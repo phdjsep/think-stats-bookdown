@@ -1,1 +1,3 @@
-This is a minimal example of a book based on R Markdown and **bookdown** (https://github.com/rstudio/bookdown). Please see the page "Get Started" at https://bookdown.org/ for how to compile this example.
+## About
+
+I was perusing the interwebs for some statistics reading and came across Allen B. Downey's "Think Stats" book. Kindly he's made available an html (and pdf) version for free, but I immediately thought 1) this site needs some love (it was made with tables after all) 2) this would be a nice resource to be made into bookdown. This would make the book easier to consume, but also easier to collaborate on. Here we go...
