@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+
+<meta charset="utf-8">
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="generator" content="pandoc" />
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta property="og:title" content="1.4 DataFrames | Think Stats" />
+<meta property="og:type" content="book" />
+
+
+<meta property="og:description" content="Version 2.0.35" />
+
+
+<meta name="author" content="Allen B. Downey" />
+
+<meta name="date" content="2019-03-22" />
+
+
+<meta name="description" content="Version 2.0.35">
+
+<title>1.4 DataFrames | Think Stats</title>
+
+<script src="libs/jquery-1.11.3/jquery.min.js"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<link href="libs/bootstrap-3.3.5/css/bootstrap.min.css" rel="stylesheet" />
+<script src="libs/bootstrap-3.3.5/js/bootstrap.min.js"></script>
+<script src="libs/bootstrap-3.3.5/shim/html5shiv.min.js"></script>
+<script src="libs/bootstrap-3.3.5/shim/respond.min.js"></script>
+<script src="libs/navigation-1.1/tabsets.js"></script>
+
+
+
+
+
+<style type = "text/css">
+.main-container {
+  max-width: 940px;
+  margin-left: auto;
+  margin-right: auto;
+}
+code {
+  color: inherit;
+  background-color: rgba(0, 0, 0, 0.04);
+}
+img {
+  max-width:100%;
+  height: auto;
+}
+</style>
+</head>
+
+<body>
+
+<div class="container-fluid main-container">
+
+
+<div class="row">
+<div class="col-sm-12">
+<div id="TOC">
+<ul>
+<li class="has-sub"><a href="index.html#preface">Preface</a><ul>
+<li><a href="0-1-how-i-wrote-this-book.html#how-i-wrote-this-book"><span class="toc-section-number">0.1</span> How I wrote this book</a></li>
+<li><a href="0-2-using-the-code.html#using-the-code"><span class="toc-section-number">0.2</span> Using the code</a></li>
+<li><a href="0-3-contributor-list.html#contributor-list"><span class="toc-section-number">0.3</span> Contributor List</a></li>
+</ul></li>
+<li class="has-sub"><a href="1-exploratory.html#exploratory"><span class="toc-section-number">1</span> Exploratory Data Analysis</a><ul>
+<li><a href="1-1-a-statistical-approach.html#a-statistical-approach"><span class="toc-section-number">1.1</span> A statistical approach</a></li>
+<li><a href="1-2-the-national-survey-of-family-growth.html#the-national-survey-of-family-growth"><span class="toc-section-number">1.2</span> The National Survey of Family Growth</a></li>
+<li><a href="1-3-importing-the-data.html#importing-the-data"><span class="toc-section-number">1.3</span> Importing the data</a></li>
+<li><a href="1-4-dataframes.html#dataframes"><span class="toc-section-number">1.4</span> DataFrames</a></li>
+<li><a href="1-5-variables.html#variables"><span class="toc-section-number">1.5</span> Variables</a></li>
+<li><a href="1-6-transformation.html#transformation"><span class="toc-section-number">1.6</span> Transformation</a></li>
+<li><a href="1-7-validation.html#validation"><span class="toc-section-number">1.7</span> Validation</a></li>
+<li><a href="1-8-exercises.html#exercises"><span class="toc-section-number">1.8</span> Exercises</a></li>
+<li><a href="1-9-glossary.html#glossary"><span class="toc-section-number">1.9</span> Glossary</a></li>
+<li><a href="1-10-nsfg-variables.html#nsfg-variables"><span class="toc-section-number">1.10</span> NSFG Variables</a></li>
+<li><a href="1-11-summarizing-distributions.html#summarizing-distributions"><span class="toc-section-number">1.11</span> Summarizing Distributions</a></li>
+<li><a href="1-12-effect-size.html#effect-size"><span class="toc-section-number">1.12</span> Effect Size</a></li>
+<li><a href="1-13-glossary-1.html#glossary-1"><span class="toc-section-number">1.13</span> Glossary</a></li>
+</ul></li>
+</ul>
+</div>
+</div>
+</div>
+<div class="row">
+<div class="col-sm-12">
+<div id="dataframes" class="section level2">
+<h2><span class="header-section-number">1.4</span> DataFrames</h2>
+<p>The result of ReadFixedWidth is a DataFrame,
+which is the fundamental data structure provided by pandas, which is a
+Python data and statistics package we’ll use throughout this book. A
+DataFrame contains a row for each record, in this case one row per
+pregnancy, and a column for each variable.</p>
+<p>In addition to the data, a DataFrame also
+contains the variable names and their types, and it provides methods for
+accessing and modifying the data.</p>
+<p>If you print df you get a truncated view of the
+rows and columns, and the shape of the DataFrame, which is 13593
+rows/records and 244 columns/variables.</p>
+<pre><code>&gt;&gt;&gt; import nsfg
+&gt;&gt;&gt; df = nsfg.ReadFemPreg()
+&gt;&gt;&gt; df
+...
+[13593 rows x 244 columns]</code></pre>
+<p>The DataFrame is too big to display, so
+the output is truncated. The last line reports the number of rows and
+columns.</p>
+<p>The attribute columns returns a sequence of
+column names as Unicode strings:</p>
+<pre><code>&gt;&gt;&gt; df.columns
+Index([u&#39;caseid&#39;, u&#39;pregordr&#39;, u&#39;howpreg_n&#39;, u&#39;howpreg_p&#39;, ... ])</code></pre>
+<p>The result is an Index, which is another
+pandas data structure. We’ll learn more about Index later, but for now
+we’ll treat it like a list:</p>
+<pre><code>&gt;&gt;&gt; df.columns[1]
+&#39;pregordr&#39;</code></pre>
+<p>To access a column from a DataFrame, you
+can use the column name as a key:</p>
+<pre><code>&gt;&gt;&gt; pregordr = df[&#39;pregordr&#39;]
+&gt;&gt;&gt; type(pregordr)
+&lt;class &#39;pandas.core.series.Series&#39;&gt;</code></pre>
+<p>The result is a Series, yet another
+pandas data structure. A Series is like a Python list with some
+additional features. When you print a Series, you get the indices and
+the corresponding values:</p>
+<pre><code>&gt;&gt;&gt; pregordr
+0     1
+1     2
+2     1
+3     2
+...
+13590    3
+13591    4
+13592    5
+Name: pregordr, Length: 13593, dtype: int64</code></pre>
+<p>In this example the indices are integers
+from 0 to 13592, but in general they can be any sortable type. The
+elements are also integers, but they can be any type.</p>
+<p>The last line includes the variable name,
+Series length, and data type; int64 is one of the types provided
+by NumPy. If you run this example on a 32-bit machine you might see
+int32.</p>
+<p>You can access the elements of a Series
+using integer indices and slices:</p>
+<pre><code>&gt;&gt;&gt; pregordr[0]
+1
+&gt;&gt;&gt; pregordr[2:5]
+2    1
+3    2
+4    3
+Name: pregordr, dtype: int64</code></pre>
+<p>The result of the index operator is an
+int64; the result of the
+slice is another Series.</p>
+<p>You can also access the columns of a
+DataFrame using dot notation:</p>
+<pre><code>&gt;&gt;&gt; pregordr = df.pregordr</code></pre>
+<p>This notation only works if the column
+name is a valid Python identifier, so it has to begin with a letter,
+can’t contain spaces, etc.</p>
+</div>
+<p style="text-align: center;">
+<a href="1-3-importing-the-data.html"><button class="btn btn-default">Previous</button></a>
+<a href="1-5-variables.html"><button class="btn btn-default">Next</button></a>
+</p>
+</div>
+</div>
+
+
+</div>
+
+<script>
+
+// add bootstrap table styles to pandoc tables
+$(document).ready(function () {
+  $('tr.header').parent('thead').parent('table').addClass('table table-condensed');
+});
+
+</script>
+
+</body>
+</html>

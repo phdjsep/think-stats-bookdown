@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+
+<meta charset="utf-8">
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="generator" content="pandoc" />
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta property="og:title" content="Chapter 1 Exploratory Data Analysis | Think Stats" />
+<meta property="og:type" content="book" />
+
+
+<meta property="og:description" content="Version 2.0.35" />
+
+
+<meta name="author" content="Allen B. Downey" />
+
+<meta name="date" content="2019-03-22" />
+
+
+<meta name="description" content="Version 2.0.35">
+
+<title>Chapter 1 Exploratory Data Analysis | Think Stats</title>
+
+<script src="libs/jquery-1.11.3/jquery.min.js"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<link href="libs/bootstrap-3.3.5/css/bootstrap.min.css" rel="stylesheet" />
+<script src="libs/bootstrap-3.3.5/js/bootstrap.min.js"></script>
+<script src="libs/bootstrap-3.3.5/shim/html5shiv.min.js"></script>
+<script src="libs/bootstrap-3.3.5/shim/respond.min.js"></script>
+<script src="libs/navigation-1.1/tabsets.js"></script>
+
+
+
+
+
+<style type = "text/css">
+.main-container {
+  max-width: 940px;
+  margin-left: auto;
+  margin-right: auto;
+}
+code {
+  color: inherit;
+  background-color: rgba(0, 0, 0, 0.04);
+}
+img {
+  max-width:100%;
+  height: auto;
+}
+</style>
+</head>
+
+<body>
+
+<div class="container-fluid main-container">
+
+
+<div class="row">
+<div class="col-sm-12">
+<div id="TOC">
+<ul>
+<li class="has-sub"><a href="index.html#preface">Preface</a><ul>
+<li><a href="0-1-how-i-wrote-this-book.html#how-i-wrote-this-book"><span class="toc-section-number">0.1</span> How I wrote this book</a></li>
+<li><a href="0-2-using-the-code.html#using-the-code"><span class="toc-section-number">0.2</span> Using the code</a></li>
+<li><a href="0-3-contributor-list.html#contributor-list"><span class="toc-section-number">0.3</span> Contributor List</a></li>
+</ul></li>
+<li class="has-sub"><a href="1-exploratory.html#exploratory"><span class="toc-section-number">1</span> Exploratory Data Analysis</a><ul>
+<li><a href="1-1-a-statistical-approach.html#a-statistical-approach"><span class="toc-section-number">1.1</span> A statistical approach</a></li>
+<li><a href="1-2-the-national-survey-of-family-growth.html#the-national-survey-of-family-growth"><span class="toc-section-number">1.2</span> The National Survey of Family Growth</a></li>
+<li><a href="1-3-importing-the-data.html#importing-the-data"><span class="toc-section-number">1.3</span> Importing the data</a></li>
+<li><a href="1-4-dataframes.html#dataframes"><span class="toc-section-number">1.4</span> DataFrames</a></li>
+<li><a href="1-5-variables.html#variables"><span class="toc-section-number">1.5</span> Variables</a></li>
+<li><a href="1-6-transformation.html#transformation"><span class="toc-section-number">1.6</span> Transformation</a></li>
+<li><a href="1-7-validation.html#validation"><span class="toc-section-number">1.7</span> Validation</a></li>
+<li><a href="1-8-exercises.html#exercises"><span class="toc-section-number">1.8</span> Exercises</a></li>
+<li><a href="1-9-glossary.html#glossary"><span class="toc-section-number">1.9</span> Glossary</a></li>
+<li><a href="1-10-nsfg-variables.html#nsfg-variables"><span class="toc-section-number">1.10</span> NSFG Variables</a></li>
+<li><a href="1-11-summarizing-distributions.html#summarizing-distributions"><span class="toc-section-number">1.11</span> Summarizing Distributions</a></li>
+<li><a href="1-12-effect-size.html#effect-size"><span class="toc-section-number">1.12</span> Effect Size</a></li>
+<li><a href="1-13-glossary-1.html#glossary-1"><span class="toc-section-number">1.13</span> Glossary</a></li>
+</ul></li>
+</ul>
+</div>
+</div>
+</div>
+<div class="row">
+<div class="col-sm-12">
+<div id="exploratory" class="section level1">
+<h1><span class="header-section-number">Chapter 1</span> Exploratory Data Analysis</h1>
+<p>The thesis of this book is that data
+combined with practical methods can answer questions and guide decisions
+under uncertainty.</p>
+<p>As an example, I present a case study
+motivated by a question I heard when my wife and I were expecting our
+first child: do first babies tend to arrive late?</p>
+<p>If you Google this question, you will
+find plenty of discussion. Some people claim it’s true, others say it’s
+a myth, and some people say it’s the other way around: first babies come
+early.</p>
+<p>In many of these discussions, people
+provide data to support their claims. I found many examples like
+these:</p>
+<blockquote>
+<p>“My two friends that have given birth
+recently to their first babies, BOTH went almost 2 weeks overdue
+before going into labour or being induced.”</p>
+<p>“My first one came 2 weeks late and now
+I think the second one is going to come out two weeks early!!”</p>
+<p>“I don’t think that can be true because
+my sister was my mother’s first and she was early, as with many of my
+cousins.”</p>
+</blockquote>
+<p>Reports like these are called anecdotal evidence because they are
+based on data that is unpublished and usually personal. In casual
+conversation, there is nothing wrong with anecdotes, so I don’t mean to
+pick on the people I quoted.</p>
+<p>But we might want evidence that is more
+persuasive and an answer that is more reliable. By those standards,
+anecdotal evidence usually fails, because:</p>
+<ul>
+<li>Small number of observations: If
+pregnancy length is longer for first babies, the difference is
+probably small compared to natural variation. In that case, we might
+have to compare a large number of pregnancies to be sure that a
+difference exists.</li>
+<li>Selection bias: People who join a
+discussion of this question might be interested because their first
+babies were late. In that case the process of selecting data would
+bias the results.<br />
+</li>
+<li>Confirmation bias: People who believe
+the claim might be more likely to contribute examples that confirm
+it. People who doubt the claim are more likely to cite
+counterexamples.<br />
+</li>
+<li>Inaccuracy: Anecdotes are often
+personal stories, and often misremembered, misrepresented, repeated
+inaccurately, etc.</li>
+</ul>
+<p>So how can we do better?</p> 
+</div>
+<p style="text-align: center;">
+<a href="0-3-contributor-list.html"><button class="btn btn-default">Previous</button></a>
+<a href="1-1-a-statistical-approach.html"><button class="btn btn-default">Next</button></a>
+</p>
+</div>
+</div>
+
+
+</div>
+
+<script>
+
+// add bootstrap table styles to pandoc tables
+$(document).ready(function () {
+  $('tr.header').parent('thead').parent('table').addClass('table table-condensed');
+});
+
+</script>
+
+</body>
+</html>

@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+
+<meta charset="utf-8">
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="generator" content="pandoc" />
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta property="og:title" content="1.9 Glossary | Think Stats" />
+<meta property="og:type" content="book" />
+
+
+<meta property="og:description" content="Version 2.0.35" />
+
+
+<meta name="author" content="Allen B. Downey" />
+
+<meta name="date" content="2019-03-22" />
+
+
+<meta name="description" content="Version 2.0.35">
+
+<title>1.9 Glossary | Think Stats</title>
+
+<script src="libs/jquery-1.11.3/jquery.min.js"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<link href="libs/bootstrap-3.3.5/css/bootstrap.min.css" rel="stylesheet" />
+<script src="libs/bootstrap-3.3.5/js/bootstrap.min.js"></script>
+<script src="libs/bootstrap-3.3.5/shim/html5shiv.min.js"></script>
+<script src="libs/bootstrap-3.3.5/shim/respond.min.js"></script>
+<script src="libs/navigation-1.1/tabsets.js"></script>
+
+
+
+
+
+<style type = "text/css">
+.main-container {
+  max-width: 940px;
+  margin-left: auto;
+  margin-right: auto;
+}
+code {
+  color: inherit;
+  background-color: rgba(0, 0, 0, 0.04);
+}
+img {
+  max-width:100%;
+  height: auto;
+}
+</style>
+</head>
+
+<body>
+
+<div class="container-fluid main-container">
+
+
+<div class="row">
+<div class="col-sm-12">
+<div id="TOC">
+<ul>
+<li class="has-sub"><a href="index.html#preface">Preface</a><ul>
+<li><a href="0-1-how-i-wrote-this-book.html#how-i-wrote-this-book"><span class="toc-section-number">0.1</span> How I wrote this book</a></li>
+<li><a href="0-2-using-the-code.html#using-the-code"><span class="toc-section-number">0.2</span> Using the code</a></li>
+<li><a href="0-3-contributor-list.html#contributor-list"><span class="toc-section-number">0.3</span> Contributor List</a></li>
+</ul></li>
+<li class="has-sub"><a href="1-exploratory.html#exploratory"><span class="toc-section-number">1</span> Exploratory Data Analysis</a><ul>
+<li><a href="1-1-a-statistical-approach.html#a-statistical-approach"><span class="toc-section-number">1.1</span> A statistical approach</a></li>
+<li><a href="1-2-the-national-survey-of-family-growth.html#the-national-survey-of-family-growth"><span class="toc-section-number">1.2</span> The National Survey of Family Growth</a></li>
+<li><a href="1-3-importing-the-data.html#importing-the-data"><span class="toc-section-number">1.3</span> Importing the data</a></li>
+<li><a href="1-4-dataframes.html#dataframes"><span class="toc-section-number">1.4</span> DataFrames</a></li>
+<li><a href="1-5-variables.html#variables"><span class="toc-section-number">1.5</span> Variables</a></li>
+<li><a href="1-6-transformation.html#transformation"><span class="toc-section-number">1.6</span> Transformation</a></li>
+<li><a href="1-7-validation.html#validation"><span class="toc-section-number">1.7</span> Validation</a></li>
+<li><a href="1-8-exercises.html#exercises"><span class="toc-section-number">1.8</span> Exercises</a></li>
+<li><a href="1-9-glossary.html#glossary"><span class="toc-section-number">1.9</span> Glossary</a></li>
+<li><a href="1-10-nsfg-variables.html#nsfg-variables"><span class="toc-section-number">1.10</span> NSFG Variables</a></li>
+<li><a href="1-11-summarizing-distributions.html#summarizing-distributions"><span class="toc-section-number">1.11</span> Summarizing Distributions</a></li>
+<li><a href="1-12-effect-size.html#effect-size"><span class="toc-section-number">1.12</span> Effect Size</a></li>
+<li><a href="1-13-glossary-1.html#glossary-1"><span class="toc-section-number">1.13</span> Glossary</a></li>
+</ul></li>
+</ul>
+</div>
+</div>
+</div>
+<div class="row">
+<div class="col-sm-12">
+<div id="glossary" class="section level2">
+<h2><span class="header-section-number">1.9</span> Glossary</h2>
+<ul>
+<li>anecdotal evidence: Evidence, often
+personal, that is collected casually rather than by a well-designed
+study.</li>
+<li>population: A group we are
+interested in studying. “Population” often refers to a group of
+people, but the term is used for other subjects, too.</li>
+<li><p>cross-sectional study: A study that
+collects data about a population at a particular point in time.</p></li>
+<li>cycle: In a repeated cross-sectional
+study, each repetition of the study is called a cycle.</li>
+<li>longitudinal study: A study that
+follows a population over time, collecting data from the same group
+repeatedly.<br />
+</li>
+<li>record: In a dataset, a collection
+of information about a single person or other subject.</li>
+<li>respondent: A person who responds to
+a survey.</li>
+<li>sample: The subset of a population
+used to collect data.</li>
+<li>representative: A sample is
+representative if every member of the population has the same chance
+of being in the sample.</li>
+<li>oversampling: The technique of
+increasing the representation of a sub-population in order to avoid
+errors due to small sample sizes.</li>
+<li>raw
+data: Values collected and recorded with little or no
+checking, calculation or interpretation.</li>
+<li>recode: A value that is generated by
+calculation and other logic applied to raw data.</li>
+<li><p>data
+cleaning: Processes that include validating data, identifying
+errors, translating between data types and representations,
+etc.</p></li>
+</ul>
+
+<p># Distributions {#distributions}</p>
+<p>## Histograms</p>
+<p>One of the best ways to describe a
+variable is to report the values that appear in the dataset and how many
+times each value appears. This description is called the <strong>distribution</strong> of the variable.</p>
+<p>The most common representation of a
+distribution is a <strong>histogram</strong>, which
+is a graph that shows the <strong>frequency</strong> of each value. In this
+context, “frequency” means the number of times the value appears.</p>
+<p>In Python, an efficient way to compute
+frequencies is with a dictionary. Given a sequence of values, <code>t</code>:</p>
+<pre><code>hist = {}
+for x in t:
+    hist[x] = hist.get(x, 0) + 1</code></pre>
+<p>The result is a dictionary that maps from
+values to frequencies. Alternatively, you could use the <code>Counter</code> class defined in the <code>collections</code> module:</p>
+<pre><code>from collections import Counter
+counter = Counter(t)</code></pre>
+<p>The result is a <code>Counter</code> object, which is a subclass
+of dictionary.</p>
+<p>Another option is to use the pandas
+method <code>value_counts</code>, which we saw in the previous chapter. But for
+this book I created a class, Hist, that represents histograms and
+provides the methods that operate on them.</p>
+<p>## Representing Histograms</p>
+<p>The Hist constructor can take a sequence,
+dictionary, pandas Series, or another Hist. You can instantiate a Hist
+object like this:</p>
+<pre><code>&gt;&gt;&gt; import thinkstats2
+&gt;&gt;&gt; hist = thinkstats2.Hist([1, 2, 2, 3, 5])
+&gt;&gt;&gt; hist
+Hist({1: 1, 2: 2, 3: 1, 5: 1})</code></pre>
+<p>Hist objects provide <code>Freq</code>, which takes a value and
+returns its frequency:</p>
+<pre><code>&gt;&gt;&gt; hist.Freq(2)
+2</code></pre>
+<p>The bracket operator does the same thing:</p>
+<pre><code>&gt;&gt;&gt; hist[2]
+2</code></pre>
+<p>If you look up a value that has never
+appeared, the frequency is 0.</p>
+<pre><code>&gt;&gt;&gt; hist.Freq(4)
+0</code></pre>
+<p><code>Values</code> returns an unsorted list of
+the values in the Hist:</p>
+<pre><code>&gt;&gt;&gt; hist.Values()
+[1, 5, 3, 2]</code></pre>
+<p>To loop through the values in order, you
+can use the built-in function <code>sorted</code>:</p>
+<pre><code>for val in sorted(hist.Values()):
+    print(val, hist.Freq(val))</code></pre>
+<p>Or you can use <code>Items</code> to iterate through
+value-frequency pairs:</p>
+<pre><code>for val, freq in hist.Items():
+     print(val, freq)</code></pre>
+<p>## Plotting Histograms</p>
+<blockquote>
+<hr />
+<p></span></p>
+<p><img src="thinkstats2001.png" /></span></p>
+<p></span></p>
+<table>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">
+Figure 2.1: Histogram of the pound part of birth weight.</span>
+</td>
+</tr>
+</tbody>
+</table>
+<p></span><span id="first_wgt_lb_hist"></span> </span></p>
+<hr />
+</blockquote>
+<p>For this book I wrote a module called
+<code>thinkplot.py</code> that provides functions for plotting Hists and other objects defined in <code>thinkstats2.py</code>.
+It is based on <code>pyplot</code>, which is part of the <code>matplotlib</code> package. See
+Section <a href="thinkstats2001.html#code">0.2</a> for information about installing <code>matplotlib</code>.</p>
+<p>To plot <code>hist</code> with <code>thinkplot</code>, try this:</p>
+<pre><code>&gt;&gt;&gt; import thinkplot
+&gt;&gt;&gt; thinkplot.Hist(hist)
+&gt;&gt;&gt; thinkplot.Show(xlabel=&#39;value&#39;, ylabel=&#39;frequency&#39;)</code></pre>
+<p>You can read the documentation for <code>thinkplot</code> at <a href="http://greenteapress.com/thinkstats2/thinkplot.html">http://greenteapress.com/thinkstats2/thinkplot.html</a></p>
+<blockquote>
+<hr />
+<p></span></p>
+<p><img src="thinkstats2002.png" /></span></p>
+<p></span></p>
+<table>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">
+Figure 2.2: Histogram of the ounce part of birth weight.</span>
+</td>
+</tr>
+</tbody>
+</table>
+<p></span><span id="first_wgt_oz_hist"></span> </span></p>
+<hr />
+</blockquote>
+</div>
+<p style="text-align: center;">
+<a href="1-8-exercises.html"><button class="btn btn-default">Previous</button></a>
+<a href="1-10-nsfg-variables.html"><button class="btn btn-default">Next</button></a>
+</p>
+</div>
+</div>
+
+
+</div>
+
+<script>
+
+// add bootstrap table styles to pandoc tables
+$(document).ready(function () {
+  $('tr.header').parent('thead').parent('table').addClass('table table-condensed');
+});
+
+</script>
+
+</body>
+</html>

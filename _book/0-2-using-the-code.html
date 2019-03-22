@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+
+<meta charset="utf-8">
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="generator" content="pandoc" />
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta property="og:title" content="0.2 Using the code | Think Stats" />
+<meta property="og:type" content="book" />
+
+
+<meta property="og:description" content="Version 2.0.35" />
+
+
+<meta name="author" content="Allen B. Downey" />
+
+<meta name="date" content="2019-03-22" />
+
+
+<meta name="description" content="Version 2.0.35">
+
+<title>0.2 Using the code | Think Stats</title>
+
+<script src="libs/jquery-1.11.3/jquery.min.js"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<link href="libs/bootstrap-3.3.5/css/bootstrap.min.css" rel="stylesheet" />
+<script src="libs/bootstrap-3.3.5/js/bootstrap.min.js"></script>
+<script src="libs/bootstrap-3.3.5/shim/html5shiv.min.js"></script>
+<script src="libs/bootstrap-3.3.5/shim/respond.min.js"></script>
+<script src="libs/navigation-1.1/tabsets.js"></script>
+
+
+
+
+
+<style type = "text/css">
+.main-container {
+  max-width: 940px;
+  margin-left: auto;
+  margin-right: auto;
+}
+code {
+  color: inherit;
+  background-color: rgba(0, 0, 0, 0.04);
+}
+img {
+  max-width:100%;
+  height: auto;
+}
+</style>
+</head>
+
+<body>
+
+<div class="container-fluid main-container">
+
+
+<div class="row">
+<div class="col-sm-12">
+<div id="TOC">
+<ul>
+<li class="has-sub"><a href="index.html#preface">Preface</a><ul>
+<li><a href="0-1-how-i-wrote-this-book.html#how-i-wrote-this-book"><span class="toc-section-number">0.1</span> How I wrote this book</a></li>
+<li><a href="0-2-using-the-code.html#using-the-code"><span class="toc-section-number">0.2</span> Using the code</a></li>
+<li><a href="0-3-contributor-list.html#contributor-list"><span class="toc-section-number">0.3</span> Contributor List</a></li>
+</ul></li>
+<li class="has-sub"><a href="1-exploratory.html#exploratory"><span class="toc-section-number">1</span> Exploratory Data Analysis</a><ul>
+<li><a href="1-1-a-statistical-approach.html#a-statistical-approach"><span class="toc-section-number">1.1</span> A statistical approach</a></li>
+<li><a href="1-2-the-national-survey-of-family-growth.html#the-national-survey-of-family-growth"><span class="toc-section-number">1.2</span> The National Survey of Family Growth</a></li>
+<li><a href="1-3-importing-the-data.html#importing-the-data"><span class="toc-section-number">1.3</span> Importing the data</a></li>
+<li><a href="1-4-dataframes.html#dataframes"><span class="toc-section-number">1.4</span> DataFrames</a></li>
+<li><a href="1-5-variables.html#variables"><span class="toc-section-number">1.5</span> Variables</a></li>
+<li><a href="1-6-transformation.html#transformation"><span class="toc-section-number">1.6</span> Transformation</a></li>
+<li><a href="1-7-validation.html#validation"><span class="toc-section-number">1.7</span> Validation</a></li>
+<li><a href="1-8-exercises.html#exercises"><span class="toc-section-number">1.8</span> Exercises</a></li>
+<li><a href="1-9-glossary.html#glossary"><span class="toc-section-number">1.9</span> Glossary</a></li>
+<li><a href="1-10-nsfg-variables.html#nsfg-variables"><span class="toc-section-number">1.10</span> NSFG Variables</a></li>
+<li><a href="1-11-summarizing-distributions.html#summarizing-distributions"><span class="toc-section-number">1.11</span> Summarizing Distributions</a></li>
+<li><a href="1-12-effect-size.html#effect-size"><span class="toc-section-number">1.12</span> Effect Size</a></li>
+<li><a href="1-13-glossary-1.html#glossary-1"><span class="toc-section-number">1.13</span> Glossary</a></li>
+</ul></li>
+</ul>
+</div>
+</div>
+</div>
+<div class="row">
+<div class="col-sm-12">
+<div id="using-the-code" class="section level2">
+<h2><span class="header-section-number">0.2</span> Using the code</h2>
+<p>The code and data used in this book are available from <a href="https://github.com/AllenDowney/ThinkStats2">&gt;https://github.com/AllenDowney/ThinkStats2</a>. Git is a version control system that allows you to keep track of the files that make up a project. A collection of files under Git’s control is called a repository. GitHub is
+a hosting service that provides storage for Git repositories and a convenient web interface.</p>
+<p>The GitHub homepage for my repository provides several ways to work with
+the code:</p>
+<ul>
+<li>You can create a copy of my repository on GitHub by pressing the
+Fork button. If you don’t already have a GitHub account, you’ll need to create one. After forking, you’ll have your own repository on GitHub that you can use to keep track of code you write while working on this book. Then you can clone the repo, which means that you make a copy of the files on your computer.</li>
+<li>Or you could clone my repository. You don’t need a GitHub account to
+do this, but you won’t be able to write your changes back to GitHub.</li>
+<li>If you don’t want to use Git at all, you can download the files in a
+Zip file using the button in the lower-right corner of the GitHub
+page.</li>
+</ul>
+<p>All of the code is written to work in both Python 2 and Python 3 with no
+translation.</p>
+<p>I developed this book using Anaconda from Continuum Analytics, which is
+a free Python distribution that includes all the packages you’ll need to
+run the code (and lots more). I found Anaconda easy to install. By
+default it does a user-level installation, not system-level, so you
+don’t need administrative privileges. And it supports both Python 2 and
+Python 3. You can download Anaconda from <a href="http://continuum.io/downloads">http://continuum.io/downloads</a>.</p>
+<p>If you don’t want to use Anaconda, you will need the following packages:</p>
+<ul>
+<li>pandas for representing and analyzing data, <a href="http://pandas.pydata.org/">http://pandas.pydata.org/</a>;</li>
+<li>NumPy for basic numerical computation, <a href="http://www.numpy.org/">http://www.numpy.org/</a>;</li>
+<li>SciPy for scientific computation including statistics, <a href="http://www.scipy.org/">http://www.scipy.org/</a>;</li>
+<li>StatsModels for regression and other statistical analysis, <a href="http://statsmodels.sourceforge.net/">http://statsmodels.sourceforge.net/</a>; and</li>
+<li>matplotlib for visualization, <a href="http://matplotlib.org/">http://matplotlib.org/</a>.</li>
+</ul>
+<p>Although these are commonly used packages, they are not included with
+all Python installations, and they can be hard to install in some
+environments. If you have trouble installing them, I strongly recommend
+using Anaconda or one of the other Python distributions that include
+these packages.</p>
+<p>After you clone the repository or unzip the zip file, you should have a
+folder called ThinkStats2/code with a file called
+nsfg.py. If you run nsfg.py, it should read a data file, run some tests,
+and print a message like, “All tests passed.” If you get import errors,
+it probably means there are packages you need to install.</p>
+<p>Most exercises use Python scripts, but some also use the IPython
+notebook. If you have not used IPython notebook before, I suggest you
+start with the documentation at <a href="http://ipython.org/ipython-doc/stable/notebook/notebook.html">http://ipython.org/ipython-doc/stable/notebook/notebook.html</a>.</p>
+<p>I wrote this book assuming that the reader is familiar with core Python,
+including object-oriented features, but not pandas, NumPy, and SciPy. If
+you are already familiar with these modules, you can skip a few
+sections.</p>
+<p>I assume that the reader knows basic mathematics, including logarithms,
+for example, and summations. I refer to calculus concepts in a few
+places, but you don’t have to do any calculus.</p>
+<p>If you have never studied statistics, I think this book is a good place
+to start. And if you have taken a traditional statistics class, I hope
+this book will help repair the damage.</p>
+<p>—</p>
+<p>Allen B. Downey is a Professor of Computer Science at the Franklin W.
+Olin College of Engineering in Needham, MA.</p>
+</div>
+<p style="text-align: center;">
+<a href="0-1-how-i-wrote-this-book.html"><button class="btn btn-default">Previous</button></a>
+<a href="0-3-contributor-list.html"><button class="btn btn-default">Next</button></a>
+</p>
+</div>
+</div>
+
+
+</div>
+
+<script>
+
+// add bootstrap table styles to pandoc tables
+$(document).ready(function () {
+  $('tr.header').parent('thead').parent('table').addClass('table table-condensed');
+});
+
+</script>
+
+</body>
+</html>

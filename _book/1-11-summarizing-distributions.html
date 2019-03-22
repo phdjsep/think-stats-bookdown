@@ -1,0 +1,314 @@
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+
+<meta charset="utf-8">
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="generator" content="pandoc" />
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta property="og:title" content="1.11 Summarizing Distributions | Think Stats" />
+<meta property="og:type" content="book" />
+
+
+<meta property="og:description" content="Version 2.0.35" />
+
+
+<meta name="author" content="Allen B. Downey" />
+
+<meta name="date" content="2019-03-22" />
+
+
+<meta name="description" content="Version 2.0.35">
+
+<title>1.11 Summarizing Distributions | Think Stats</title>
+
+<script src="libs/jquery-1.11.3/jquery.min.js"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<link href="libs/bootstrap-3.3.5/css/bootstrap.min.css" rel="stylesheet" />
+<script src="libs/bootstrap-3.3.5/js/bootstrap.min.js"></script>
+<script src="libs/bootstrap-3.3.5/shim/html5shiv.min.js"></script>
+<script src="libs/bootstrap-3.3.5/shim/respond.min.js"></script>
+<script src="libs/navigation-1.1/tabsets.js"></script>
+
+
+
+
+
+<style type = "text/css">
+.main-container {
+  max-width: 940px;
+  margin-left: auto;
+  margin-right: auto;
+}
+code {
+  color: inherit;
+  background-color: rgba(0, 0, 0, 0.04);
+}
+img {
+  max-width:100%;
+  height: auto;
+}
+</style>
+</head>
+
+<body>
+
+<div class="container-fluid main-container">
+
+
+<div class="row">
+<div class="col-sm-12">
+<div id="TOC">
+<ul>
+<li class="has-sub"><a href="index.html#preface">Preface</a><ul>
+<li><a href="0-1-how-i-wrote-this-book.html#how-i-wrote-this-book"><span class="toc-section-number">0.1</span> How I wrote this book</a></li>
+<li><a href="0-2-using-the-code.html#using-the-code"><span class="toc-section-number">0.2</span> Using the code</a></li>
+<li><a href="0-3-contributor-list.html#contributor-list"><span class="toc-section-number">0.3</span> Contributor List</a></li>
+</ul></li>
+<li class="has-sub"><a href="1-exploratory.html#exploratory"><span class="toc-section-number">1</span> Exploratory Data Analysis</a><ul>
+<li><a href="1-1-a-statistical-approach.html#a-statistical-approach"><span class="toc-section-number">1.1</span> A statistical approach</a></li>
+<li><a href="1-2-the-national-survey-of-family-growth.html#the-national-survey-of-family-growth"><span class="toc-section-number">1.2</span> The National Survey of Family Growth</a></li>
+<li><a href="1-3-importing-the-data.html#importing-the-data"><span class="toc-section-number">1.3</span> Importing the data</a></li>
+<li><a href="1-4-dataframes.html#dataframes"><span class="toc-section-number">1.4</span> DataFrames</a></li>
+<li><a href="1-5-variables.html#variables"><span class="toc-section-number">1.5</span> Variables</a></li>
+<li><a href="1-6-transformation.html#transformation"><span class="toc-section-number">1.6</span> Transformation</a></li>
+<li><a href="1-7-validation.html#validation"><span class="toc-section-number">1.7</span> Validation</a></li>
+<li><a href="1-8-exercises.html#exercises"><span class="toc-section-number">1.8</span> Exercises</a></li>
+<li><a href="1-9-glossary.html#glossary"><span class="toc-section-number">1.9</span> Glossary</a></li>
+<li><a href="1-10-nsfg-variables.html#nsfg-variables"><span class="toc-section-number">1.10</span> NSFG Variables</a></li>
+<li><a href="1-11-summarizing-distributions.html#summarizing-distributions"><span class="toc-section-number">1.11</span> Summarizing Distributions</a></li>
+<li><a href="1-12-effect-size.html#effect-size"><span class="toc-section-number">1.12</span> Effect Size</a></li>
+<li><a href="1-13-glossary-1.html#glossary-1"><span class="toc-section-number">1.13</span> Glossary</a></li>
+</ul></li>
+</ul>
+</div>
+</div>
+</div>
+<div class="row">
+<div class="col-sm-12">
+<div id="summarizing-distributions" class="section level2">
+<h2><span class="header-section-number">1.11</span> Summarizing Distributions</h2>
+<p>A histogram is a complete description of
+the distribution of a sample; that is, given a histogram, we could
+reconstruct the values in the sample (although not their order).</p>
+<p>If the details of the distribution are
+important, it might be necessary to present a histogram. But often we
+want to summarize the distribution with a few descriptive
+statistics.</p>
+<p>Some of the characteristics we might want
+to report are:</p>
+<ul>
+<li>central tendency: Do the values tend
+to cluster around a particular point?</li>
+<li>modes: Is there more than one
+cluster?</li>
+<li>spread: How much variability is there
+in the values?</li>
+<li>tails: How quickly do the
+probabilities drop off as we move away from the modes?</li>
+<li>outliers: Are there extreme values
+far from the modes?</li>
+</ul>
+<p>Statistics designed to answer these
+questions are called <strong>summary statistics</strong>. By far the most common summary statistic is the <strong>mean</strong>,
+which is meant to describe the central tendency of the distribution.</p>
+<p>If you have a sample of <code>n</code> values, <em>x<sub>i</sub></em>, the mean, <span style="text-decoration:overline">x</span>, is the sum of the values
+divided by the number of values; in other words</p>
+<table>
+<colgroup>
+<col style="width: 20%" />
+<col style="width: 20%" />
+<col style="width: 20%" />
+<col style="width: 20%" />
+<col style="width: 20%" />
+</colgroup>
+<tbody>
+<tr class="odd">
+<td>
+<span style="text-decoration:overline">x</span> = </span>
+</td>
+<td>
+<table>
+<tbody>
+<tr class="odd">
+<td style="text-align: center;">
+1</span>
+</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">
+</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">
+<span style="font-style:italic;font-size:medium">n</span>
+</td>
+</tr>
+</tbody>
+</table>
+</td>
+<td>
+ </span>
+</td>
+<td>
+<table>
+<tbody>
+<tr class="odd">
+<td style="text-align: center;">
+ </span>
+</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">
+<span style="font-size:xx-large">∑</span>
+</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">
+<span style="font-style:italic;font-size:medium">i</span>
+</td>
+</tr>
+</tbody>
+</table>
+</td>
+<td>
+ <span style="font-style:italic">x</span></span><sub><span style="font-style:italic;font-size:medium">i</span></sub> </span>
+</td>
+</tr>
+</tbody>
+</table>
+<p>The words “mean” and “average” are
+sometimes used interchangeably, but I make this distinction:</span></p>
+<ul>
+<li>The “mean” of a sample is the summary
+statistic computed with the previous formula.</span></li>
+<li>An “average” is one of several
+summary statistics you might choose to describe a central tendency.</li>
+</ul>
+<p>Sometimes the mean is a good description
+of a set of values. For example, apples are all pretty much the same
+size (at least the ones sold in supermarkets). So if I buy 6 apples and
+the total weight is 3 pounds, it would be a reasonable summary to say
+they are about a half pound each.</p>
+<p>But pumpkins are more diverse. Suppose I
+grow several varieties in my garden, and one day I harvest three
+decorative pumpkins that are 1 pound each, two pie pumpkins that are 3
+pounds each, and one Atlantic Giant® pumpkin that weighs 591 pounds. The
+mean of this sample is 100 pounds, but if I told you “The average
+pumpkin in my garden is 100 pounds,” that would be misleading. In this
+example, there is no meaningful average because there is no typical
+pumpkin.</p>
+<p>## Variance</p>
+<p>If there is no single number that
+summarizes pumpkin weights, we can do a little better with two numbers:
+mean and <strong>variance</strong>.</p>
+<p>Variance is a summary statistic intended
+to describe the variability or spread of a distribution. The variance of
+a set of values is</p>
+<table>
+<colgroup>
+<col style="width: 20%" />
+<col style="width: 20%" />
+<col style="width: 20%" />
+<col style="width: 20%" />
+<col style="width: 20%" />
+</colgroup>
+<tbody>
+<tr class="odd">
+<td>
+<span style="font-style:italic;font-size:medium">S</span><sup>2</span></sup> = </span>
+</td>
+<td>
+<table>
+<tbody>
+<tr class="odd">
+<td style="text-align: center;">
+1</span>
+</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">
+</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">
+<span style="font-style:italic;font-size:medium">n</span>
+</td>
+</tr>
+</tbody>
+</table>
+</td>
+<td>
+ </span>
+</td>
+<td>
+<table>
+<tbody>
+<tr class="odd">
+<td style="text-align: center;">
+ </span>
+</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">
+<span style="font-size:xx-large">∑</span>
+</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">
+<span style="font-style:italic;font-size:medium">i</span>
+</td>
+</tr>
+</tbody>
+</table>
+</td>
+<td>
+ (<span style="font-style:italic">x</span></span><sub><span style="font-style:italic;font-size:medium">i</span></sub> − <span style="text-decoration:overline">x</span>)</span><sup>2</span></sup> </span>
+</td>
+</tr>
+</tbody>
+</table>
+<p>The term <em>x<sub>i</sub></em> − <span style="text-decoration:overline">x</span> is called the “deviation from
+the mean,” so variance is the mean squared deviation. The square root of
+variance, <em>S</em>, is the <strong>standard deviation</strong>.</p>
+<p>If you have prior experience, you might
+have seen a formula for variance with <em>n</em>−1 in the denominator, rather than
+<code>n</code>. This statistic is used to
+estimate the variance in a population using a sample. We will come back
+to this in Chapter <a href="thinkstats2009.html#estimation">8</a>.</p>
+<p>Pandas data structures provides methods
+to compute mean, variance and standard deviation:</p>
+<pre><code>    mean = live.prglngth.mean()
+    var = live.prglngth.var()
+    std = live.prglngth.std()</code></pre>
+<p>For all live births, the mean pregnancy
+length is 38.6 weeks, the standard deviation is 2.7 weeks, which means
+we should expect deviations of 2-3 weeks to be common.</p>
+<p>Variance of pregnancy length is 7.3,
+which is hard to interpret, especially since the units are
+weeks<sup>2</sup>, or “square weeks.” Variance is useful in some
+calculations, but it is not a good summary statistic.</p>
+</div>
+<p style="text-align: center;">
+<a href="1-10-nsfg-variables.html"><button class="btn btn-default">Previous</button></a>
+<a href="1-12-effect-size.html"><button class="btn btn-default">Next</button></a>
+</p>
+</div>
+</div>
+
+
+</div>
+
+<script>
+
+// add bootstrap table styles to pandoc tables
+$(document).ready(function () {
+  $('tr.header').parent('thead').parent('table').addClass('table table-condensed');
+});
+
+</script>
+
+</body>
+</html>

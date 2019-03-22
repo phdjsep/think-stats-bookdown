@@ -1,0 +1,706 @@
+# Exploratory Data Analysis {#exploratory}
+
+The thesis of this book is that data
+combined with practical methods can answer questions and guide decisions
+under uncertainty.
+
+As an example, I present a case study
+motivated by a question I heard when my wife and I were expecting our
+first child: do first babies tend to arrive late? 
+
+If you Google this question, you will
+find plenty of discussion. Some people claim it’s true, others say it’s
+a myth, and some people say it’s the other way around: first babies come
+early.
+
+In many of these discussions, people
+provide data to support their claims. I found many examples like
+these:
+
+> “My two friends that have given birth
+> recently to their first babies, BOTH went almost 2 weeks overdue
+> before going into labour or being induced.”
+>
+> “My first one came 2 weeks late and now
+> I think the second one is going to come out two weeks early!!”
+>
+> “I don’t think that can be true because
+> my sister was my mother’s first and she was early, as with many of my
+> cousins.”
+
+Reports like these are called anecdotal evidence because they are
+based on data that is unpublished and usually personal. In casual
+conversation, there is nothing wrong with anecdotes, so I don’t mean to
+pick on the people I quoted. 
+
+But we might want evidence that is more
+persuasive and an answer that is more reliable. By those standards,
+anecdotal evidence usually fails, because:
+
+-   Small number of observations: If
+    pregnancy length is longer for first babies, the difference is
+    probably small compared to natural variation. In that case, we might
+    have to compare a large number of pregnancies to be sure that a
+    difference exists. 
+-   Selection bias: People who join a
+    discussion of this question might be interested because their first
+    babies were late. In that case the process of selecting data would
+    bias the results.  
+-   Confirmation bias: People who believe
+    the claim might be more likely to contribute examples that confirm
+    it. People who doubt the claim are more likely to cite
+    counterexamples.  
+-   Inaccuracy: Anecdotes are often
+    personal stories, and often misremembered, misrepresented, repeated
+    inaccurately, etc.
+
+So how can we do better?
+
+ 
+
+## A Statistical Approach
+
+
+To address the limitations of anecdotes,
+we will use the tools of statistics, which include:
+
+-   Data collection: We will use data
+    from a large national survey that was designed explicitly with the
+    goal of generating statistically valid inferences about the U.S.
+    population. 
+-   Descriptive statistics: We will
+    generate statistics that summarize the data concisely, and evaluate
+    different ways to visualize data. 
+-   Exploratory data analysis: We will
+    look for patterns, differences, and other features that address the
+    questions we are interested in. At the same time we will check for
+    inconsistencies and identify limitations. 
+-   Estimation: We will use data from a
+    sample to estimate characteristics of the general population.
+    
+-   Hypothesis testing: Where we see
+    apparent effects, like a difference between two groups, we will
+    evaluate whether the effect might have happened by chance.
+    
+
+By performing these steps with care to
+avoid pitfalls, we can reach conclusions that are more justifiable and
+more likely to be correct.
+
+ 
+
+## The National Survey of Family Growth
+
+
+Since 1973 the U.S. Centers for Disease
+Control and Prevention (CDC) have conducted the National Survey of
+Family Growth (NSFG), which is intended to gather “information on family
+life, marriage and divorce, pregnancy, infertility, use of
+contraception, and men’s and women’s health. The survey results are used
+... to plan health services and health education programs, and to do
+statistical studies of families, fertility, and health.” See
+[http://cdc.gov/nchs/nsfg.htm](http://cdc.gov/nchs/nsfg.htm). 
+
+We will use data collected by this survey
+to investigate whether first babies tend to come late, and other
+questions. In order to use this data effectively, we have to understand
+the design of the study.
+
+The NSFG is a cross-sectional study, which means that
+it captures a snapshot of a group at a point in time. The most common
+alternative is a longitudinal
+study, which observes a group repeatedly over a period of time.
+
+The NSFG has been conducted seven times;
+each deployment is called a cycle.
+We will use data from Cycle 6, which was conducted from January 2002 to
+March 2003. 
+
+The goal of the survey is to draw
+conclusions about a population;
+the target population of the NSFG is people in the United States aged
+15-44. Ideally surveys would collect data from every member of the
+population, but that’s seldom possible. Instead we collect data from a
+subset of the population called a sample. The people who participate in a
+survey are called respondents.
+
+
+In general, cross-sectional studies are
+meant to be representative, which
+means that every member of the target population has an equal chance of
+participating. That ideal is hard to achieve in practice, but people who
+conduct surveys come as close as they can. 
+
+The NSFG is not representative; instead
+it is deliberately oversampled.
+The designers of the study recruited three groups—Hispanics,
+African-Americans and teenagers—at rates higher than their
+representation in the U.S. population, in order to make sure that the
+number of respondents in each of these groups is large enough to draw
+valid statistical inferences. 
+
+Of course, the drawback of oversampling
+is that it is not as easy to draw conclusions about the general
+population based on statistics from the survey. We will come back to
+this point later.
+
+When working with this kind of data, it
+is important to be familiar with the codebook, which documents the design of
+the study, the survey questions, and the encoding of the responses. The
+codebook and user’s guide for the NSFG data are available from
+[http://www.cdc.gov/nchs/nsfg/nsfg\_cycle6.htm](http://www.cdc.gov/nchs/nsfg/nsfg_cycle6.htm)
+
+ 
+
+## Importing the Data
+
+
+The code and data used in this book are
+available from [https://github.com/AllenDowney/ThinkStats2](https://github.com/AllenDowney/ThinkStats2). For information about downloading and working
+with this code, see Section [0.2](thinkstats2001.html#code).
+
+Once you download the code, you should
+have a file called ThinkStats2/code/nsfg.py. If you
+run it, it should read a data file, run some tests, and print a message
+like, “All tests passed.”
+
+Let’s see what it does. Pregnancy data
+from Cycle 6 of the NSFG is in a file called 2002FemPreg.dat.gz; it is a
+gzip-compressed data file in plain text (ASCII), with fixed width
+columns. Each line in the file is a record that contains data about one
+pregnancy.
+
+The format of the file is documented in
+2002FemPreg.dct, which is a
+Stata dictionary file. Stata is a statistical software system; a
+“dictionary” in this context is a list of variable names, types, and
+indices that identify where in each line to find each variable.
+
+For example, here are a few lines from
+2002FemPreg.dct: 
+
+    infile dictionary {
+      _column(1)  str12  caseid    %12s  "RESPONDENT ID NUMBER"
+      _column(13) byte   pregordr   %2f  "PREGNANCY ORDER (NUMBER)"
+    }
+
+This dictionary describes two variables:
+caseid is a 12-character
+string that represents the respondent ID; pregorder is a one-byte integer
+that indicates which pregnancy this record describes for this
+respondent.
+
+The code you downloaded includes thinkstats2.py, which is a Python
+module that contains many classes and functions used in this book,
+including functions that read the Stata dictionary and the NSFG data
+file. Here’s how they are used in nsfg.py:
+
+    def ReadFemPreg(dct_file='2002FemPreg.dct',
+                    dat_file='2002FemPreg.dat.gz'):
+        dct = thinkstats2.ReadStataDct(dct_file)
+        df = dct.ReadFixedWidth(dat_file, compression='gzip')
+        CleanFemPreg(df)
+        return df
+
+ReadStataDct takes the name of the
+dictionary file and returns dct, a FixedWidthVariables object that
+contains the information from the dictionary file. dct provides ReadFixedWidth, which reads the
+data file.
+
+ 
+
+## DataFrames
+
+
+The result of ReadFixedWidth is a DataFrame,
+which is the fundamental data structure provided by pandas, which is a
+Python data and statistics package we’ll use throughout this book. A
+DataFrame contains a row for each record, in this case one row per
+pregnancy, and a column for each variable. 
+
+In addition to the data, a DataFrame also
+contains the variable names and their types, and it provides methods for
+accessing and modifying the data.
+
+If you print df you get a truncated view of the
+rows and columns, and the shape of the DataFrame, which is 13593
+rows/records and 244 columns/variables.
+
+    >>> import nsfg
+    >>> df = nsfg.ReadFemPreg()
+    >>> df
+    ...
+    [13593 rows x 244 columns]
+
+The DataFrame is too big to display, so
+the output is truncated. The last line reports the number of rows and
+columns.
+
+The attribute columns returns a sequence of
+column names as Unicode strings:
+
+    >>> df.columns
+    Index([u'caseid', u'pregordr', u'howpreg_n', u'howpreg_p', ... ])
+
+The result is an Index, which is another
+pandas data structure. We’ll learn more about Index later, but for now
+we’ll treat it like a list: 
+
+    >>> df.columns[1]
+    'pregordr'
+
+To access a column from a DataFrame, you
+can use the column name as a key: 
+
+    >>> pregordr = df['pregordr']
+    >>> type(pregordr)
+    <class 'pandas.core.series.Series'>
+
+The result is a Series, yet another
+pandas data structure. A Series is like a Python list with some
+additional features. When you print a Series, you get the indices and
+the corresponding values: 
+
+    >>> pregordr
+    0     1
+    1     2
+    2     1
+    3     2
+    ...
+    13590    3
+    13591    4
+    13592    5
+    Name: pregordr, Length: 13593, dtype: int64
+
+In this example the indices are integers
+from 0 to 13592, but in general they can be any sortable type. The
+elements are also integers, but they can be any type.
+
+The last line includes the variable name,
+Series length, and data type; int64 is one of the types provided
+by NumPy. If you run this example on a 32-bit machine you might see
+int32. 
+
+You can access the elements of a Series
+using integer indices and slices:
+
+    >>> pregordr[0]
+    1
+    >>> pregordr[2:5]
+    2    1
+    3    2
+    4    3
+    Name: pregordr, dtype: int64
+
+The result of the index operator is an
+int64; the result of the
+slice is another Series.
+
+You can also access the columns of a
+DataFrame using dot notation: 
+
+    >>> pregordr = df.pregordr
+
+This notation only works if the column
+name is a valid Python identifier, so it has to begin with a letter,
+can’t contain spaces, etc.
+
+
+## Variables
+
+
+We have already seen two variables in the
+NSFG dataset, caseid and
+pregordr, and we have seen
+that there are 244 variables in total. For the explorations in this
+book, I use the following variables:
+
+-   caseid is the integer ID of the
+    respondent.
+-   prglngth is the integer
+    duration of the pregnancy in weeks. 
+-   outcome is an integer code for
+    the outcome of the pregnancy. The code 1 indicates a live
+    birth.
+-   pregordr is a pregnancy serial
+    number; for example, the code for a respondent’s first pregnancy is
+    1, for the second pregnancy is 2, and so on.
+-   birthord is a serial number for
+    live births; the code for a respondent’s first child is 1, and so
+    on. For outcomes other than live birth, this field is blank.
+-   `birthwgt_lb` and `birthwgt_oz`
+    contain the pounds and ounces parts of the birth weight of the baby.
+     
+-   agepreg is the mother’s age at
+    the end of the pregnancy.
+-   finalwgt is the statistical
+    weight associated with the respondent. It is a floating-point value
+    that indicates the number of people in the U.S. population this
+    respondent represents. 
+
+If you read the codebook carefully, you
+will see that many of the variables are recodes, which means that they are not
+part of the raw data collected by
+the survey; they are calculated using the raw data. 
+
+For example, prglngth for live births is equal
+to the raw variable wksgest
+(weeks of gestation) if it is available; otherwise it is estimated using
+mosgest \* 4.33 (months of
+gestation times the average number of weeks in a month).
+
+Recodes are often based on logic that
+checks the consistency and accuracy of the data. In general it is a good
+idea to use recodes when they are available, unless there is a
+compelling reason to process the raw data yourself.
+
+
+## Transformation
+
+
+When you import data like this, you often
+have to check for errors, deal with special values, convert data into
+different formats, and perform calculations. These operations are called
+data cleaning.
+
+nsfg.py includes CleanFemPreg, a function that
+cleans the variables I am planning to use.
+
+    def CleanFemPreg(df):
+        df.agepreg /= 100.0
+
+        na_vals = [97, 98, 99]
+        df.birthwgt_lb.replace(na_vals, np.nan, inplace=True)
+        df.birthwgt_oz.replace(na_vals, np.nan, inplace=True)
+
+        df['totalwgt_lb'] = df.birthwgt_lb + df.birthwgt_oz / 16.0    
+
+agepreg contains the mother’s age
+at the end of the pregnancy. In the data file, agepreg is encoded as an integer
+number of centiyears. So the first line divides each element of agepreg by 100, yielding a
+floating-point value in years.
+
+`birthwgt_lb` and `birthwgt_oz` contain
+the weight of the baby, in pounds and ounces, for pregnancies that end
+in live birth. In addition it uses several special codes:
+
+    97 NOT ASCERTAINED
+    98 REFUSED  
+    99 DON'T KNOW
+
+Special values encoded as numbers are
+*dangerous* because if they are not handled properly, they can generate
+bogus results, like a 99-pound baby. The replace method replaces these
+values with np.nan, a special
+floating-point value that represents “not a number.” The inplace flag tells replace to modify the existing
+Series rather than create a new one. 
+
+As part of the IEEE floating-point
+standard, all mathematical operations return nan if either argument is nan:
+
+    >>> import numpy as np
+    >>> np.nan / 100.0
+    nan
+
+So computations with nan tend to do the right thing, and
+most pandas functions handle nan appropriately. But dealing with
+missing data will be a recurring issue. 
+
+The last line of CleanFemPreg creates a new column
+`totalwgt_lb` that combines pounds and ounces into a single quantity, in
+pounds.
+
+One important note: when you add a new
+column to a DataFrame, you must use dictionary syntax, like this
+
+
+        # CORRECT
+        df['totalwgt_lb'] = df.birthwgt_lb + df.birthwgt_oz / 16.0 
+
+Not dot notation, like this:
+
+        # WRONG!
+        df.totalwgt_lb = df.birthwgt_lb + df.birthwgt_oz / 16.0 
+
+The version with dot notation adds an
+attribute to the DataFrame object, but that attribute is not treated as
+a new column.
+
+
+## Validation
+
+When data is exported from one software
+environment and imported into another, errors might be introduced. And
+when you are getting familiar with a new dataset, you might interpret
+data incorrectly or introduce other misunderstandings. If you take time
+to validate the data, you can save time later and avoid errors.
+
+One way to validate data is to compute
+basic statistics and compare them with published results. For example,
+the NSFG codebook includes tables that summarize each variable. Here is
+the table for outcome, which
+encodes the outcome of each pregnancy:
+
+    value label           Total
+    1 LIVE BIRTH              9148
+    2 INDUCED ABORTION        1862
+    3 STILLBIRTH               120
+    4 MISCARRIAGE             1921
+    5 ECTOPIC PREGNANCY        190
+    6 CURRENT PREGNANCY        352
+
+The Series class provides a method,
+`value_counts`, that counts the number of times each value appears. If
+we select the outcome Series
+from the DataFrame, we can use `value_counts` to compare with the
+published data:  
+
+    >>> df.outcome.value_counts(sort=False)
+    1    9148
+    2    1862
+    3     120
+    4    1921
+    5     190
+    6     352
+
+The result of `value_counts` is a Series;
+`sort=False` doesn’t sort the Series by values, so them appear in
+order.
+
+Comparing the results with the published
+table, it looks like the values in outcome are correct. Similarly,
+here is the published table for `birthwgt_lb`
+
+    value label                  Total
+    . INAPPLICABLE            4449
+    0-5 UNDER 6 POUNDS          1125
+    6 6 POUNDS                2223
+    7 7 POUNDS                3049
+    8 8 POUNDS                1889
+    9-95 9 POUNDS OR MORE         799
+
+And here are the value counts:
+
+    >>> df.birthwgt_lb.value_counts(sort=False)
+    0        8
+    1       40
+    2       53
+    3       98
+    4      229
+    5      697
+    6     2223
+    7     3049
+    8     1889
+    9      623
+    10     132
+    11      26
+    12      10
+    13       3
+    14       3
+    15       1
+    51       1
+
+The counts for 6, 7, and 8 pounds check
+out, and if you add up the counts for 0-5 and 9-95, they check out, too.
+But if you look more closely, you will notice one value that has to be
+an error, a 51 pound baby!
+
+To deal with this error, I added a line
+to CleanFemPreg:
+
+    df.loc[df.birthwgt_lb > 20, 'birthwgt_lb'] = np.nan
+
+This statement replaces invalid values
+with np.nan. The attribute
+loc provides several ways to
+select rows and columns from a DataFrame. In this example, the first
+expression in brackets is the row indexer; the second expression selects
+the column.  
+
+The expression `df.birthwgt_lb > 20`
+yields a Series of type bool,
+where True indicates that the condition is true. When a boolean Series
+is used as an index, it selects only the elements that satisfy the
+condition.   
+
+
+## Interpretation
+
+To work with data effectively, you have
+to think on two levels at the same time: the level of statistics and the
+level of context.
+
+As an example, let’s look at the sequence
+of outcomes for a few respondents. Because of the way the data files are
+organized, we have to do some processing to collect the pregnancy data
+for each respondent. Here’s a function that does that:
+
+    def MakePregMap(df):
+        d = defaultdict(list)
+        for index, caseid in df.caseid.iteritems():
+            d[caseid].append(index)
+        return d
+
+df is the DataFrame with pregnancy
+data. The iteritems method
+enumerates the index (row number) and caseid for each pregnancy.
+
+
+d is a dictionary that maps from
+each case ID to a list of indices. If you are not familiar with defaultdict, it is in the Python
+collections module. Using
+d, we can look up a
+respondent and get the indices of that respondent’s pregnancies.
+
+This example looks up one respondent and
+prints a list of outcomes for her pregnancies:
+
+    >>> caseid = 10229
+    >>> preg_map = nsfg.MakePregMap(df)
+    >>> indices = preg_map[caseid]
+    >>> df.outcome[indices].values
+    [4 4 4 4 4 4 1]
+
+indices is the list of indices for
+pregnancies corresponding to respondent 10229.
+
+Using this list as an index into df.outcome selects the indicated
+rows and yields a Series. Instead of printing the whole Series, I
+selected the values
+attribute, which is a NumPy array. 
+
+The outcome code 1 indicates a live birth. Code
+4 indicates a miscarriage;
+that is, a pregnancy that ended spontaneously, usually with no known
+medical cause.
+
+Statistically this respondent is not
+unusual. Miscarriages are common and there are other respondents who
+reported as many or more.
+
+But remembering the context, this data
+tells the story of a woman who was pregnant six times, each time ending
+in miscarriage. Her seventh and most recent pregnancy ended in a live
+birth. If we consider this data with empathy, it is natural to be moved
+by the story it tells.
+
+Each record in the NSFG dataset
+represents a person who provided honest answers to many personal and
+difficult questions. We can use this data to answer statistical
+questions about family life, reproduction, and health. At the same time,
+we have an obligation to consider the people represented by the data,
+and to afford them respect and gratitude. 
+
+ 
+
+## Exercises
+
+
+**Exercise 1** 
+
+In the repository you downloaded, you should find a file named `chap01ex.ipynb`, which is an
+IPython notebook. You can launch IPython notebook from the command line
+like this:
+
+    $ ipython notebook &
+
+If IPython is installed, it should launch a server that runs in the background and open a browser to view
+the notebook. If you are not familiar with IPython, I suggest you start
+at [http://ipython.org/ipython-doc/stable/notebook/notebook.html](http://ipython.org/ipython-doc/stable/notebook/notebook.html).
+
+To launch the IPython notebook server, run:
+
+    $ ipython notebook &
+
+It should open a new browser window, but if not, the startup message provides a URL you can load in a browser,
+usually [http://localhost:8888](http://localhost:8888). The new window should list the notebooks in
+the repository.
+
+Open `chap01ex.ipynb`. Some cells are already filled in, and you should execute them. Other cells give you
+instructions for exercises you should try.
+
+*A solution to this exercise is in `chap01soln.ipynb`*
+
+**Exercise 2** 
+
+In the repository you downloaded, you should find a file named `chap01ex.py`; using this file
+as a starting place, write a function that reads the respondent file, 2002FemResp.dat.gz.
+
+The variable pregnum is a recode that indicates how many times each respondent has been pregnant. Print the value counts
+for this variable and compare them to the published results in the NSFG
+codebook.
+
+You can also cross-validate the respondent and pregnancy files by comparing pregnum for each respondent with
+the number of records in the pregnancy file.
+
+You can use nsfg.MakePregMap to make a dictionary that maps from each caseid to a list of indices into
+the pregnancy DataFrame.
+
+*A solution to this exercise is in `chap01soln.py`* 
+
+**Exercise 3**
+
+The best way to learn about statistics is to work on a project you are interested in. Is there
+a question like, “Do first babies arrive late,” that you want to investigate?
+
+Think about questions you find personally interesting, or items of conventional wisdom, or
+controversial topics, or questions that have political consequences, and
+see if you can formulate a question that lends itself to statistical
+inquiry.
+
+Look for data to help you address the question. Governments are good sources because data from public research
+is often freely available. Good places to start include [http://www.data.gov/](http://www.data.gov/), and [http://www.science.gov/](http://www.science.gov/), and in the United Kingdom, [http://data.gov.uk/](http://data.gov.uk/).
+
+Two of my favorite data sets are the General Social Survey at [http://www3.norc.org/gss+website/](http://www3.norc.org/gss+website/), and the European Social Survey at
+[http://www.europeansocialsurvey.org/](http://www.europeansocialsurvey.org/).
+
+If it seems like someone has already answered your question, look closely to see whether the answer is
+justified. There might be flaws in the data or the analysis that make
+the conclusion unreliable. In that case you could perform a different
+analysis of the same data, or look for a better source of data.
+
+If you find a published paper that addresses your question, you should be able to get the raw data. Many
+authors make their data available on the web, but for sensitive data you might have to write to the authors, provide information about how you plan to use the data, or agree to certain terms of use. Be
+persistent!
+
+ 
+
+## Glossary
+
+-   anecdotal evidence: Evidence, often
+    personal, that is collected casually rather than by a well-designed
+    study. 
+-   population: A group we are
+    interested in studying. “Population” often refers to a group of
+    people, but the term is used for other subjects, too. 
+-   cross-sectional study: A study that
+    collects data about a population at a particular point in time.
+     
+-   cycle: In a repeated cross-sectional
+    study, each repetition of the study is called a cycle.
+-   longitudinal study: A study that
+    follows a population over time, collecting data from the same group
+    repeatedly.  
+-   record: In a dataset, a collection
+    of information about a single person or other subject. 
+-   respondent: A person who responds to
+    a survey. 
+-   sample: The subset of a population
+    used to collect data. 
+-   representative: A sample is
+    representative if every member of the population has the same chance
+    of being in the sample. 
+-   oversampling: The technique of
+    increasing the representation of a sub-population in order to avoid
+    errors due to small sample sizes. 
+-   raw
+    data: Values collected and recorded with little or no
+    checking, calculation or interpretation. 
+-   recode: A value that is generated by
+    calculation and other logic applied to raw data. 
+-   data
+    cleaning: Processes that include validating data, identifying
+    errors, translating between data types and representations,
+    etc.
+
+ 

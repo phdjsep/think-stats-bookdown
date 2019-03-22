@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+
+<meta charset="utf-8">
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="generator" content="pandoc" />
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta property="og:title" content="1.7 Validation | Think Stats" />
+<meta property="og:type" content="book" />
+
+
+<meta property="og:description" content="Version 2.0.35" />
+
+
+<meta name="author" content="Allen B. Downey" />
+
+<meta name="date" content="2019-03-22" />
+
+
+<meta name="description" content="Version 2.0.35">
+
+<title>1.7 Validation | Think Stats</title>
+
+<script src="libs/jquery-1.11.3/jquery.min.js"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<link href="libs/bootstrap-3.3.5/css/bootstrap.min.css" rel="stylesheet" />
+<script src="libs/bootstrap-3.3.5/js/bootstrap.min.js"></script>
+<script src="libs/bootstrap-3.3.5/shim/html5shiv.min.js"></script>
+<script src="libs/bootstrap-3.3.5/shim/respond.min.js"></script>
+<script src="libs/navigation-1.1/tabsets.js"></script>
+
+
+
+
+
+<style type = "text/css">
+.main-container {
+  max-width: 940px;
+  margin-left: auto;
+  margin-right: auto;
+}
+code {
+  color: inherit;
+  background-color: rgba(0, 0, 0, 0.04);
+}
+img {
+  max-width:100%;
+  height: auto;
+}
+</style>
+</head>
+
+<body>
+
+<div class="container-fluid main-container">
+
+
+<div class="row">
+<div class="col-sm-12">
+<div id="TOC">
+<ul>
+<li class="has-sub"><a href="index.html#preface">Preface</a><ul>
+<li><a href="0-1-how-i-wrote-this-book.html#how-i-wrote-this-book"><span class="toc-section-number">0.1</span> How I wrote this book</a></li>
+<li><a href="0-2-using-the-code.html#using-the-code"><span class="toc-section-number">0.2</span> Using the code</a></li>
+<li><a href="0-3-contributor-list.html#contributor-list"><span class="toc-section-number">0.3</span> Contributor List</a></li>
+</ul></li>
+<li class="has-sub"><a href="1-exploratory.html#exploratory"><span class="toc-section-number">1</span> Exploratory Data Analysis</a><ul>
+<li><a href="1-1-a-statistical-approach.html#a-statistical-approach"><span class="toc-section-number">1.1</span> A statistical approach</a></li>
+<li><a href="1-2-the-national-survey-of-family-growth.html#the-national-survey-of-family-growth"><span class="toc-section-number">1.2</span> The National Survey of Family Growth</a></li>
+<li><a href="1-3-importing-the-data.html#importing-the-data"><span class="toc-section-number">1.3</span> Importing the data</a></li>
+<li><a href="1-4-dataframes.html#dataframes"><span class="toc-section-number">1.4</span> DataFrames</a></li>
+<li><a href="1-5-variables.html#variables"><span class="toc-section-number">1.5</span> Variables</a></li>
+<li><a href="1-6-transformation.html#transformation"><span class="toc-section-number">1.6</span> Transformation</a></li>
+<li><a href="1-7-validation.html#validation"><span class="toc-section-number">1.7</span> Validation</a></li>
+<li><a href="1-8-exercises.html#exercises"><span class="toc-section-number">1.8</span> Exercises</a></li>
+<li><a href="1-9-glossary.html#glossary"><span class="toc-section-number">1.9</span> Glossary</a></li>
+<li><a href="1-10-nsfg-variables.html#nsfg-variables"><span class="toc-section-number">1.10</span> NSFG Variables</a></li>
+<li><a href="1-11-summarizing-distributions.html#summarizing-distributions"><span class="toc-section-number">1.11</span> Summarizing Distributions</a></li>
+<li><a href="1-12-effect-size.html#effect-size"><span class="toc-section-number">1.12</span> Effect Size</a></li>
+<li><a href="1-13-glossary-1.html#glossary-1"><span class="toc-section-number">1.13</span> Glossary</a></li>
+</ul></li>
+</ul>
+</div>
+</div>
+</div>
+<div class="row">
+<div class="col-sm-12">
+<div id="validation" class="section level2">
+<h2><span class="header-section-number">1.7</span> Validation</h2>
+<p>When data is exported from one software
+environment and imported into another, errors might be introduced. And
+when you are getting familiar with a new dataset, you might interpret
+data incorrectly or introduce other misunderstandings. If you take time
+to validate the data, you can save time later and avoid errors.</p>
+<p>One way to validate data is to compute
+basic statistics and compare them with published results. For example,
+the NSFG codebook includes tables that summarize each variable. Here is
+the table for outcome, which
+encodes the outcome of each pregnancy:</p>
+<pre><code>value label           Total
+1 LIVE BIRTH              9148
+2 INDUCED ABORTION        1862
+3 STILLBIRTH               120
+4 MISCARRIAGE             1921
+5 ECTOPIC PREGNANCY        190
+6 CURRENT PREGNANCY        352</code></pre>
+<p>The Series class provides a method,
+<code>value_counts</code>, that counts the number of times each value appears. If
+we select the outcome Series
+from the DataFrame, we can use <code>value_counts</code> to compare with the
+published data:</p>
+<pre><code>&gt;&gt;&gt; df.outcome.value_counts(sort=False)
+1    9148
+2    1862
+3     120
+4    1921
+5     190
+6     352</code></pre>
+<p>The result of <code>value_counts</code> is a Series;
+<code>sort=False</code> doesn’t sort the Series by values, so them appear in
+order.</p>
+<p>Comparing the results with the published
+table, it looks like the values in outcome are correct. Similarly,
+here is the published table for <code>birthwgt_lb</code></p>
+<pre><code>value label                  Total
+. INAPPLICABLE            4449
+0-5 UNDER 6 POUNDS          1125
+6 6 POUNDS                2223
+7 7 POUNDS                3049
+8 8 POUNDS                1889
+9-95 9 POUNDS OR MORE         799</code></pre>
+<p>And here are the value counts:</p>
+<pre><code>&gt;&gt;&gt; df.birthwgt_lb.value_counts(sort=False)
+0        8
+1       40
+2       53
+3       98
+4      229
+5      697
+6     2223
+7     3049
+8     1889
+9      623
+10     132
+11      26
+12      10
+13       3
+14       3
+15       1
+51       1</code></pre>
+<p>The counts for 6, 7, and 8 pounds check
+out, and if you add up the counts for 0-5 and 9-95, they check out, too.
+But if you look more closely, you will notice one value that has to be
+an error, a 51 pound baby!</p>
+<p>To deal with this error, I added a line
+to CleanFemPreg:</p>
+<pre><code>df.loc[df.birthwgt_lb &gt; 20, &#39;birthwgt_lb&#39;] = np.nan</code></pre>
+<p>This statement replaces invalid values
+with np.nan. The attribute
+loc provides several ways to
+select rows and columns from a DataFrame. In this example, the first
+expression in brackets is the row indexer; the second expression selects
+the column.</p>
+<p>The expression <code>df.birthwgt_lb &gt; 20</code>
+yields a Series of type bool,
+where True indicates that the condition is true. When a boolean Series
+is used as an index, it selects only the elements that satisfy the
+condition.</p>
+<p>## Interpretation</p>
+<p>To work with data effectively, you have
+to think on two levels at the same time: the level of statistics and the
+level of context.</p>
+<p>As an example, let’s look at the sequence
+of outcomes for a few respondents. Because of the way the data files are
+organized, we have to do some processing to collect the pregnancy data
+for each respondent. Here’s a function that does that:</p>
+<pre><code>def MakePregMap(df):
+    d = defaultdict(list)
+    for index, caseid in df.caseid.iteritems():
+        d[caseid].append(index)
+    return d</code></pre>
+<p>df is the DataFrame with pregnancy
+data. The iteritems method
+enumerates the index (row number) and caseid for each pregnancy.</p>
+<p>d is a dictionary that maps from
+each case ID to a list of indices. If you are not familiar with defaultdict, it is in the Python
+collections module. Using
+d, we can look up a
+respondent and get the indices of that respondent’s pregnancies.</p>
+<p>This example looks up one respondent and
+prints a list of outcomes for her pregnancies:</p>
+<pre><code>&gt;&gt;&gt; caseid = 10229
+&gt;&gt;&gt; preg_map = nsfg.MakePregMap(df)
+&gt;&gt;&gt; indices = preg_map[caseid]
+&gt;&gt;&gt; df.outcome[indices].values
+[4 4 4 4 4 4 1]</code></pre>
+<p>indices is the list of indices for
+pregnancies corresponding to respondent 10229.</p>
+<p>Using this list as an index into df.outcome selects the indicated
+rows and yields a Series. Instead of printing the whole Series, I
+selected the values
+attribute, which is a NumPy array.</p>
+<p>The outcome code 1 indicates a live birth. Code
+4 indicates a miscarriage;
+that is, a pregnancy that ended spontaneously, usually with no known
+medical cause.</p>
+<p>Statistically this respondent is not
+unusual. Miscarriages are common and there are other respondents who
+reported as many or more.</p>
+<p>But remembering the context, this data
+tells the story of a woman who was pregnant six times, each time ending
+in miscarriage. Her seventh and most recent pregnancy ended in a live
+birth. If we consider this data with empathy, it is natural to be moved
+by the story it tells.</p>
+<p>Each record in the NSFG dataset
+represents a person who provided honest answers to many personal and
+difficult questions. We can use this data to answer statistical
+questions about family life, reproduction, and health. At the same time,
+we have an obligation to consider the people represented by the data,
+and to afford them respect and gratitude.</p>
+</div>
+<p style="text-align: center;">
+<a href="1-6-transformation.html"><button class="btn btn-default">Previous</button></a>
+<a href="1-8-exercises.html"><button class="btn btn-default">Next</button></a>
+</p>
+</div>
+</div>
+
+
+</div>
+
+<script>
+
+// add bootstrap table styles to pandoc tables
+$(document).ready(function () {
+  $('tr.header').parent('thead').parent('table').addClass('table table-condensed');
+});
+
+</script>
+
+</body>
+</html>

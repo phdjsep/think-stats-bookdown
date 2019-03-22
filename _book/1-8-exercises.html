@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+
+<meta charset="utf-8">
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="generator" content="pandoc" />
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta property="og:title" content="1.8 Exercises | Think Stats" />
+<meta property="og:type" content="book" />
+
+
+<meta property="og:description" content="Version 2.0.35" />
+
+
+<meta name="author" content="Allen B. Downey" />
+
+<meta name="date" content="2019-03-22" />
+
+
+<meta name="description" content="Version 2.0.35">
+
+<title>1.8 Exercises | Think Stats</title>
+
+<script src="libs/jquery-1.11.3/jquery.min.js"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<link href="libs/bootstrap-3.3.5/css/bootstrap.min.css" rel="stylesheet" />
+<script src="libs/bootstrap-3.3.5/js/bootstrap.min.js"></script>
+<script src="libs/bootstrap-3.3.5/shim/html5shiv.min.js"></script>
+<script src="libs/bootstrap-3.3.5/shim/respond.min.js"></script>
+<script src="libs/navigation-1.1/tabsets.js"></script>
+
+
+
+
+
+<style type = "text/css">
+.main-container {
+  max-width: 940px;
+  margin-left: auto;
+  margin-right: auto;
+}
+code {
+  color: inherit;
+  background-color: rgba(0, 0, 0, 0.04);
+}
+img {
+  max-width:100%;
+  height: auto;
+}
+</style>
+</head>
+
+<body>
+
+<div class="container-fluid main-container">
+
+
+<div class="row">
+<div class="col-sm-12">
+<div id="TOC">
+<ul>
+<li class="has-sub"><a href="index.html#preface">Preface</a><ul>
+<li><a href="0-1-how-i-wrote-this-book.html#how-i-wrote-this-book"><span class="toc-section-number">0.1</span> How I wrote this book</a></li>
+<li><a href="0-2-using-the-code.html#using-the-code"><span class="toc-section-number">0.2</span> Using the code</a></li>
+<li><a href="0-3-contributor-list.html#contributor-list"><span class="toc-section-number">0.3</span> Contributor List</a></li>
+</ul></li>
+<li class="has-sub"><a href="1-exploratory.html#exploratory"><span class="toc-section-number">1</span> Exploratory Data Analysis</a><ul>
+<li><a href="1-1-a-statistical-approach.html#a-statistical-approach"><span class="toc-section-number">1.1</span> A statistical approach</a></li>
+<li><a href="1-2-the-national-survey-of-family-growth.html#the-national-survey-of-family-growth"><span class="toc-section-number">1.2</span> The National Survey of Family Growth</a></li>
+<li><a href="1-3-importing-the-data.html#importing-the-data"><span class="toc-section-number">1.3</span> Importing the data</a></li>
+<li><a href="1-4-dataframes.html#dataframes"><span class="toc-section-number">1.4</span> DataFrames</a></li>
+<li><a href="1-5-variables.html#variables"><span class="toc-section-number">1.5</span> Variables</a></li>
+<li><a href="1-6-transformation.html#transformation"><span class="toc-section-number">1.6</span> Transformation</a></li>
+<li><a href="1-7-validation.html#validation"><span class="toc-section-number">1.7</span> Validation</a></li>
+<li><a href="1-8-exercises.html#exercises"><span class="toc-section-number">1.8</span> Exercises</a></li>
+<li><a href="1-9-glossary.html#glossary"><span class="toc-section-number">1.9</span> Glossary</a></li>
+<li><a href="1-10-nsfg-variables.html#nsfg-variables"><span class="toc-section-number">1.10</span> NSFG Variables</a></li>
+<li><a href="1-11-summarizing-distributions.html#summarizing-distributions"><span class="toc-section-number">1.11</span> Summarizing Distributions</a></li>
+<li><a href="1-12-effect-size.html#effect-size"><span class="toc-section-number">1.12</span> Effect Size</a></li>
+<li><a href="1-13-glossary-1.html#glossary-1"><span class="toc-section-number">1.13</span> Glossary</a></li>
+</ul></li>
+</ul>
+</div>
+</div>
+</div>
+<div class="row">
+<div class="col-sm-12">
+<div id="exercises" class="section level2">
+<h2><span class="header-section-number">1.8</span> Exercises</h2>
+<p>Exercise 1   <em>In the repository you
+downloaded, you should find a file named <code>chap01ex.ipynb</code>, which is an
+IPython notebook. You can launch IPython notebook from the command line
+like this:</em></p>
+<pre><code>$ ipython notebook &amp;</code></pre>
+<p><em>If IPython is installed, it should
+launch a server that runs in the background and open a browser to view
+the notebook. If you are not familiar with IPython, I suggest you start
+at</em> <a href="http://ipython.org/ipython-doc/stable/notebook/notebook.html"><em>http://ipython.org/ipython-doc/stable/notebook/notebook.html</em></a><em>.</em></p>
+<p><em>To launch the IPython notebook server,
+run:</em></p>
+<pre><code>$ ipython notebook &amp;</code></pre>
+<p><em>It should open a new browser window, but
+if not, the startup message provides a URL you can load in a browser,
+usually</em> <a href="http://localhost:8888"><em>http://localhost:8888</em></a><em>. The new window should list the notebooks in
+the repository.</em></p>
+<p><em>Open <code>chap01ex.ipynb</code>. Some cells are
+already filled in, and you should execute them. Other cells give you
+instructions for exercises you should try.</em></p>
+<p><em>A solution to this exercise is in
+<code>chap01soln.ipynb</code></em></p>
+<p>Exercise 2   <em>In the repository you
+downloaded, you should find a file named <code>chap01ex.py</code>; using this file
+as a starting place, write a function that reads the respondent file,
+2002FemResp.dat.gz.</em></p>
+<p><em>The variable pregnum is a recode that indicates
+how many times each respondent has been pregnant. Print the value counts
+for this variable and compare them to the published results in the NSFG
+codebook.</em></p>
+<p><em>You can also cross-validate the
+respondent and pregnancy files by comparing pregnum for each respondent with
+the number of records in the pregnancy file.</em></p>
+<p><em>You can use nsfg.MakePregMap to make a
+dictionary that maps from each caseid to a list of indices into
+the pregnancy DataFrame.</em></p>
+<p><em>A solution to this exercise is in
+<code>chap01soln.py</code></em></p>
+<p>Exercise 3   <em>The best way to learn
+about statistics is to work on a project you are interested in. Is there
+a question like, “Do first babies arrive late,” that you want to
+investigate?</em></p>
+<p><em>Think about questions you find
+personally interesting, or items of conventional wisdom, or
+controversial topics, or questions that have political consequences, and
+see if you can formulate a question that lends itself to statistical
+inquiry.</em></p>
+<p><em>Look for data to help you address the
+question. Governments are good sources because data from public research
+is often freely available. Good places to start include</em> <a href="http://www.data.gov/"><em>http://www.data.gov/</em></a><em>, and</em> <a href="http://www.science.gov/"><em>http://www.science.gov/</em></a><em>, and in the United Kingdom,</em> <a href="http://data.gov.uk/"><em>http://data.gov.uk/</em></a><em>.</em></p>
+<p><em>Two of my favorite data sets are the
+General Social Survey at</em> <a href="http://www3.norc.org/gss+website/"><em>http://www3.norc.org/gss+website/</em></a><em>, and the European Social Survey at</em>
+<a href="http://www.europeansocialsurvey.org/"><em>http://www.europeansocialsurvey.org/</em></a><em>.</em></p>
+<p><em>If it seems like someone has already
+answered your question, look closely to see whether the answer is
+justified. There might be flaws in the data or the analysis that make
+the conclusion unreliable. In that case you could perform a different
+analysis of the same data, or look for a better source of data.</em></p>
+<p><em>If you find a published paper that
+addresses your question, you should be able to get the raw data. Many
+authors make their data available on the web, but for sensitive data you
+might have to write to the authors, provide information about how you
+plan to use the data, or agree to certain terms of use. Be
+persistent!</em></p>
+</div>
+<p style="text-align: center;">
+<a href="1-7-validation.html"><button class="btn btn-default">Previous</button></a>
+<a href="1-9-glossary.html"><button class="btn btn-default">Next</button></a>
+</p>
+</div>
+</div>
+
+
+</div>
+
+<script>
+
+// add bootstrap table styles to pandoc tables
+$(document).ready(function () {
+  $('tr.header').parent('thead').parent('table').addClass('table table-condensed');
+});
+
+</script>
+
+</body>
+</html>
