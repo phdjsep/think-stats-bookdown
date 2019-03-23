@@ -25,7 +25,7 @@
 <meta name="author" content="Allen B. Downey">
 
 
-<meta name="date" content="2019-03-22">
+<meta name="date" content="2019-03-23">
 
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="apple-mobile-web-app-capable" content="yes">
@@ -94,6 +94,15 @@
 <li class="chapter" data-level="2.11" data-path="distributions.html"><a href="distributions.html#exercises-1"><i class="fa fa-check"></i><b>2.11</b> Exercises</a></li>
 <li class="chapter" data-level="2.12" data-path="distributions.html"><a href="distributions.html#glossary-1"><i class="fa fa-check"></i><b>2.12</b> Glossary</a></li>
 </ul></li>
+<li class="chapter" data-level="3" data-path="probability-mass-functions.html"><a href="probability-mass-functions.html"><i class="fa fa-check"></i><b>3</b> Probability Mass Functions</a><ul>
+<li class="chapter" data-level="3.1" data-path="probability-mass-functions.html"><a href="probability-mass-functions.html#pmfs"><i class="fa fa-check"></i><b>3.1</b> PMFs</a></li>
+<li class="chapter" data-level="3.2" data-path="probability-mass-functions.html"><a href="probability-mass-functions.html#plotting-pmfs"><i class="fa fa-check"></i><b>3.2</b> Plotting PMFs</a></li>
+<li class="chapter" data-level="3.3" data-path="probability-mass-functions.html"><a href="probability-mass-functions.html#other-visualizations"><i class="fa fa-check"></i><b>3.3</b> Other Visualizations</a></li>
+<li class="chapter" data-level="3.4" data-path="probability-mass-functions.html"><a href="probability-mass-functions.html#the-class-size-paradox"><i class="fa fa-check"></i><b>3.4</b> The Class Size Paradox</a></li>
+<li class="chapter" data-level="3.5" data-path="probability-mass-functions.html"><a href="probability-mass-functions.html#dataframe-indexing"><i class="fa fa-check"></i><b>3.5</b> DataFrame Indexing</a></li>
+<li class="chapter" data-level="3.6" data-path="probability-mass-functions.html"><a href="probability-mass-functions.html#exercises-2"><i class="fa fa-check"></i><b>3.6</b> Exercises</a></li>
+<li class="chapter" data-level="3.7" data-path="probability-mass-functions.html"><a href="probability-mass-functions.html#glossary-2"><i class="fa fa-check"></i><b>3.7</b> Glossary</a></li>
+</ul></li>
 </ul>
 
       </nav>
@@ -130,8 +139,12 @@ these:</p>
 <p>“My two friends that have given birth
 recently to their first babies, BOTH went almost 2 weeks overdue
 before going into labour or being induced.”</p>
+</blockquote>
+<blockquote>
 <p>“My first one came 2 weeks late and now
 I think the second one is going to come out two weeks early!!”</p>
+</blockquote>
+<blockquote>
 <p>“I don’t think that can be true because
 my sister was my mother’s first and she was early, as with many of my
 cousins.”</p>
@@ -245,18 +258,18 @@ codebook and user’s guide for the NSFG data are available from
 <h2><span class="header-section-number">1.3</span> Importing the Data</h2>
 <p>The code and data used in this book are
 available from <a href="https://github.com/AllenDowney/ThinkStats2">https://github.com/AllenDowney/ThinkStats2</a>. For information about downloading and working
-with this code, see Section <a href="thinkstats2001.html#code">0.2</a>.</p>
+with this code, see Section <a href="index.html#using-the-code">0.2</a>.</p>
 <p>Once you download the code, you should
-have a file called ThinkStats2/code/nsfg.py. If you
+have a file called <code>ThinkStats2/code/nsfg.py</code>. If you
 run it, it should read a data file, run some tests, and print a message
 like, “All tests passed.”</p>
 <p>Let’s see what it does. Pregnancy data
-from Cycle 6 of the NSFG is in a file called 2002FemPreg.dat.gz; it is a
+from Cycle 6 of the NSFG is in a file called <code>2002FemPreg.dat.gz</code>; it is a
 gzip-compressed data file in plain text (ASCII), with fixed width
 columns. Each line in the file is a record that contains data about one
 pregnancy.</p>
 <p>The format of the file is documented in
-2002FemPreg.dct, which is a
+<code>2002FemPreg.dct</code>, which is a
 Stata dictionary file. Stata is a statistical software system; a
 “dictionary” in this context is a list of variable names, types, and
 indices that identify where in each line to find each variable.</p>
@@ -271,7 +284,7 @@ caseid is a 12-character
 string that represents the respondent ID; pregorder is a one-byte integer
 that indicates which pregnancy this record describes for this
 respondent.</p>
-<p>The code you downloaded includes thinkstats2.py, which is a Python
+<p>The code you downloaded includes <code>thinkstats2.py</code>, which is a Python
 module that contains many classes and functions used in this book,
 including functions that read the Stata dictionary and the NSFG data
 file. Here’s how they are used in nsfg.py:</p>
@@ -281,14 +294,14 @@ file. Here’s how they are used in nsfg.py:</p>
     df = dct.ReadFixedWidth(dat_file, compression=&#39;gzip&#39;)
     CleanFemPreg(df)
     return df</code></pre>
-<p>ReadStataDct takes the name of the
-dictionary file and returns dct, a FixedWidthVariables object that
-contains the information from the dictionary file. dct provides ReadFixedWidth, which reads the
+<p><code>ReadStataDct</code> takes the name of the
+dictionary file and returns dct, a <code>FixedWidthVariables</code> object that
+contains the information from the dictionary file. dct provides <code>ReadFixedWidth</code>, which reads the
 data file.</p>
 </div>
 <div id="dataframes" class="section level2">
 <h2><span class="header-section-number">1.4</span> DataFrames</h2>
-<p>The result of ReadFixedWidth is a DataFrame,
+<p>The result of <code>ReadFixedWidth</code> is a DataFrame,
 which is the fundamental data structure provided by pandas, which is a
 Python data and statistics package we’ll use throughout this book. A
 DataFrame contains a row for each record, in this case one row per
@@ -364,41 +377,35 @@ can’t contain spaces, etc.</p>
 <div id="variables" class="section level2">
 <h2><span class="header-section-number">1.5</span> Variables</h2>
 <p>We have already seen two variables in the
-NSFG dataset, caseid and
-pregordr, and we have seen
+NSFG dataset, <code>caseid</code> and
+<code>pregordr</code>, and we have seen
 that there are 244 variables in total. For the explorations in this
 book, I use the following variables:</p>
 <ul>
-<li>caseid is the integer ID of the
-respondent.</li>
-<li>prglngth is the integer
-duration of the pregnancy in weeks.</li>
-<li>outcome is an integer code for
-the outcome of the pregnancy. The code 1 indicates a live
-birth.</li>
-<li>pregordr is a pregnancy serial
-number; for example, the code for a respondent’s first pregnancy is
+<li><code>caseid</code> is the integer ID of the respondent.</li>
+<li><code>prglngth</code> is the integer duration of the pregnancy in weeks.</li>
+<li><code>outcome</code> is an integer code for the outcome of the pregnancy. The code 1 indicates a live birth.</li>
+<li><code>pregordr</code> is a pregnancy serial number; for example, the code for a respondent’s first pregnancy is
 1, for the second pregnancy is 2, and so on.</li>
-<li>birthord is a serial number for
+<li><code>birthord</code> is a serial number for
 live births; the code for a respondent’s first child is 1, and so
 on. For outcomes other than live birth, this field is blank.</li>
-<li><p><code>birthwgt_lb</code> and <code>birthwgt_oz</code>
-contain the pounds and ounces parts of the birth weight of the baby.</p></li>
-<li>agepreg is the mother’s age at
-the end of the pregnancy.</li>
-<li><p>finalwgt is the statistical
+<li><code>birthwgt_lb</code> and <code>birthwgt_oz</code>
+contain the pounds and ounces parts of the birth weight of the baby.</li>
+<li><code>agepreg</code> is the mother’s age at the end of the pregnancy.</li>
+<li><code>finalwgt</code> is the statistical
 weight associated with the respondent. It is a floating-point value
 that indicates the number of people in the U.S. population this
-respondent represents.</p></li>
+respondent represents.</li>
 </ul>
 <p>If you read the codebook carefully, you
 will see that many of the variables are recodes, which means that they are not
 part of the raw data collected by
 the survey; they are calculated using the raw data.</p>
-<p>For example, prglngth for live births is equal
+<p>For example, <code>prglngth</code> for live births is equal
 to the raw variable wksgest
 (weeks of gestation) if it is available; otherwise it is estimated using
-mosgest * 4.33 (months of
+<code>mosgest * 4.33</code> (months of
 gestation times the average number of weeks in a month).</p>
 <p>Recodes are often based on logic that
 checks the consistency and accuracy of the data. In general it is a good
@@ -411,7 +418,7 @@ compelling reason to process the raw data yourself.</p>
 have to check for errors, deal with special values, convert data into
 different formats, and perform calculations. These operations are called
 data cleaning.</p>
-<p>nsfg.py includes CleanFemPreg, a function that
+<p><code>nsfg.py</code> includes <code>CleanFemPreg</code>, a function that
 cleans the variables I am planning to use.</p>
 <pre><code>def CleanFemPreg(df):
     df.agepreg /= 100.0
@@ -421,8 +428,8 @@ cleans the variables I am planning to use.</p>
     df.birthwgt_oz.replace(na_vals, np.nan, inplace=True)
 
     df[&#39;totalwgt_lb&#39;] = df.birthwgt_lb + df.birthwgt_oz / 16.0    </code></pre>
-<p>agepreg contains the mother’s age
-at the end of the pregnancy. In the data file, agepreg is encoded as an integer
+<p><code>agepreg</code> contains the mother’s age
+at the end of the pregnancy. In the data file, <code>agepreg</code> is encoded as an integer
 number of centiyears. So the first line divides each element of agepreg by 100, yielding a
 floating-point value in years.</p>
 <p><code>birthwgt_lb</code> and <code>birthwgt_oz</code> contain
@@ -438,14 +445,14 @@ values with np.nan, a special
 floating-point value that represents “not a number.” The inplace flag tells replace to modify the existing
 Series rather than create a new one.</p>
 <p>As part of the IEEE floating-point
-standard, all mathematical operations return nan if either argument is nan:</p>
+standard, all mathematical operations return nan if either argument is <code>nan</code>:</p>
 <pre><code>&gt;&gt;&gt; import numpy as np
 &gt;&gt;&gt; np.nan / 100.0
 nan</code></pre>
-<p>So computations with nan tend to do the right thing, and
-most pandas functions handle nan appropriately. But dealing with
+<p>So computations with <code>nan</code> tend to do the right thing, and
+most pandas functions handle <code>nan</code> appropriately. But dealing with
 missing data will be a recurring issue.</p>
-<p>The last line of CleanFemPreg creates a new column
+<p>The last line of <code>CleanFemPreg</code> creates a new column
 <code>totalwgt_lb</code> that combines pounds and ounces into a single quantity, in
 pounds.</p>
 <p>One important note: when you add a new
@@ -527,11 +534,11 @@ out, and if you add up the counts for 0-5 and 9-95, they check out, too.
 But if you look more closely, you will notice one value that has to be
 an error, a 51 pound baby!</p>
 <p>To deal with this error, I added a line
-to CleanFemPreg:</p>
+to <code>CleanFemPreg</code>:</p>
 <pre><code>df.loc[df.birthwgt_lb &gt; 20, &#39;birthwgt_lb&#39;] = np.nan</code></pre>
 <p>This statement replaces invalid values
-with np.nan. The attribute
-loc provides several ways to
+with <code>np.nan</code>. The attribute
+<code>loc</code> provides several ways to
 select rows and columns from a DataFrame. In this example, the first
 expression in brackets is the row indexer; the second expression selects
 the column.</p>
@@ -555,13 +562,13 @@ for each respondent. Here’s a function that does that:</p>
     for index, caseid in df.caseid.iteritems():
         d[caseid].append(index)
     return d</code></pre>
-<p>df is the DataFrame with pregnancy
-data. The iteritems method
+<p><code>df</code> is the DataFrame with pregnancy
+data. The <code>iteritems</code> method
 enumerates the index (row number) and caseid for each pregnancy.</p>
-<p>d is a dictionary that maps from
-each case ID to a list of indices. If you are not familiar with defaultdict, it is in the Python
-collections module. Using
-d, we can look up a
+<p><code>d</code> is a dictionary that maps from
+each case ID to a list of indices. If you are not familiar with <code>defaultdict</code>, it is in the Python
+<code>collections</code> module. Using
+<code>d</code>, we can look up a
 respondent and get the indices of that respondent’s pregnancies.</p>
 <p>This example looks up one respondent and
 prints a list of outcomes for her pregnancies:</p>
@@ -615,13 +622,13 @@ instructions for exercises you should try.</p>
 <p><em>A solution to this exercise is in <code>chap01soln.ipynb</code></em></p>
 <p><strong>Exercise 2</strong></p>
 <p>In the repository you downloaded, you should find a file named <code>chap01ex.py</code>; using this file
-as a starting place, write a function that reads the respondent file, 2002FemResp.dat.gz.</p>
+as a starting place, write a function that reads the respondent file, <code>2002FemResp.dat.gz</code>.</p>
 <p>The variable pregnum is a recode that indicates how many times each respondent has been pregnant. Print the value counts
 for this variable and compare them to the published results in the NSFG
 codebook.</p>
 <p>You can also cross-validate the respondent and pregnancy files by comparing pregnum for each respondent with
 the number of records in the pregnancy file.</p>
-<p>You can use nsfg.MakePregMap to make a dictionary that maps from each caseid to a list of indices into
+<p>You can use <code>nsfg.MakePregMap</code> to make a dictionary that maps from each caseid to a list of indices into
 the pregnancy DataFrame.</p>
 <p><em>A solution to this exercise is in <code>chap01soln.py</code></em></p>
 <p><strong>Exercise 3</strong></p>
@@ -646,41 +653,39 @@ persistent!</p>
 <div id="glossary" class="section level2">
 <h2><span class="header-section-number">1.10</span> Glossary</h2>
 <ul>
-<li>anecdotal evidence: Evidence, often
+<li><strong>anecdotal evidence</strong>: Evidence, often
 personal, that is collected casually rather than by a well-designed
 study.</li>
-<li>population: A group we are
+<li><strong>population</strong>: A group we are
 interested in studying. “Population” often refers to a group of
 people, but the term is used for other subjects, too.</li>
-<li><p>cross-sectional study: A study that
-collects data about a population at a particular point in time.</p></li>
-<li>cycle: In a repeated cross-sectional
+<li><strong>cross-sectional study</strong>: A study that
+collects data about a population at a particular point in time.</li>
+<li><strong>cycle</strong>: In a repeated cross-sectional
 study, each repetition of the study is called a cycle.</li>
-<li>longitudinal study: A study that
+<li><strong>longitudinal study</strong>: A study that
 follows a population over time, collecting data from the same group
 repeatedly.<br />
 </li>
-<li>record: In a dataset, a collection
+<li><strong>record</strong>: In a dataset, a collection
 of information about a single person or other subject.</li>
-<li>respondent: A person who responds to
+<li><strong>respondent</strong>: A person who responds to
 a survey.</li>
-<li>sample: The subset of a population
+<li><strong>sample</strong>: The subset of a population
 used to collect data.</li>
-<li>representative: A sample is
+<li><strong>representative</strong>: A sample is
 representative if every member of the population has the same chance
 of being in the sample.</li>
-<li>oversampling: The technique of
+<li><strong>oversampling</strong>: The technique of
 increasing the representation of a sub-population in order to avoid
 errors due to small sample sizes.</li>
-<li>raw
-data: Values collected and recorded with little or no
+<li><strong>raw data</strong>: Values collected and recorded with little or no
 checking, calculation or interpretation.</li>
-<li>recode: A value that is generated by
+<li><strong>recode</strong>: A value that is generated by
 calculation and other logic applied to raw data.</li>
-<li><p>data
-cleaning: Processes that include validating data, identifying
+<li><strong>data cleaning</strong>: Processes that include validating data, identifying
 errors, translating between data types and representations,
-etc.</p></li>
+etc.</li>
 </ul>
 
 </div>
@@ -736,6 +741,19 @@ gitbook.start({
 });
 </script>
 
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    var src = "true";
+    if (src === "" || src === "true") src = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML";
+    if (location.protocol !== "file:" && /^https?:/.test(src))
+      src = src.replace(/^https?:/, '');
+    script.src = src;
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
 </body>
 
 </html>

@@ -38,8 +38,8 @@ provides the methods that operate on them.
 ## Representing Histograms
 
 
-The Hist constructor can take a sequence,
-dictionary, pandas Series, or another Hist. You can instantiate a Hist
+The `Hist` constructor can take a sequence,
+dictionary, pandas `Series`, or another `Hist`. You can instantiate a `Hist`
 object like this: 
 
     >>> import thinkstats2
@@ -47,7 +47,7 @@ object like this:
     >>> hist
     Hist({1: 1, 2: 2, 3: 1, 5: 1})
 
-Hist objects provide `Freq`, which takes a value and
+`Hist` objects provide `Freq`, which takes a value and
 returns its frequency: 
 
     >>> hist.Freq(2)
@@ -85,30 +85,14 @@ value-frequency pairs:
 
 ## Plotting Histograms
 
-
-
-    </span>
-
-    ![](thinkstats2001.png)</span>
-
-    </span>
-
-    <table>
-    <tbody>
-    <tr class="odd">
-    <td style="text-align: left;">Figure 2.1: Histogram of the pound part of birth weight.</span></td>
-    </tr>
-    </tbody>
-    </table>
-
-    </span><span
-    id="first_wgt_lb_hist"></span> </span>
-
+```{r first-wgt-lb-hist, echo=F, out.width='90%', fig.align='center', fig.show='hold', fig.cap='Histogram of the pound part of birth weight.'}
+knitr::include_graphics("images/01.png")
+```
 
 For this book I wrote a module called
 `thinkplot.py` that provides functions for plotting Hists and other objects defined in `thinkstats2.py`. 
 It is based on `pyplot`, which is part of the `matplotlib` package. See
-Section [0.2](thinkstats2001.html#code) for information about installing `matplotlib`. 
+Section \@ref(using-the-code) for information about installing `matplotlib`. 
 
 To plot `hist` with `thinkplot`, try this: 
 
@@ -118,24 +102,9 @@ To plot `hist` with `thinkplot`, try this:
 
 You can read the documentation for `thinkplot` at [http://greenteapress.com/thinkstats2/thinkplot.html](http://greenteapress.com/thinkstats2/thinkplot.html)
 
-
-    
-    </span>
-    
-    ![](thinkstats2002.png)</span>
-    
-    </span>
-    
-    <table>
-    <tbody>
-    <tr class="odd">
-    <td style="text-align: left;">Figure 2.2: Histogram of the ounce part of birth weight.</span></td>
-    </tr>
-    </tbody>
-    </table>
-    
-    </span><span
-    id="first_wgt_oz_hist"></span> </span>
+```{r first-wgt-oz-hist, echo=F, out.width='90%', fig.align='center', fig.show='hold', fig.cap='Histogram of the ounce part of birth weight.'}
+knitr::include_graphics("images/02.png")
+```
     
     
 ## NSFG Variables
@@ -143,31 +112,20 @@ You can read the documentation for `thinkplot` at [http://greenteapress.com/thin
 
 Now let’s get back to the data from the
 NSFG. The code in this chapter is in `first.py`. For information about
-downloading and working with this code, see Section [0.2](thinkstats2001.html#code).
+downloading and working with this code, see Section \@ref(using-the-code).
 
 When you start working with a new
 dataset, I suggest you explore the variables you are planning to use one
 at a time, and a good way to start is by looking at histograms.
 
-In Section [1.6](thinkstats2002.html#cleaning) we transformed `agepreg` from centiyears to years,
+In Section [1.6][transformation] we transformed `agepreg` from centiyears to years,
 and combined `birthwgt_lb` and `birthwgt_oz` into a single quantity,
 `totalwgt_lb`. In this section I use these variables to demonstrate some
 features of histograms.
 
-
-     </span>
-    ![](thinkstats2003.png)</span>
-     </span>
-    <table>
-    <tbody>
-    <tr class="odd">
-    <td style="text-align: left;">Figure 2.3: Histogram of mother’s age at end of pregnancy.</span></td>
-    </tr>
-    </tbody>
-    </table>
-     </span><span
-    id="first_agepreg_hist"></span> </span>
-    
+```{r first-agepreg-hist, echo=F, out.width='90%', fig.align='center', fig.show='hold', fig.cap='Histogram of mother’s age at end of pregnancy.'}
+knitr::include_graphics("images/03.png")
+```
 
 I’ll start by reading the data and selecting records for live births:
 
@@ -187,42 +145,32 @@ are dropped. `label` is a
 string that appears in the legend when the Hist is plotted. 
 
 
-     </span>
-    ![](thinkstats2004.png)</span>
-     </span>
-    <table>
-    <tbody>
-    <tr class="odd">
-    <td style="text-align: left;">Figure 2.4: Histogram of pregnancy length in weeks.</span></td>
-    </tr>
-    </tbody>
-    </table>
-     </span><span
-    id="first_prglngth_hist"></span>
-    </span>
-    
+```{r first-prglngth-hist, echo=F, out.width='90%', fig.align='center', fig.show='hold', fig.cap='Histogram of pregnancy length in weeks.'}
+knitr::include_graphics("images/04.png")
+```
 
-Figure [2.1](#first_wgt_lb_hist) shows the result. The most common value,
+
+Figure [2.1](#first-wgt-lb-hist) shows the result. The most common value,
 called the **mode**, is 7 pounds. The
 distribution is approximately bell-shaped, which is the shape of the
 **normal** distribution, also called a **Gaussian** distribution. But unlike
 a true normal distribution, this distribution is asymmetric; it has a **tail** that extends farther to the
 left than to the right.
 
-Figure [2.2](#first_wgt_oz_hist) shows the histogram of `birthwgt_oz`, which is
+Figure [2.2](#first-wgt-oz-hist) shows the histogram of `birthwgt_oz`, which is
 the ounces part of birth weight. In theory we expect this distribution
 to be **uniform**; that is, all values
 should have the same frequency. In fact, 0 is more common than the other
 values, and 1 and 15 are less common, probably because respondents round
 off birth weights that are close to an integer value. 
 
-Figure [2.3](#first_agepreg_hist) shows the histogram of `agepreg`, the mother’s
+Figure [2.3](#first-agepreg-hist) shows the histogram of `agepreg`, the mother’s
 age at the end of pregnancy. The mode is 21 years. The distribution is
 very roughly bell-shaped, but in this case the tail extends farther to
 the right than left; most mothers are in their 20s, fewer in their
 30s.
 
-Figure [2.4](#first_prglngth_hist) shows the histogram of `prglngth`, the length
+Figure [2.4](#first-prglngth-hist) shows the histogram of `prglngth`, the length
 of the pregnancy in weeks. By far the most common value is 39 weeks. The
 left tail is longer than the right; early babies are common, but
 pregnancies seldom go past 43 weeks, and doctors often intervene if they
@@ -311,20 +259,9 @@ same axis:
 of histograms we are planning to plot; it uses this information to
 choose an appropriate collection of colors. 
 
-
-     </span>
-    ![](thinkstats2005.png)</span>
-     </span>
-    <table>
-    <tbody>
-    <tr class="odd">
-    <td style="text-align: left;">Figure 2.5: Histogram of pregnancy lengths.</span></td>
-    </tr>
-    </tbody>
-    </table>
-     </span><span
-    id="first_nsfg_hist"></span> </span>
-    
+```{r first-nsfg-hist, echo=F, out.width='90%', fig.align='center', fig.show='hold', fig.cap='Histogram of pregnancy lengths.'}
+knitr::include_graphics("images/05.png")
+```
 
 `thinkplot.Hist` normally uses `align=’center’` so that each bar is
 centered over its value. For this figure, I use `align=’right’` and `align=’left’` to place corresponding
@@ -374,52 +311,14 @@ Statistics designed to answer these
 questions are called **summary statistics**. By far the most common summary statistic is the **mean**, 
 which is meant to describe the central tendency of the distribution. 
 
-If you have a sample of `n` values, *x<sub>i</sub>*, the mean, <span
+If you have a sample of `n` values, $x_i$, the mean, <span
 style="text-decoration:overline">x</span>, is the sum of the values
 divided by the number of values; in other words
 
-<table>
-<colgroup>
-<col style="width: 20%" />
-<col style="width: 20%" />
-<col style="width: 20%" />
-<col style="width: 20%" />
-<col style="width: 20%" />
-</colgroup>
-<tbody>
-<tr class="odd">
-<td><span style="text-decoration:overline">x</span> = </span></td>
-<td><table>
-<tbody>
-<tr class="odd">
-<td style="text-align: center;">1</span></td>
-</tr>
-<tr class="even">
-<td style="text-align: center;"></td>
-</tr>
-<tr class="odd">
-<td style="text-align: center;"><span style="font-style:italic;font-size:medium">n</span></td>
-</tr>
-</tbody>
-</table></td>
-<td> </span></td>
-<td><table>
-<tbody>
-<tr class="odd">
-<td style="text-align: center;"> </span></td>
-</tr>
-<tr class="even">
-<td style="text-align: center;"><span style="font-size:xx-large">∑</span></td>
-</tr>
-<tr class="odd">
-<td style="text-align: center;"><span style="font-style:italic;font-size:medium">i</span></td>
-</tr>
-</tbody>
-</table></td>
-<td> <span style="font-style:italic">x</span></span><sub><span style="font-style:italic;font-size:medium">i</span></sub> </span></td>
-</tr>
-</tbody>
-</table>
+$$
+\bar{x} = \frac 1n \sum_i x_i
+$$
+
 
 The words “mean” and “average” are
 sometimes used interchangeably, but I make this distinction:</span>
@@ -456,56 +355,18 @@ Variance is a summary statistic intended
 to describe the variability or spread of a distribution. The variance of
 a set of values is
 
-<table>
-<colgroup>
-<col style="width: 20%" />
-<col style="width: 20%" />
-<col style="width: 20%" />
-<col style="width: 20%" />
-<col style="width: 20%" />
-</colgroup>
-<tbody>
-<tr class="odd">
-<td><span style="font-style:italic;font-size:medium">S</span><sup>2</span></sup> = </span></td>
-<td><table>
-<tbody>
-<tr class="odd">
-<td style="text-align: center;">1</span></td>
-</tr>
-<tr class="even">
-<td style="text-align: center;"></td>
-</tr>
-<tr class="odd">
-<td style="text-align: center;"><span style="font-style:italic;font-size:medium">n</span></td>
-</tr>
-</tbody>
-</table></td>
-<td> </span></td>
-<td><table>
-<tbody>
-<tr class="odd">
-<td style="text-align: center;"> </span></td>
-</tr>
-<tr class="even">
-<td style="text-align: center;"><span style="font-size:xx-large">∑</span></td>
-</tr>
-<tr class="odd">
-<td style="text-align: center;"><span style="font-style:italic;font-size:medium">i</span></td>
-</tr>
-</tbody>
-</table></td>
-<td> (<span style="font-style:italic">x</span></span><sub><span style="font-style:italic;font-size:medium">i</span></sub> − <span style="text-decoration:overline">x</span>)</span><sup>2</span></sup> </span></td>
-</tr>
-</tbody>
-</table>
 
-The term *x<sub>i</sub>* − <span
+$$
+S^2 = \frac 1n \sum_i (x_i - \bar x)^2
+$$
+
+The term $x_i$ − <span
 style="text-decoration:overline">x</span> is called the “deviation from
 the mean,” so variance is the mean squared deviation. The square root of
-variance, *S*, is the **standard deviation**. 
+variance, $S$, is the **standard deviation**. 
 
 If you have prior experience, you might
-have seen a formula for variance with *n*−1 in the denominator, rather than
+have seen a formula for variance with $n-1$ in the denominator, rather than
 `n`. This statistic is used to
 estimate the variance in a population using a sample. We will come back
 to this in Chapter [8](thinkstats2009.html#estimation). 
@@ -530,8 +391,7 @@ calculations, but it is not a good summary statistic.
 ## Effect Size
 
 
-An **effect
-size** is a summary statistic intended to describe (wait for it)
+An **effect size** is a summary statistic intended to describe (wait for it)
 the size of an effect. For example, to describe the difference between
 two groups, one obvious choice is the difference in the means.
 
@@ -547,41 +407,16 @@ would notice this difference at all.
 
 Another way to convey the size of the
 effect is to compare the difference between groups to the variability
-within groups. Cohen’s *d* is a
+within groups. Cohen’s $d$ is a
 statistic intended to do that; it is defined
 
-<table>
-<colgroup>
-<col style="width: 33%" />
-<col style="width: 33%" />
-<col style="width: 33%" />
-</colgroup>
-<tbody>
-<tr class="odd">
-<td><span style="font-style:italic">d</span> = </span></td>
-<td><table>
-<tbody>
-<tr class="odd">
-<td style="text-align: center;"><span style="text-decoration:overline">x_1</span> − <span style="text-decoration:overline">x_2</span></span></td>
-</tr>
-<tr class="even">
-<td style="text-align: center;"></td>
-</tr>
-<tr class="odd">
-<td style="text-align: center;"><span style="font-style:italic;font-size:medium">s</span></td>
-</tr>
-</tbody>
-</table></td>
-<td>  </span></td>
-</tr>
-</tbody>
-</table>
+$$
+d = \frac{\bar x_1 - \bar x_2}{s}
+$$
 
-where <span
-style="text-decoration:overline">x\_1</span> and <span
-style="text-decoration:overline">x\_2</span> are the means of the groups
-and *s* is the “pooled standard
-deviation”. Here’s the Python code that computes Cohen’s *d*: 
+where $\bar x_1$ and $\bar x_2$ are the means of the groups
+and $s$ is the “pooled standard
+deviation”. Here’s the Python code that computes Cohen’s $d$: 
 
     def CohenEffectSize(group1, group2):
         diff = group1.mean() - group2.mean()
@@ -673,37 +508,37 @@ the difference in pregnancy length?
 ## Glossary
 
 
--   distribution: The values that appear
+-   **distribution**: The values that appear
     in a sample and the frequency of each. 
--   histogram: A mapping from values to
+-   **histogram**: A mapping from values to
     frequencies, or a graph that shows this mapping. 
--   frequency: The number of times a
+-   **frequency**: The number of times a
     value appears in a sample.
--   mode: The most frequent value in a
+-   **mode**: The most frequent value in a
     sample, or one of the most frequent values. 
--   normal distribution: An idealization
+-   **normal distribution**: An idealization
     of a bell-shaped distribution; also known as a Gaussian
     distribution. 
--   uniform distribution: A distribution
+-   **uniform distribution**: A distribution
     in which all values have the same frequency. 
--   tail: The part of a distribution at
+-   **tail**: The part of a distribution at
     the high and low extremes.
--   central tendency: A characteristic of
+-   **central tendency**: A characteristic of
     a sample or population; intuitively, it is an average or typical
     value. 
--   outlier: A value far from the central
+-   **outlier**: A value far from the central
     tendency. 
--   spread: A measure of how spread out
+-   **spread**: A measure of how spread out
     the values in a distribution are. 
--   summary statistic: A statistic that
+-   **summary statistic**: A statistic that
     quantifies some aspect of a distribution, like central tendency or
     spread. 
--   variance: A summary statistic often
+-   **variance**: A summary statistic often
     used to quantify spread. 
--   standard deviation: The square root
+-   **standard deviation**: The square root
     of variance, also used as a measure of spread. 
--   effect size: A summary statistic
+-   **effect size**: A summary statistic
     intended to quantify the size of an effect like a difference between
     groups. 
--   clinically significant: A result,
+-   **clinically significant**: A result,
     like a difference between groups, that is relevant in practice.

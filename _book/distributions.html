@@ -25,7 +25,7 @@
 <meta name="author" content="Allen B. Downey">
 
 
-<meta name="date" content="2019-03-22">
+<meta name="date" content="2019-03-23">
 
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="apple-mobile-web-app-capable" content="yes">
@@ -33,7 +33,7 @@
   
   
 <link rel="prev" href="exploratory.html">
-
+<link rel="next" href="probability-mass-functions.html">
 <script src="libs/jquery-2.2.3/jquery.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
@@ -94,6 +94,15 @@
 <li class="chapter" data-level="2.11" data-path="distributions.html"><a href="distributions.html#exercises-1"><i class="fa fa-check"></i><b>2.11</b> Exercises</a></li>
 <li class="chapter" data-level="2.12" data-path="distributions.html"><a href="distributions.html#glossary-1"><i class="fa fa-check"></i><b>2.12</b> Glossary</a></li>
 </ul></li>
+<li class="chapter" data-level="3" data-path="probability-mass-functions.html"><a href="probability-mass-functions.html"><i class="fa fa-check"></i><b>3</b> Probability Mass Functions</a><ul>
+<li class="chapter" data-level="3.1" data-path="probability-mass-functions.html"><a href="probability-mass-functions.html#pmfs"><i class="fa fa-check"></i><b>3.1</b> PMFs</a></li>
+<li class="chapter" data-level="3.2" data-path="probability-mass-functions.html"><a href="probability-mass-functions.html#plotting-pmfs"><i class="fa fa-check"></i><b>3.2</b> Plotting PMFs</a></li>
+<li class="chapter" data-level="3.3" data-path="probability-mass-functions.html"><a href="probability-mass-functions.html#other-visualizations"><i class="fa fa-check"></i><b>3.3</b> Other Visualizations</a></li>
+<li class="chapter" data-level="3.4" data-path="probability-mass-functions.html"><a href="probability-mass-functions.html#the-class-size-paradox"><i class="fa fa-check"></i><b>3.4</b> The Class Size Paradox</a></li>
+<li class="chapter" data-level="3.5" data-path="probability-mass-functions.html"><a href="probability-mass-functions.html#dataframe-indexing"><i class="fa fa-check"></i><b>3.5</b> DataFrame Indexing</a></li>
+<li class="chapter" data-level="3.6" data-path="probability-mass-functions.html"><a href="probability-mass-functions.html#exercises-2"><i class="fa fa-check"></i><b>3.6</b> Exercises</a></li>
+<li class="chapter" data-level="3.7" data-path="probability-mass-functions.html"><a href="probability-mass-functions.html#glossary-2"><i class="fa fa-check"></i><b>3.7</b> Glossary</a></li>
+</ul></li>
 </ul>
 
       </nav>
@@ -140,14 +149,14 @@ provides the methods that operate on them.</p>
 </div>
 <div id="representing-histograms" class="section level2">
 <h2><span class="header-section-number">2.2</span> Representing Histograms</h2>
-<p>The Hist constructor can take a sequence,
-dictionary, pandas Series, or another Hist. You can instantiate a Hist
+<p>The <code>Hist</code> constructor can take a sequence,
+dictionary, pandas <code>Series</code>, or another <code>Hist</code>. You can instantiate a <code>Hist</code>
 object like this:</p>
 <pre><code>&gt;&gt;&gt; import thinkstats2
 &gt;&gt;&gt; hist = thinkstats2.Hist([1, 2, 2, 3, 5])
 &gt;&gt;&gt; hist
 Hist({1: 1, 2: 2, 3: 1, 5: 1})</code></pre>
-<p>Hist objects provide <code>Freq</code>, which takes a value and
+<p><code>Hist</code> objects provide <code>Freq</code>, which takes a value and
 returns its frequency:</p>
 <pre><code>&gt;&gt;&gt; hist.Freq(2)
 2</code></pre>
@@ -173,72 +182,46 @@ value-frequency pairs:</p>
 </div>
 <div id="plotting-histograms" class="section level2">
 <h2><span class="header-section-number">2.3</span> Plotting Histograms</h2>
-<pre><code>&lt;/span&gt;
-
-![](thinkstats2001.png)&lt;/span&gt;
-
-&lt;/span&gt;
-
-&lt;table&gt;
-&lt;tbody&gt;
-&lt;tr class=&quot;odd&quot;&gt;
-&lt;td style=&quot;text-align: left;&quot;&gt;Figure 2.1: Histogram of the pound part of birth weight.&lt;/span&gt;&lt;/td&gt;
-&lt;/tr&gt;
-&lt;/tbody&gt;
-&lt;/table&gt;
-
-&lt;/span&gt;&lt;span
-id=&quot;first_wgt_lb_hist&quot;&gt;&lt;/span&gt; &lt;/span&gt;</code></pre>
+<div class="figure" style="text-align: center"><span id="fig:first-wgt-lb-hist"></span>
+<img src="images/01.png" alt="Histogram of the pound part of birth weight." width="90%" />
+<p class="caption">
+Figure 2.1: Histogram of the pound part of birth weight.
+</p>
+</div>
 <p>For this book I wrote a module called
 <code>thinkplot.py</code> that provides functions for plotting Hists and other objects defined in <code>thinkstats2.py</code>.
 It is based on <code>pyplot</code>, which is part of the <code>matplotlib</code> package. See
-Section <a href="thinkstats2001.html#code">0.2</a> for information about installing <code>matplotlib</code>.</p>
+Section <a href="index.html#using-the-code">0.2</a> for information about installing <code>matplotlib</code>.</p>
 <p>To plot <code>hist</code> with <code>thinkplot</code>, try this:</p>
 <pre><code>&gt;&gt;&gt; import thinkplot
 &gt;&gt;&gt; thinkplot.Hist(hist)
 &gt;&gt;&gt; thinkplot.Show(xlabel=&#39;value&#39;, ylabel=&#39;frequency&#39;)</code></pre>
 <p>You can read the documentation for <code>thinkplot</code> at <a href="http://greenteapress.com/thinkstats2/thinkplot.html">http://greenteapress.com/thinkstats2/thinkplot.html</a></p>
-<pre><code>&lt;/span&gt;
-
-![](thinkstats2002.png)&lt;/span&gt;
-
-&lt;/span&gt;
-
-&lt;table&gt;
-&lt;tbody&gt;
-&lt;tr class=&quot;odd&quot;&gt;
-&lt;td style=&quot;text-align: left;&quot;&gt;Figure 2.2: Histogram of the ounce part of birth weight.&lt;/span&gt;&lt;/td&gt;
-&lt;/tr&gt;
-&lt;/tbody&gt;
-&lt;/table&gt;
-
-&lt;/span&gt;&lt;span
-id=&quot;first_wgt_oz_hist&quot;&gt;&lt;/span&gt; &lt;/span&gt;</code></pre>
+<div class="figure" style="text-align: center"><span id="fig:first-wgt-oz-hist"></span>
+<img src="images/02.png" alt="Histogram of the ounce part of birth weight." width="90%" />
+<p class="caption">
+Figure 2.2: Histogram of the ounce part of birth weight.
+</p>
+</div>
 </div>
 <div id="nsfg-variables" class="section level2">
 <h2><span class="header-section-number">2.4</span> NSFG Variables</h2>
 <p>Now let’s get back to the data from the
 NSFG. The code in this chapter is in <code>first.py</code>. For information about
-downloading and working with this code, see Section <a href="thinkstats2001.html#code">0.2</a>.</p>
+downloading and working with this code, see Section <a href="index.html#using-the-code">0.2</a>.</p>
 <p>When you start working with a new
 dataset, I suggest you explore the variables you are planning to use one
 at a time, and a good way to start is by looking at histograms.</p>
-<p>In Section <a href="thinkstats2002.html#cleaning">1.6</a> we transformed <code>agepreg</code> from centiyears to years,
+<p>In Section <a href="exploratory.html#transformation">1.6</a> we transformed <code>agepreg</code> from centiyears to years,
 and combined <code>birthwgt_lb</code> and <code>birthwgt_oz</code> into a single quantity,
 <code>totalwgt_lb</code>. In this section I use these variables to demonstrate some
 features of histograms.</p>
-<pre><code> &lt;/span&gt;
-![](thinkstats2003.png)&lt;/span&gt;
- &lt;/span&gt;
-&lt;table&gt;
-&lt;tbody&gt;
-&lt;tr class=&quot;odd&quot;&gt;
-&lt;td style=&quot;text-align: left;&quot;&gt;Figure 2.3: Histogram of mother’s age at end of pregnancy.&lt;/span&gt;&lt;/td&gt;
-&lt;/tr&gt;
-&lt;/tbody&gt;
-&lt;/table&gt;
- &lt;/span&gt;&lt;span
-id=&quot;first_agepreg_hist&quot;&gt;&lt;/span&gt; &lt;/span&gt;</code></pre>
+<div class="figure" style="text-align: center"><span id="fig:first-agepreg-hist"></span>
+<img src="images/03.png" alt="Histogram of mother’s age at end of pregnancy." width="90%" />
+<p class="caption">
+Figure 2.3: Histogram of mother’s age at end of pregnancy.
+</p>
+</div>
 <p>I’ll start by reading the data and selecting records for live births:</p>
 <pre><code>    preg = nsfg.ReadFemPreg()
     live = preg[preg.outcome == 1]</code></pre>
@@ -251,37 +234,30 @@ Next I generate and plot the histogram of <code>birthwgt_lb</code> for live birt
 <p>When the argument passed to Hist is a pandas Series, any <code>nan</code> values
 are dropped. <code>label</code> is a
 string that appears in the legend when the Hist is plotted.</p>
-<pre><code> &lt;/span&gt;
-![](thinkstats2004.png)&lt;/span&gt;
- &lt;/span&gt;
-&lt;table&gt;
-&lt;tbody&gt;
-&lt;tr class=&quot;odd&quot;&gt;
-&lt;td style=&quot;text-align: left;&quot;&gt;Figure 2.4: Histogram of pregnancy length in weeks.&lt;/span&gt;&lt;/td&gt;
-&lt;/tr&gt;
-&lt;/tbody&gt;
-&lt;/table&gt;
- &lt;/span&gt;&lt;span
-id=&quot;first_prglngth_hist&quot;&gt;&lt;/span&gt;
-&lt;/span&gt;</code></pre>
-<p>Figure <a href="#first_wgt_lb_hist">2.1</a> shows the result. The most common value,
+<div class="figure" style="text-align: center"><span id="fig:first-prglngth-hist"></span>
+<img src="images/04.png" alt="Histogram of pregnancy length in weeks." width="90%" />
+<p class="caption">
+Figure 2.4: Histogram of pregnancy length in weeks.
+</p>
+</div>
+<p>Figure <a href="#first-wgt-lb-hist">2.1</a> shows the result. The most common value,
 called the <strong>mode</strong>, is 7 pounds. The
 distribution is approximately bell-shaped, which is the shape of the
 <strong>normal</strong> distribution, also called a <strong>Gaussian</strong> distribution. But unlike
 a true normal distribution, this distribution is asymmetric; it has a <strong>tail</strong> that extends farther to the
 left than to the right.</p>
-<p>Figure <a href="#first_wgt_oz_hist">2.2</a> shows the histogram of <code>birthwgt_oz</code>, which is
+<p>Figure <a href="#first-wgt-oz-hist">2.2</a> shows the histogram of <code>birthwgt_oz</code>, which is
 the ounces part of birth weight. In theory we expect this distribution
 to be <strong>uniform</strong>; that is, all values
 should have the same frequency. In fact, 0 is more common than the other
 values, and 1 and 15 are less common, probably because respondents round
 off birth weights that are close to an integer value.</p>
-<p>Figure <a href="#first_agepreg_hist">2.3</a> shows the histogram of <code>agepreg</code>, the mother’s
+<p>Figure <a href="#first-agepreg-hist">2.3</a> shows the histogram of <code>agepreg</code>, the mother’s
 age at the end of pregnancy. The mode is 21 years. The distribution is
 very roughly bell-shaped, but in this case the tail extends farther to
 the right than left; most mothers are in their 20s, fewer in their
 30s.</p>
-<p>Figure <a href="#first_prglngth_hist">2.4</a> shows the histogram of <code>prglngth</code>, the length
+<p>Figure <a href="#first-prglngth-hist">2.4</a> shows the histogram of <code>prglngth</code>, the length
 of the pregnancy in weeks. By far the most common value is 39 weeks. The
 left tail is longer than the right; early babies are common, but
 pregnancies seldom go past 43 weeks, and doctors often intervene if they
@@ -351,18 +327,12 @@ same axis:</p>
 <p><code>thinkplot.PrePlot</code> takes the number
 of histograms we are planning to plot; it uses this information to
 choose an appropriate collection of colors.</p>
-<pre><code> &lt;/span&gt;
-![](thinkstats2005.png)&lt;/span&gt;
- &lt;/span&gt;
-&lt;table&gt;
-&lt;tbody&gt;
-&lt;tr class=&quot;odd&quot;&gt;
-&lt;td style=&quot;text-align: left;&quot;&gt;Figure 2.5: Histogram of pregnancy lengths.&lt;/span&gt;&lt;/td&gt;
-&lt;/tr&gt;
-&lt;/tbody&gt;
-&lt;/table&gt;
- &lt;/span&gt;&lt;span
-id=&quot;first_nsfg_hist&quot;&gt;&lt;/span&gt; &lt;/span&gt;</code></pre>
+<div class="figure" style="text-align: center"><span id="fig:first-nsfg-hist"></span>
+<img src="images/05.png" alt="Histogram of pregnancy lengths." width="90%" />
+<p class="caption">
+Figure 2.5: Histogram of pregnancy lengths.
+</p>
+</div>
 <p><code>thinkplot.Hist</code> normally uses <code>align=’center’</code> so that each bar is
 centered over its value. For this figure, I use <code>align=’right’</code> and <code>align=’left’</code> to place corresponding
 bars on either side of the value.</p>
@@ -403,71 +373,11 @@ far from the modes?</li>
 <p>Statistics designed to answer these
 questions are called <strong>summary statistics</strong>. By far the most common summary statistic is the <strong>mean</strong>,
 which is meant to describe the central tendency of the distribution.</p>
-<p>If you have a sample of <code>n</code> values, <em>x<sub>i</sub></em>, the mean, <span style="text-decoration:overline">x</span>, is the sum of the values
+<p>If you have a sample of <code>n</code> values, <span class="math inline">\(x_i\)</span>, the mean, <span style="text-decoration:overline">x</span>, is the sum of the values
 divided by the number of values; in other words</p>
-<table>
-<colgroup>
-<col style="width: 20%" />
-<col style="width: 20%" />
-<col style="width: 20%" />
-<col style="width: 20%" />
-<col style="width: 20%" />
-</colgroup>
-<tbody>
-<tr class="odd">
-<td>
-<span style="text-decoration:overline">x</span> = </span>
-</td>
-<td>
-<table>
-<tbody>
-<tr class="odd">
-<td style="text-align: center;">
-1</span>
-</td>
-</tr>
-<tr class="even">
-<td style="text-align: center;">
-</td>
-</tr>
-<tr class="odd">
-<td style="text-align: center;">
-<span style="font-style:italic;font-size:medium">n</span>
-</td>
-</tr>
-</tbody>
-</table>
-</td>
-<td>
- </span>
-</td>
-<td>
-<table>
-<tbody>
-<tr class="odd">
-<td style="text-align: center;">
- </span>
-</td>
-</tr>
-<tr class="even">
-<td style="text-align: center;">
-<span style="font-size:xx-large">∑</span>
-</td>
-</tr>
-<tr class="odd">
-<td style="text-align: center;">
-<span style="font-style:italic;font-size:medium">i</span>
-</td>
-</tr>
-</tbody>
-</table>
-</td>
-<td>
- <span style="font-style:italic">x</span></span><sub><span style="font-style:italic;font-size:medium">i</span></sub> </span>
-</td>
-</tr>
-</tbody>
-</table>
+<p><span class="math display">\[
+\bar{x} = \frac 1n \sum_i x_i
+\]</span></p>
 <p>The words “mean” and “average” are
 sometimes used interchangeably, but I make this distinction:</span></p>
 <ul>
@@ -498,74 +408,14 @@ mean and <strong>variance</strong>.</p>
 <p>Variance is a summary statistic intended
 to describe the variability or spread of a distribution. The variance of
 a set of values is</p>
-<table>
-<colgroup>
-<col style="width: 20%" />
-<col style="width: 20%" />
-<col style="width: 20%" />
-<col style="width: 20%" />
-<col style="width: 20%" />
-</colgroup>
-<tbody>
-<tr class="odd">
-<td>
-<span style="font-style:italic;font-size:medium">S</span><sup>2</span></sup> = </span>
-</td>
-<td>
-<table>
-<tbody>
-<tr class="odd">
-<td style="text-align: center;">
-1</span>
-</td>
-</tr>
-<tr class="even">
-<td style="text-align: center;">
-</td>
-</tr>
-<tr class="odd">
-<td style="text-align: center;">
-<span style="font-style:italic;font-size:medium">n</span>
-</td>
-</tr>
-</tbody>
-</table>
-</td>
-<td>
- </span>
-</td>
-<td>
-<table>
-<tbody>
-<tr class="odd">
-<td style="text-align: center;">
- </span>
-</td>
-</tr>
-<tr class="even">
-<td style="text-align: center;">
-<span style="font-size:xx-large">∑</span>
-</td>
-</tr>
-<tr class="odd">
-<td style="text-align: center;">
-<span style="font-style:italic;font-size:medium">i</span>
-</td>
-</tr>
-</tbody>
-</table>
-</td>
-<td>
- (<span style="font-style:italic">x</span></span><sub><span style="font-style:italic;font-size:medium">i</span></sub> − <span style="text-decoration:overline">x</span>)</span><sup>2</span></sup> </span>
-</td>
-</tr>
-</tbody>
-</table>
-<p>The term <em>x<sub>i</sub></em> − <span style="text-decoration:overline">x</span> is called the “deviation from
+<p><span class="math display">\[
+S^2 = \frac 1n \sum_i (x_i - \bar x)^2
+\]</span></p>
+<p>The term <span class="math inline">\(x_i\)</span> − <span style="text-decoration:overline">x</span> is called the “deviation from
 the mean,” so variance is the mean squared deviation. The square root of
-variance, <em>S</em>, is the <strong>standard deviation</strong>.</p>
+variance, <span class="math inline">\(S\)</span>, is the <strong>standard deviation</strong>.</p>
 <p>If you have prior experience, you might
-have seen a formula for variance with <em>n</em>−1 in the denominator, rather than
+have seen a formula for variance with <span class="math inline">\(n-1\)</span> in the denominator, rather than
 <code>n</code>. This statistic is used to
 estimate the variance in a population using a sample. We will come back
 to this in Chapter <a href="thinkstats2009.html#estimation">8</a>.</p>
@@ -584,8 +434,7 @@ calculations, but it is not a good summary statistic.</p>
 </div>
 <div id="effect-size" class="section level2">
 <h2><span class="header-section-number">2.9</span> Effect Size</h2>
-<p>An <strong>effect
-size</strong> is a summary statistic intended to describe (wait for it)
+<p>An <strong>effect size</strong> is a summary statistic intended to describe (wait for it)
 the size of an effect. For example, to describe the difference between
 two groups, one obvious choice is the difference in the means.</p>
 <p>Mean pregnancy length for first babies is
@@ -598,48 +447,14 @@ observing a large number of pregnancies, it is unlikely that anyone
 would notice this difference at all.</p>
 <p>Another way to convey the size of the
 effect is to compare the difference between groups to the variability
-within groups. Cohen’s <em>d</em> is a
+within groups. Cohen’s <span class="math inline">\(d\)</span> is a
 statistic intended to do that; it is defined</p>
-<table>
-<colgroup>
-<col style="width: 33%" />
-<col style="width: 33%" />
-<col style="width: 33%" />
-</colgroup>
-<tbody>
-<tr class="odd">
-<td>
-<span style="font-style:italic">d</span> = </span>
-</td>
-<td>
-<table>
-<tbody>
-<tr class="odd">
-<td style="text-align: center;">
-<span style="text-decoration:overline">x_1</span> − <span style="text-decoration:overline">x_2</span></span>
-</td>
-</tr>
-<tr class="even">
-<td style="text-align: center;">
-</td>
-</tr>
-<tr class="odd">
-<td style="text-align: center;">
-<span style="font-style:italic;font-size:medium">s</span>
-</td>
-</tr>
-</tbody>
-</table>
-</td>
-<td>
-  </span>
-</td>
-</tr>
-</tbody>
-</table>
-<p>where <span style="text-decoration:overline">x_1</span> and <span style="text-decoration:overline">x_2</span> are the means of the groups
-and <em>s</em> is the “pooled standard
-deviation”. Here’s the Python code that computes Cohen’s <em>d</em>:</p>
+<p><span class="math display">\[
+d = \frac{\bar x_1 - \bar x_2}{s}
+\]</span></p>
+<p>where <span class="math inline">\(\bar x_1\)</span> and <span class="math inline">\(\bar x_2\)</span> are the means of the groups
+and <span class="math inline">\(s\)</span> is the “pooled standard
+deviation”. Here’s the Python code that computes Cohen’s <span class="math inline">\(d\)</span>:</p>
 <pre><code>def CohenEffectSize(group1, group2):
     diff = group1.mean() - group2.mean()
 
@@ -713,39 +528,39 @@ the difference in pregnancy length?</p>
 <div id="glossary-1" class="section level2">
 <h2><span class="header-section-number">2.12</span> Glossary</h2>
 <ul>
-<li>distribution: The values that appear
+<li><strong>distribution</strong>: The values that appear
 in a sample and the frequency of each.</li>
-<li>histogram: A mapping from values to
+<li><strong>histogram</strong>: A mapping from values to
 frequencies, or a graph that shows this mapping.</li>
-<li>frequency: The number of times a
+<li><strong>frequency</strong>: The number of times a
 value appears in a sample.</li>
-<li>mode: The most frequent value in a
+<li><strong>mode</strong>: The most frequent value in a
 sample, or one of the most frequent values.</li>
-<li>normal distribution: An idealization
+<li><strong>normal distribution</strong>: An idealization
 of a bell-shaped distribution; also known as a Gaussian
 distribution.</li>
-<li>uniform distribution: A distribution
+<li><strong>uniform distribution</strong>: A distribution
 in which all values have the same frequency.</li>
-<li>tail: The part of a distribution at
+<li><strong>tail</strong>: The part of a distribution at
 the high and low extremes.</li>
-<li>central tendency: A characteristic of
+<li><strong>central tendency</strong>: A characteristic of
 a sample or population; intuitively, it is an average or typical
 value.</li>
-<li>outlier: A value far from the central
+<li><strong>outlier</strong>: A value far from the central
 tendency.</li>
-<li>spread: A measure of how spread out
+<li><strong>spread</strong>: A measure of how spread out
 the values in a distribution are.</li>
-<li>summary statistic: A statistic that
+<li><strong>summary statistic</strong>: A statistic that
 quantifies some aspect of a distribution, like central tendency or
 spread.</li>
-<li>variance: A summary statistic often
+<li><strong>variance</strong>: A summary statistic often
 used to quantify spread.</li>
-<li>standard deviation: The square root
+<li><strong>standard deviation</strong>: The square root
 of variance, also used as a measure of spread.</li>
-<li>effect size: A summary statistic
+<li><strong>effect size</strong>: A summary statistic
 intended to quantify the size of an effect like a difference between
 groups.</li>
-<li>clinically significant: A result,
+<li><strong>clinically significant</strong>: A result,
 like a difference between groups, that is relevant in practice.</li>
 </ul>
 
@@ -756,8 +571,8 @@ like a difference between groups, that is relevant in practice.</li>
           </div>
         </div>
       </div>
-<a href="exploratory.html" class="navigation navigation-prev navigation-unique" aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
-
+<a href="exploratory.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="probability-mass-functions.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>
@@ -802,6 +617,19 @@ gitbook.start({
 });
 </script>
 
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    var src = "true";
+    if (src === "" || src === "true") src = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML";
+    if (location.protocol !== "file:" && /^https?:/.test(src))
+      src = src.replace(/^https?:/, '');
+    script.src = src;
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
 </body>
 
 </html>

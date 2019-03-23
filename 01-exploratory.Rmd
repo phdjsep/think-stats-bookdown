@@ -20,10 +20,10 @@ these:
 > “My two friends that have given birth
 > recently to their first babies, BOTH went almost 2 weeks overdue
 > before going into labour or being induced.”
->
+
 > “My first one came 2 weeks late and now
 > I think the second one is going to come out two weeks early!!”
->
+
 > “I don’t think that can be true because
 > my sister was my mother’s first and she was early, as with many of my
 > cousins.”
@@ -157,21 +157,21 @@ codebook and user’s guide for the NSFG data are available from
 
 The code and data used in this book are
 available from [https://github.com/AllenDowney/ThinkStats2](https://github.com/AllenDowney/ThinkStats2). For information about downloading and working
-with this code, see Section [0.2](thinkstats2001.html#code).
+with this code, see Section \@ref(using-the-code).
 
 Once you download the code, you should
-have a file called ThinkStats2/code/nsfg.py. If you
+have a file called `ThinkStats2/code/nsfg.py`. If you
 run it, it should read a data file, run some tests, and print a message
 like, “All tests passed.”
 
 Let’s see what it does. Pregnancy data
-from Cycle 6 of the NSFG is in a file called 2002FemPreg.dat.gz; it is a
+from Cycle 6 of the NSFG is in a file called `2002FemPreg.dat.gz`; it is a
 gzip-compressed data file in plain text (ASCII), with fixed width
 columns. Each line in the file is a record that contains data about one
 pregnancy.
 
 The format of the file is documented in
-2002FemPreg.dct, which is a
+`2002FemPreg.dct`, which is a
 Stata dictionary file. Stata is a statistical software system; a
 “dictionary” in this context is a list of variable names, types, and
 indices that identify where in each line to find each variable.
@@ -190,7 +190,7 @@ string that represents the respondent ID; pregorder is a one-byte integer
 that indicates which pregnancy this record describes for this
 respondent.
 
-The code you downloaded includes thinkstats2.py, which is a Python
+The code you downloaded includes `thinkstats2.py`, which is a Python
 module that contains many classes and functions used in this book,
 including functions that read the Stata dictionary and the NSFG data
 file. Here’s how they are used in nsfg.py:
@@ -202,9 +202,9 @@ file. Here’s how they are used in nsfg.py:
         CleanFemPreg(df)
         return df
 
-ReadStataDct takes the name of the
-dictionary file and returns dct, a FixedWidthVariables object that
-contains the information from the dictionary file. dct provides ReadFixedWidth, which reads the
+`ReadStataDct` takes the name of the
+dictionary file and returns dct, a `FixedWidthVariables` object that
+contains the information from the dictionary file. dct provides `ReadFixedWidth`, which reads the
 data file.
 
  
@@ -212,7 +212,7 @@ data file.
 ## DataFrames
 
 
-The result of ReadFixedWidth is a DataFrame,
+The result of `ReadFixedWidth` is a DataFrame,
 which is the fundamental data structure provided by pandas, which is a
 Python data and statistics package we’ll use throughout this book. A
 DataFrame contains a row for each record, in this case one row per
@@ -310,30 +310,23 @@ can’t contain spaces, etc.
 
 
 We have already seen two variables in the
-NSFG dataset, caseid and
-pregordr, and we have seen
+NSFG dataset, `caseid` and
+`pregordr`, and we have seen
 that there are 244 variables in total. For the explorations in this
 book, I use the following variables:
 
--   caseid is the integer ID of the
-    respondent.
--   prglngth is the integer
-    duration of the pregnancy in weeks. 
--   outcome is an integer code for
-    the outcome of the pregnancy. The code 1 indicates a live
-    birth.
--   pregordr is a pregnancy serial
-    number; for example, the code for a respondent’s first pregnancy is
+-   `caseid` is the integer ID of the respondent.
+-   `prglngth` is the integer duration of the pregnancy in weeks. 
+-   `outcome` is an integer code for the outcome of the pregnancy. The code 1 indicates a live birth.
+-   `pregordr` is a pregnancy serial number; for example, the code for a respondent’s first pregnancy is
     1, for the second pregnancy is 2, and so on.
--   birthord is a serial number for
+-   `birthord` is a serial number for
     live births; the code for a respondent’s first child is 1, and so
     on. For outcomes other than live birth, this field is blank.
 -   `birthwgt_lb` and `birthwgt_oz`
     contain the pounds and ounces parts of the birth weight of the baby.
-     
--   agepreg is the mother’s age at
-    the end of the pregnancy.
--   finalwgt is the statistical
+-   `agepreg` is the mother’s age at the end of the pregnancy.
+-   `finalwgt` is the statistical
     weight associated with the respondent. It is a floating-point value
     that indicates the number of people in the U.S. population this
     respondent represents. 
@@ -343,10 +336,10 @@ will see that many of the variables are recodes, which means that they are not
 part of the raw data collected by
 the survey; they are calculated using the raw data. 
 
-For example, prglngth for live births is equal
+For example, `prglngth` for live births is equal
 to the raw variable wksgest
 (weeks of gestation) if it is available; otherwise it is estimated using
-mosgest \* 4.33 (months of
+`mosgest * 4.33` (months of
 gestation times the average number of weeks in a month).
 
 Recodes are often based on logic that
@@ -363,7 +356,7 @@ have to check for errors, deal with special values, convert data into
 different formats, and perform calculations. These operations are called
 data cleaning.
 
-nsfg.py includes CleanFemPreg, a function that
+`nsfg.py` includes `CleanFemPreg`, a function that
 cleans the variables I am planning to use.
 
     def CleanFemPreg(df):
@@ -375,8 +368,8 @@ cleans the variables I am planning to use.
 
         df['totalwgt_lb'] = df.birthwgt_lb + df.birthwgt_oz / 16.0    
 
-agepreg contains the mother’s age
-at the end of the pregnancy. In the data file, agepreg is encoded as an integer
+`agepreg` contains the mother’s age
+at the end of the pregnancy. In the data file, `agepreg` is encoded as an integer
 number of centiyears. So the first line divides each element of agepreg by 100, yielding a
 floating-point value in years.
 
@@ -396,17 +389,17 @@ floating-point value that represents “not a number.” The inplace flag tells 
 Series rather than create a new one. 
 
 As part of the IEEE floating-point
-standard, all mathematical operations return nan if either argument is nan:
+standard, all mathematical operations return nan if either argument is `nan`:
 
     >>> import numpy as np
     >>> np.nan / 100.0
     nan
 
-So computations with nan tend to do the right thing, and
-most pandas functions handle nan appropriately. But dealing with
+So computations with `nan` tend to do the right thing, and
+most pandas functions handle `nan` appropriately. But dealing with
 missing data will be a recurring issue. 
 
-The last line of CleanFemPreg creates a new column
+The last line of `CleanFemPreg` creates a new column
 `totalwgt_lb` that combines pounds and ounces into a single quantity, in
 pounds.
 
@@ -506,13 +499,13 @@ But if you look more closely, you will notice one value that has to be
 an error, a 51 pound baby!
 
 To deal with this error, I added a line
-to CleanFemPreg:
+to `CleanFemPreg`:
 
     df.loc[df.birthwgt_lb > 20, 'birthwgt_lb'] = np.nan
 
 This statement replaces invalid values
-with np.nan. The attribute
-loc provides several ways to
+with `np.nan`. The attribute
+`loc` provides several ways to
 select rows and columns from a DataFrame. In this example, the first
 expression in brackets is the row indexer; the second expression selects
 the column.  
@@ -541,15 +534,15 @@ for each respondent. Here’s a function that does that:
             d[caseid].append(index)
         return d
 
-df is the DataFrame with pregnancy
-data. The iteritems method
+`df` is the DataFrame with pregnancy
+data. The `iteritems` method
 enumerates the index (row number) and caseid for each pregnancy.
 
 
-d is a dictionary that maps from
-each case ID to a list of indices. If you are not familiar with defaultdict, it is in the Python
-collections module. Using
-d, we can look up a
+`d` is a dictionary that maps from
+each case ID to a list of indices. If you are not familiar with `defaultdict`, it is in the Python
+`collections` module. Using
+`d`, we can look up a
 respondent and get the indices of that respondent’s pregnancies.
 
 This example looks up one respondent and
@@ -624,7 +617,7 @@ instructions for exercises you should try.
 **Exercise 2** 
 
 In the repository you downloaded, you should find a file named `chap01ex.py`; using this file
-as a starting place, write a function that reads the respondent file, 2002FemResp.dat.gz.
+as a starting place, write a function that reads the respondent file, `2002FemResp.dat.gz`.
 
 The variable pregnum is a recode that indicates how many times each respondent has been pregnant. Print the value counts
 for this variable and compare them to the published results in the NSFG
@@ -633,7 +626,7 @@ codebook.
 You can also cross-validate the respondent and pregnancy files by comparing pregnum for each respondent with
 the number of records in the pregnancy file.
 
-You can use nsfg.MakePregMap to make a dictionary that maps from each caseid to a list of indices into
+You can use `nsfg.MakePregMap` to make a dictionary that maps from each caseid to a list of indices into
 the pregnancy DataFrame.
 
 *A solution to this exercise is in `chap01soln.py`* 
@@ -667,39 +660,36 @@ persistent!
 
 ## Glossary
 
--   anecdotal evidence: Evidence, often
+-   **anecdotal evidence**: Evidence, often
     personal, that is collected casually rather than by a well-designed
     study. 
--   population: A group we are
+-   **population**: A group we are
     interested in studying. “Population” often refers to a group of
     people, but the term is used for other subjects, too. 
--   cross-sectional study: A study that
+-   **cross-sectional study**: A study that
     collects data about a population at a particular point in time.
-     
--   cycle: In a repeated cross-sectional
+-   **cycle**: In a repeated cross-sectional
     study, each repetition of the study is called a cycle.
--   longitudinal study: A study that
+-   **longitudinal study**: A study that
     follows a population over time, collecting data from the same group
     repeatedly.  
--   record: In a dataset, a collection
+-   **record**: In a dataset, a collection
     of information about a single person or other subject. 
--   respondent: A person who responds to
+-   **respondent**: A person who responds to
     a survey. 
--   sample: The subset of a population
+-   **sample**: The subset of a population
     used to collect data. 
--   representative: A sample is
+-   **representative**: A sample is
     representative if every member of the population has the same chance
     of being in the sample. 
--   oversampling: The technique of
+-   **oversampling**: The technique of
     increasing the representation of a sub-population in order to avoid
     errors due to small sample sizes. 
--   raw
-    data: Values collected and recorded with little or no
+-   **raw data**: Values collected and recorded with little or no
     checking, calculation or interpretation. 
--   recode: A value that is generated by
+-   **recode**: A value that is generated by
     calculation and other logic applied to raw data. 
--   data
-    cleaning: Processes that include validating data, identifying
+-   **data cleaning**: Processes that include validating data, identifying
     errors, translating between data types and representations,
     etc.
 

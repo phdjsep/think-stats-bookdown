@@ -127,7 +127,7 @@ found useful were Wolfram MathWorld and the Reddit statistics forum,
 ## Using the code
 
 
-The code and data used in this book are available from [>https://github.com/AllenDowney/ThinkStats2](https://github.com/AllenDowney/ThinkStats2). Git is a version control system that allows you to keep track of the files that make up a project. A collection of files under Git’s control is called a repository. GitHub is
+The code and data used in this book are available from [https://github.com/AllenDowney/ThinkStats2](https://github.com/AllenDowney/ThinkStats2). Git is a version control system that allows you to keep track of the files that make up a project. A collection of files under Git’s control is called a repository. GitHub is
 a hosting service that provides storage for Git repositories and a convenient web interface. 
 
 The GitHub homepage for my repository provides several ways to work with

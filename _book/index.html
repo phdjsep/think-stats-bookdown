@@ -25,7 +25,7 @@
 <meta name="author" content="Allen B. Downey">
 
 
-<meta name="date" content="2019-03-22">
+<meta name="date" content="2019-03-23">
 
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="apple-mobile-web-app-capable" content="yes">
@@ -94,6 +94,15 @@
 <li class="chapter" data-level="2.11" data-path="distributions.html"><a href="distributions.html#exercises-1"><i class="fa fa-check"></i><b>2.11</b> Exercises</a></li>
 <li class="chapter" data-level="2.12" data-path="distributions.html"><a href="distributions.html#glossary-1"><i class="fa fa-check"></i><b>2.12</b> Glossary</a></li>
 </ul></li>
+<li class="chapter" data-level="3" data-path="probability-mass-functions.html"><a href="probability-mass-functions.html"><i class="fa fa-check"></i><b>3</b> Probability Mass Functions</a><ul>
+<li class="chapter" data-level="3.1" data-path="probability-mass-functions.html"><a href="probability-mass-functions.html#pmfs"><i class="fa fa-check"></i><b>3.1</b> PMFs</a></li>
+<li class="chapter" data-level="3.2" data-path="probability-mass-functions.html"><a href="probability-mass-functions.html#plotting-pmfs"><i class="fa fa-check"></i><b>3.2</b> Plotting PMFs</a></li>
+<li class="chapter" data-level="3.3" data-path="probability-mass-functions.html"><a href="probability-mass-functions.html#other-visualizations"><i class="fa fa-check"></i><b>3.3</b> Other Visualizations</a></li>
+<li class="chapter" data-level="3.4" data-path="probability-mass-functions.html"><a href="probability-mass-functions.html#the-class-size-paradox"><i class="fa fa-check"></i><b>3.4</b> The Class Size Paradox</a></li>
+<li class="chapter" data-level="3.5" data-path="probability-mass-functions.html"><a href="probability-mass-functions.html#dataframe-indexing"><i class="fa fa-check"></i><b>3.5</b> DataFrame Indexing</a></li>
+<li class="chapter" data-level="3.6" data-path="probability-mass-functions.html"><a href="probability-mass-functions.html#exercises-2"><i class="fa fa-check"></i><b>3.6</b> Exercises</a></li>
+<li class="chapter" data-level="3.7" data-path="probability-mass-functions.html"><a href="probability-mass-functions.html#glossary-2"><i class="fa fa-check"></i><b>3.7</b> Glossary</a></li>
+</ul></li>
 </ul>
 
       </nav>
@@ -115,7 +124,7 @@
 <h1 class="title">Think Stats</h1>
 <h2 class="subtitle"><em>Exploratory Data Analysis in Python</em></h2>
 <p class="author"><em>Allen B. Downey</em></p>
-<p class="date"><em>2019-03-22</em></p>
+<p class="date"><em>2019-03-23</em></p>
 </div>
 <div id="preface" class="section level1 unnumbered">
 <h1>Preface</h1>
@@ -227,7 +236,7 @@ found useful were Wolfram MathWorld and the Reddit statistics forum,
 </div>
 <div id="using-the-code" class="section level2">
 <h2><span class="header-section-number">0.2</span> Using the code</h2>
-<p>The code and data used in this book are available from <a href="https://github.com/AllenDowney/ThinkStats2">&gt;https://github.com/AllenDowney/ThinkStats2</a>. Git is a version control system that allows you to keep track of the files that make up a project. A collection of files under Git’s control is called a repository. GitHub is
+<p>The code and data used in this book are available from <a href="https://github.com/AllenDowney/ThinkStats2">https://github.com/AllenDowney/ThinkStats2</a>. Git is a version control system that allows you to keep track of the files that make up a project. A collection of files under Git’s control is called a repository. GitHub is
 a hosting service that provides storage for Git repositories and a convenient web interface.</p>
 <p>The GitHub homepage for my repository provides several ways to work with
 the code:</p>
@@ -404,6 +413,19 @@ gitbook.start({
 });
 </script>
 
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    var src = "true";
+    if (src === "" || src === "true") src = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML";
+    if (location.protocol !== "file:" && /^https?:/.test(src))
+      src = src.replace(/^https?:/, '');
+    script.src = src;
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
 </body>
 
 </html>
