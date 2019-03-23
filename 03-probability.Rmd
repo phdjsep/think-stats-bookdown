@@ -1,4 +1,4 @@
-# Probability Mass Functions
+# Probability Mass Functions {#probability}
 
 
 The code for this chapter is in `probability.py`. For information
