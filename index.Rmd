@@ -3,6 +3,7 @@ title: "Think Stats"
 author: "Allen B. Downey"
 date: "`r Sys.Date()`"
 documentclass: book
+bibliography: [citation.bib]
 link-citations: yes
 site: bookdown::bookdown_site
 output:

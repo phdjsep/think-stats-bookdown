@@ -1,0 +1,776 @@
+<!DOCTYPE html>
+<html >
+
+<head>
+
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title>Chapter 5 Modeling Distributions | Think Stats</title>
+  <meta name="description" content="Version 2.0.35">
+  <meta name="generator" content="bookdown  and GitBook 2.6.7">
+
+  <meta property="og:title" content="Chapter 5 Modeling Distributions | Think Stats" />
+  <meta property="og:type" content="book" />
+  
+  
+  <meta property="og:description" content="Version 2.0.35" />
+  
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="Chapter 5 Modeling Distributions | Think Stats" />
+  
+  <meta name="twitter:description" content="Version 2.0.35" />
+  
+
+<meta name="author" content="Allen B. Downey">
+
+
+<meta name="date" content="2019-03-23">
+
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black">
+  
+  
+<link rel="prev" href="cumulative.html">
+
+<script src="libs/jquery-2.2.3/jquery.min.js"></script>
+<link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+
+
+
+
+
+
+
+
+
+
+</head>
+
+<body>
+
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i>Preface</a><ul>
+<li class="chapter" data-level="0.1" data-path="index.html"><a href="index.html#how-i-wrote-this-book"><i class="fa fa-check"></i><b>0.1</b> How I wrote this book</a></li>
+<li class="chapter" data-level="0.2" data-path="index.html"><a href="index.html#using-the-code"><i class="fa fa-check"></i><b>0.2</b> Using the code</a></li>
+<li class="chapter" data-level="0.3" data-path="index.html"><a href="index.html#contributor-list"><i class="fa fa-check"></i><b>0.3</b> Contributor List</a></li>
+</ul></li>
+<li class="chapter" data-level="1" data-path="exploratory.html"><a href="exploratory.html"><i class="fa fa-check"></i><b>1</b> Exploratory Data Analysis</a><ul>
+<li class="chapter" data-level="1.1" data-path="exploratory.html"><a href="exploratory.html#a-statistical-approach"><i class="fa fa-check"></i><b>1.1</b> A Statistical Approach</a></li>
+<li class="chapter" data-level="1.2" data-path="exploratory.html"><a href="exploratory.html#the-national-survey-of-family-growth"><i class="fa fa-check"></i><b>1.2</b> The National Survey of Family Growth</a></li>
+<li class="chapter" data-level="1.3" data-path="exploratory.html"><a href="exploratory.html#importing-the-data"><i class="fa fa-check"></i><b>1.3</b> Importing the Data</a></li>
+<li class="chapter" data-level="1.4" data-path="exploratory.html"><a href="exploratory.html#dataframes"><i class="fa fa-check"></i><b>1.4</b> DataFrames</a></li>
+<li class="chapter" data-level="1.5" data-path="exploratory.html"><a href="exploratory.html#variables"><i class="fa fa-check"></i><b>1.5</b> Variables</a></li>
+<li class="chapter" data-level="1.6" data-path="exploratory.html"><a href="exploratory.html#transformation"><i class="fa fa-check"></i><b>1.6</b> Transformation</a></li>
+<li class="chapter" data-level="1.7" data-path="exploratory.html"><a href="exploratory.html#validation"><i class="fa fa-check"></i><b>1.7</b> Validation</a></li>
+<li class="chapter" data-level="1.8" data-path="exploratory.html"><a href="exploratory.html#interpretation"><i class="fa fa-check"></i><b>1.8</b> Interpretation</a></li>
+<li class="chapter" data-level="1.9" data-path="exploratory.html"><a href="exploratory.html#exercises"><i class="fa fa-check"></i><b>1.9</b> Exercises</a></li>
+<li class="chapter" data-level="1.10" data-path="exploratory.html"><a href="exploratory.html#glossary"><i class="fa fa-check"></i><b>1.10</b> Glossary</a></li>
+</ul></li>
+<li class="chapter" data-level="2" data-path="distributions.html"><a href="distributions.html"><i class="fa fa-check"></i><b>2</b> Distributions</a><ul>
+<li class="chapter" data-level="2.1" data-path="distributions.html"><a href="distributions.html#histograms"><i class="fa fa-check"></i><b>2.1</b> Histograms</a></li>
+<li class="chapter" data-level="2.2" data-path="distributions.html"><a href="distributions.html#representing-histograms"><i class="fa fa-check"></i><b>2.2</b> Representing Histograms</a></li>
+<li class="chapter" data-level="2.3" data-path="distributions.html"><a href="distributions.html#plotting-histograms"><i class="fa fa-check"></i><b>2.3</b> Plotting Histograms</a></li>
+<li class="chapter" data-level="2.4" data-path="distributions.html"><a href="distributions.html#nsfg-variables"><i class="fa fa-check"></i><b>2.4</b> NSFG Variables</a></li>
+<li class="chapter" data-level="2.5" data-path="distributions.html"><a href="distributions.html#outliers"><i class="fa fa-check"></i><b>2.5</b> Outliers</a></li>
+<li class="chapter" data-level="2.6" data-path="distributions.html"><a href="distributions.html#first-babies"><i class="fa fa-check"></i><b>2.6</b> First Babies</a></li>
+<li class="chapter" data-level="2.7" data-path="distributions.html"><a href="distributions.html#summarizing-distributions"><i class="fa fa-check"></i><b>2.7</b> Summarizing Distributions</a></li>
+<li class="chapter" data-level="2.8" data-path="distributions.html"><a href="distributions.html#variance"><i class="fa fa-check"></i><b>2.8</b> Variance</a></li>
+<li class="chapter" data-level="2.9" data-path="distributions.html"><a href="distributions.html#effect-size"><i class="fa fa-check"></i><b>2.9</b> Effect Size</a></li>
+<li class="chapter" data-level="2.10" data-path="distributions.html"><a href="distributions.html#reporting-results"><i class="fa fa-check"></i><b>2.10</b> Reporting Results</a></li>
+<li class="chapter" data-level="2.11" data-path="distributions.html"><a href="distributions.html#exercises-1"><i class="fa fa-check"></i><b>2.11</b> Exercises</a></li>
+<li class="chapter" data-level="2.12" data-path="distributions.html"><a href="distributions.html#glossary-1"><i class="fa fa-check"></i><b>2.12</b> Glossary</a></li>
+</ul></li>
+<li class="chapter" data-level="3" data-path="probability.html"><a href="probability.html"><i class="fa fa-check"></i><b>3</b> Probability Mass Functions</a><ul>
+<li class="chapter" data-level="3.1" data-path="probability.html"><a href="probability.html#pmfs"><i class="fa fa-check"></i><b>3.1</b> PMFs</a></li>
+<li class="chapter" data-level="3.2" data-path="probability.html"><a href="probability.html#plotting-pmfs"><i class="fa fa-check"></i><b>3.2</b> Plotting PMFs</a></li>
+<li class="chapter" data-level="3.3" data-path="probability.html"><a href="probability.html#other-visualizations"><i class="fa fa-check"></i><b>3.3</b> Other Visualizations</a></li>
+<li class="chapter" data-level="3.4" data-path="probability.html"><a href="probability.html#the-class-size-paradox"><i class="fa fa-check"></i><b>3.4</b> The Class Size Paradox</a></li>
+<li class="chapter" data-level="3.5" data-path="probability.html"><a href="probability.html#dataframe-indexing"><i class="fa fa-check"></i><b>3.5</b> DataFrame Indexing</a></li>
+<li class="chapter" data-level="3.6" data-path="probability.html"><a href="probability.html#exercises-2"><i class="fa fa-check"></i><b>3.6</b> Exercises</a></li>
+<li class="chapter" data-level="3.7" data-path="probability.html"><a href="probability.html#glossary-2"><i class="fa fa-check"></i><b>3.7</b> Glossary</a></li>
+</ul></li>
+<li class="chapter" data-level="4" data-path="cumulative.html"><a href="cumulative.html"><i class="fa fa-check"></i><b>4</b> Cumulative Distribution Functions</a><ul>
+<li class="chapter" data-level="4.1" data-path="cumulative.html"><a href="cumulative.html#the-limits-of-pmfs"><i class="fa fa-check"></i><b>4.1</b> The Limits of PMFs</a></li>
+<li class="chapter" data-level="4.2" data-path="cumulative.html"><a href="cumulative.html#percentiles"><i class="fa fa-check"></i><b>4.2</b> Percentiles</a></li>
+<li class="chapter" data-level="4.3" data-path="cumulative.html"><a href="cumulative.html#cdfs"><i class="fa fa-check"></i><b>4.3</b> CDFs</a></li>
+<li class="chapter" data-level="4.4" data-path="cumulative.html"><a href="cumulative.html#representing-cdfs"><i class="fa fa-check"></i><b>4.4</b> Representing CDFs</a></li>
+<li class="chapter" data-level="4.5" data-path="cumulative.html"><a href="cumulative.html#comparing-cdfs"><i class="fa fa-check"></i><b>4.5</b> Comparing CDFs</a></li>
+<li class="chapter" data-level="4.6" data-path="cumulative.html"><a href="cumulative.html#percentile-based-statistics"><i class="fa fa-check"></i><b>4.6</b> Percentile-based Statistics</a></li>
+<li class="chapter" data-level="4.7" data-path="cumulative.html"><a href="cumulative.html#random-numbers"><i class="fa fa-check"></i><b>4.7</b> Random Numbers</a></li>
+<li class="chapter" data-level="4.8" data-path="cumulative.html"><a href="cumulative.html#comparing-percentile-ranks"><i class="fa fa-check"></i><b>4.8</b> Comparing Percentile Ranks</a></li>
+<li class="chapter" data-level="4.9" data-path="cumulative.html"><a href="cumulative.html#exercises-3"><i class="fa fa-check"></i><b>4.9</b> Exercises</a></li>
+<li class="chapter" data-level="4.10" data-path="cumulative.html"><a href="cumulative.html#glossary-3"><i class="fa fa-check"></i><b>4.10</b> Glossary</a></li>
+</ul></li>
+<li class="chapter" data-level="5" data-path="modeling.html"><a href="modeling.html"><i class="fa fa-check"></i><b>5</b> Modeling Distributions</a><ul>
+<li class="chapter" data-level="5.1" data-path="modeling.html"><a href="modeling.html#the-exponential-distribution"><i class="fa fa-check"></i><b>5.1</b> The Exponential Distribution</a></li>
+<li class="chapter" data-level="5.2" data-path="modeling.html"><a href="modeling.html#the-normal-distribution"><i class="fa fa-check"></i><b>5.2</b> The Normal Distribution</a></li>
+<li class="chapter" data-level="5.3" data-path="modeling.html"><a href="modeling.html#normal-probability-plot"><i class="fa fa-check"></i><b>5.3</b> Normal Probability Plot</a></li>
+<li class="chapter" data-level="5.4" data-path="modeling.html"><a href="modeling.html#the-lognormal-distribution"><i class="fa fa-check"></i><b>5.4</b> The Lognormal Distribution</a></li>
+<li class="chapter" data-level="5.5" data-path="modeling.html"><a href="modeling.html#the-pareto-distribution"><i class="fa fa-check"></i><b>5.5</b> The Pareto Distribution</a></li>
+<li class="chapter" data-level="5.6" data-path="modeling.html"><a href="modeling.html#generating-random-numbers"><i class="fa fa-check"></i><b>5.6</b> Generating Random Numbers</a></li>
+<li class="chapter" data-level="5.7" data-path="modeling.html"><a href="modeling.html#why-model"><i class="fa fa-check"></i><b>5.7</b> Why Model?</a></li>
+<li class="chapter" data-level="5.8" data-path="modeling.html"><a href="modeling.html#exercises-4"><i class="fa fa-check"></i><b>5.8</b> Exercises</a></li>
+<li class="chapter" data-level="5.9" data-path="modeling.html"><a href="modeling.html#glossary-4"><i class="fa fa-check"></i><b>5.9</b> Glossary</a></li>
+</ul></li>
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">Think Stats</a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="modeling" class="section level1">
+<h1><span class="header-section-number">Chapter 5</span> Modeling Distributions</h1>
+<p>The distributions we have used so far are
+called <strong>empirical distributions</strong>
+because they are based on empirical observations, which are necessarily
+finite samples.</p>
+<p>The alternative is an <strong>analytic distribution</strong>, which is
+characterized by a CDF that is a mathematical function. Analytic
+distributions can be used to model empirical distributions. In this
+context, a <strong>model</strong> is a
+simplification that leaves out unneeded details. This chapter presents
+common analytic distributions and uses them to model data from a variety
+of sources.</p>
+<p>The code for this chapter is in <code>analytic.py</code>. For information about
+downloading and working with this code, see Section <a href="index.html#using-the-code">0.2</a>.</p>
+<div id="the-exponential-distribution" class="section level2">
+<h2><span class="header-section-number">5.1</span> The Exponential Distribution</h2>
+<div class="figure" style="text-align: center"><span id="fig:analytic-expo-cdf"></span>
+<img src="images/14.png" alt="CDFs of exponential distributions with various parameters." width="90%" />
+<p class="caption">
+Figure 5.1: CDFs of exponential distributions with various parameters.
+</p>
+</div>
+<p>I’ll start with the <strong>exponential distribution</strong> because it is
+relatively simple. The CDF of the exponential distribution is</p>
+<p><span class="math display">\[
+CDF(x) = 1 - e^{\lambda x}
+\]</span></p>
+<p>The parameter, <span class="math inline">\(\lambda\)</span>, determines the shape
+of the distribution. Figure <a href="#analytic-expo-cdf">5.1</a> shows what this CDF looks like with <span class="math inline">\(\lambda\)</span> = 0.5,
+1, and 2.</p>
+<p>In the real world, exponential
+distributions come up when we look at a series of events and measure the
+times between events, called <strong>interarrival
+times</strong>. If the events are equally likely to occur at any time, the
+distribution of interarrival times tends to look like an exponential
+distribution.</p>
+<p>As an example, we will look at the
+interarrival time of births. On December 18, 1997, 44 babies were born
+in a hospital in Brisbane,
+Australia.<a href="#fn1" class="footnote-ref" id="fnref1"><sup>1</sup></a> The time of birth for all 44 babies was
+reported in the local paper; the complete dataset is in a file called
+<code>babyboom.dat</code>, in the <code>ThinkStats2</code> repository.</p>
+<pre><code>    df = ReadBabyBoom()
+    diffs = df.minutes.diff()
+    cdf = thinkstats2.Cdf(diffs, label=&#39;actual&#39;)
+
+    thinkplot.Cdf(cdf)
+    thinkplot.Show(xlabel=&#39;minutes&#39;, ylabel=&#39;CDF&#39;)</code></pre>
+<p><code>ReadBabyBoom</code> reads the data file
+and returns a DataFrame with columns <code>time</code>, <code>sex</code>, <code>weight_g</code>, and <code>minutes</code>, where <code>minutes</code> is time of birth converted
+to minutes since midnight.</p>
+<div class="figure" style="text-align: center"><span id="fig:analytic-interarrival-cdf"></span>
+<img src="images/15.png" alt="CDF of interarrival times (left) and CCDF on a log-y scale (right)" width="90%" />
+<p class="caption">
+Figure 5.2: CDF of interarrival times (left) and CCDF on a log-y scale (right)
+</p>
+</div>
+<p><code>diffs</code> is the difference between
+consecutive birth times, and <code>cdf</code> is the distribution of these
+interarrival times. Figure <a href="#analytic-interarrival-cdf">5.2</a> (left) shows the CDF. It seems to have the
+general shape of an exponential distribution, but how can we
+tell?</p>
+<p>One way is to plot the <strong>complementary CDF</strong>, which is <span class="math inline">\(1 − CDF(x)\)</span>, on a log-y scale. For data from an
+exponential distribution, the result is a straight line. Let’s see why
+that works.</p>
+<p>If you plot the complementary CDF (CCDF)
+of a dataset that you think is exponential, you expect to see a function
+like:</p>
+<p><span class="math display">\[
+y \approx e^{-\lambda x}
+\]</span></p>
+<p>Taking the log of both sides yields:</p>
+<p><span class="math display">\[
+logy \approx \lambda x
+\]</span></p>
+<p>So on a log-y scale the CCDF is a
+straight line with slope <span class="math inline">\(-\lambda\)</span>. Here’s how we can generate a plot like
+that:</p>
+<pre><code>    thinkplot.Cdf(cdf, complement=True)
+    thinkplot.Show(xlabel=&#39;minutes&#39;,
+                   ylabel=&#39;CCDF&#39;,
+                   yscale=&#39;log&#39;)</code></pre>
+<p>With the argument <code>complement=True</code>, <code>thinkplot.Cdf</code> computes the
+complementary CDF before plotting. And with <code>yscale=’log’</code>, <code>thinkplot.Show</code> sets the <code>y</code> axis to a logarithmic scale.</p>
+<p>Figure <a href="#analytic-interarrival-cdf">5.2</a> (right) shows the result. It is not exactly
+straight, which indicates that the exponential distribution is not a
+perfect model for this data. Most likely the underlying assumption—that
+a birth is equally likely at any time of day—is not exactly true.
+Nevertheless, it might be reasonable to model this dataset with an
+exponential distribution. With that simplification, we can summarize the
+distribution with a single parameter.</p>
+<p>The parameter, <span class="math inline">\(\lambda\)</span>, can be interpreted as a
+rate; that is, the number of events that occur, on average, in a unit of
+time. In this example, 44 babies are born in 24 hours, so the rate is λ
+= 0.0306 births per minute. The mean of an exponential distribution is
+1/λ, so the mean time between births is 32.7 minutes.</p>
+</div>
+<div id="the-normal-distribution" class="section level2">
+<h2><span class="header-section-number">5.2</span> The Normal Distribution</h2>
+<p>The <strong>normal
+distribution</strong>, also called Gaussian, is commonly used because it
+describes many phenomena, at least approximately. It turns out that
+there is a good reason for its ubiquity, which we will get to in
+Section <a href="#CLT"><strong>??</strong></a>.</p>
+<div class="figure" style="text-align: center"><span id="fig:analytic-gaussian-cdf"></span>
+<img src="images/16.png" alt="CDF of normal distributions with a range of parameters." width="90%" />
+<p class="caption">
+Figure 5.3: CDF of normal distributions with a range of parameters.
+</p>
+</div>
+<p>The normal distribution is characterized
+by two parameters: the mean, µ, and standard deviation σ. The normal
+distribution with µ=0 and σ=1 is called the <strong>standard normal distribution</strong>. Its CDF is
+defined by an integral that does not have a closed form solution, but
+there are algorithms that evaluate it efficiently. One of them is
+provided by SciPy: <code>scipy.stats.norm</code> is an object that
+represents a normal distribution; it provides a method, <code>cdf</code>, that evaluates the standard
+normal CDF:</p>
+<pre><code>&gt;&gt;&gt; import scipy.stats
+&gt;&gt;&gt; scipy.stats.norm.cdf(0)
+0.5</code></pre>
+<p>This result is correct: the median of the
+standard normal distribution is 0 (the same as the mean), and half of
+the values fall below the median, so <span class="math inline">\(CDF(0)\)</span> is 0.5.</p>
+<p><code>norm.cdf</code> takes optional parameters:
+<code>loc</code>, which specifies the mean, and <code>scale</code>, which specifies the standard deviation.</p>
+<p><code>thinkstats2</code> makes this function a
+little easier to use by providing <code>EvalNormalCdf</code>, which takes
+parameters <code>mu</code> and <code>sigma</code> and evaluates the CDF at
+<code>x</code>:</p>
+<pre><code>def EvalNormalCdf(x, mu=0, sigma=1):
+    return scipy.stats.norm.cdf(x, loc=mu, scale=sigma)</code></pre>
+<p>Figure <a href="#analytic-gaussian-cdf">5.3</a> shows CDFs for normal distributions with a
+range of parameters. The sigmoid shape of these curves is a recognizable
+characteristic of a normal distribution.</p>
+<p>In the previous chapter we looked at the
+distribution of birth weights in the NSFG. Figure <a href="#analytic-birthwgt-model">5.4</a> shows the empirical CDF of weights for all
+live births and the CDF of a normal distribution with the same mean and
+variance.</p>
+<div class="figure" style="text-align: center"><span id="fig:analytic-birthwgt-model"></span>
+<img src="images/17.png" alt="CDF of birth weights with a normal model." width="90%" />
+<p class="caption">
+Figure 5.4: CDF of birth weights with a normal model.
+</p>
+</div>
+<p>The normal distribution is a good model
+for this dataset, so if we summarize the distribution with the
+parameters <span class="math inline">\(\mu\)</span> = 7.28 and <span class="math inline">\(\sigma\)</span> = 1.24, the resulting error (difference
+between the model and the data) is small.</p>
+<p>Below the 10th percentile there is a
+discrepancy between the data and the model; there are more light babies
+than we would expect in a normal distribution. If we are specifically
+interested in preterm babies, it would be important to get this part of
+the distribution right, so it might not be appropriate to use the normal
+model.</p>
+</div>
+<div id="normal-probability-plot" class="section level2">
+<h2><span class="header-section-number">5.3</span> Normal Probability Plot</h2>
+<p>For the exponential distribution, and a
+few others, there are simple transformations we can use to test whether
+an analytic distribution is a good model for a dataset.</p>
+<p>For the normal distribution there is no
+such transformation, but there is an alternative called a <strong>normal probability plot</strong>. There are two
+ways to generate a normal probability plot: the hard way and the easy
+way. If you are interested in the hard way, you can read about it at
+<a href="https://en.wikipedia.org/wiki/Normal_probability_plot">https://en.wikipedia.org/wiki/Normal_probability_plot</a>. Here’s the easy way:</p>
+<ol style="list-style-type: decimal">
+<li>Sort the values in the sample.</li>
+<li>From a standard normal distribution
+(<span class="math inline">\(\mu\)</span>=0 and <span class="math inline">\(\sigma\)</span>=1), generate a random sample with the same size as the
+sample, and sort it.</li>
+<li>Plot the sorted values from the sample versus the random values.</li>
+</ol>
+<p>If the distribution of the sample is
+approximately normal, the result is a straight line with intercept <code>mu</code> and slope <code>sigma</code>.
+<code>thinkstats2</code> provides <code>NormalProbability</code>, which takes a
+sample and returns two NumPy arrays:</p>
+<pre><code>xs, ys = thinkstats2.NormalProbability(sample)</code></pre>
+<div class="figure" style="text-align: center"><span id="fig:analytic-normal-prob-example"></span>
+<img src="images/18.png" alt="Normal probability plot for random samples from normal distributions." width="90%" />
+<p class="caption">
+Figure 5.5: Normal probability plot for random samples from normal distributions.
+</p>
+</div>
+<p><code>ys</code> contains the sorted values from <code>sample</code>; <code>xs</code> contains the random values from
+the standard normal distribution.</p>
+<p>To test <code>NormalProbability</code> I generated some
+fake samples that were actually drawn from normal distributions with
+various parameters. Figure <a href="#analytic-normal-prob-example">5.5</a> shows the results. The lines are approximately
+straight, with values in the tails deviating more than values near the
+mean.</p>
+<p>Now let’s try it with real data. Here’s
+code to generate a normal probability plot for the birth weight data
+from the previous section. It plots a gray line that represents the
+model and a blue line that represents the data.</p>
+<pre><code>def MakeNormalPlot(weights):
+    mean = weights.mean()
+    std = weights.std()
+
+    xs = [-4, 4]
+    fxs, fys = thinkstats2.FitLine(xs, inter=mean, slope=std)
+    thinkplot.Plot(fxs, fys, color=&#39;gray&#39;, label=&#39;model&#39;)
+
+    xs, ys = thinkstats2.NormalProbability(weights)
+    thinkplot.Plot(xs, ys, label=&#39;birth weights&#39;)</code></pre>
+<p><code>weights</code> is a pandas Series of birth
+weights; <code>mean</code> and <code>std</code> are the mean and standard
+deviation.</p>
+<p><code>FitLine</code> takes a sequence of <code>xs</code>, an intercept, and a slope; it
+returns <code>xs</code> and <code>ys</code> that represent a line with the
+given parameters, evaluated at the values in <code>xs</code>.</p>
+<p><code>NormalProbability</code> returns <code>xs</code> and <code>ys</code> that contain values from the
+standard normal distribution and values from <code>weights</code>. If the distribution of
+weights is normal, the data should match the model.</p>
+<div class="figure" style="text-align: center"><span id="fig:analytic-birthwgt-normal"></span>
+<img src="images/19.png" alt="Normal probability plot of birth weights." width="90%" />
+<p class="caption">
+Figure 5.6: Normal probability plot of birth weights.
+</p>
+</div>
+<p>Figure <a href="#analytic-birthwgt-normal">5.6</a> shows the results for all live births, and
+also for full term births (pregnancy length greater than 36 weeks). Both
+curves match the model near the mean and deviate in the tails. The
+heaviest babies are heavier than what the model expects, and the
+lightest babies are lighter.</p>
+<p>When we select only full term births, we
+remove some of the lightest weights, which reduces the discrepancy in
+the lower tail of the distribution.</p>
+<p>This plot suggests that the normal model
+describes the distribution well within a few standard deviations from
+the mean, but not in the tails. Whether it is good enough for practical
+purposes depends on the purposes.</p>
+</div>
+<div id="the-lognormal-distribution" class="section level2">
+<h2><span class="header-section-number">5.4</span> The Lognormal Distribution</h2>
+<p>If the logarithms of a set of values have
+a normal distribution, the values have a <strong>lognormal distribution</strong>. The CDF of the
+lognormal distribution is the same as the CDF of the normal
+distribution, with <span class="math inline">\(logx\)</span>
+substituted for <span class="math inline">\(x\)</span>.</p>
+<p><span class="math display">\[
+CDF_{lognormal}(x) = CDF_{normal}(logx)
+\]</span></p>
+<p>The parameters of the lognormal
+distribution are usually denoted <span class="math inline">\(\mu\)</span> and <span class="math inline">\(\sigma\)</span>. But remember that these
+parameters are <em>not</em> the mean and standard deviation; the mean of a
+lognormal distribution is <span class="math inline">\(exp (\mu + {\sigma^2 \over 2})\)</span> and the standard deviation is ugly (see
+<a href="http://wikipedia.org/wiki/Log-normal_distribution">http://wikipedia.org/wiki/Log-normal_distribution</a>).</p>
+<div class="figure" style="text-align: center"><span id="fig:brfss-weight"></span>
+<img src="images/20.png" alt="CDF of adult weights on a linear scale (left) and log scale (right)" width="90%" />
+<p class="caption">
+Figure 5.7: CDF of adult weights on a linear scale (left) and log scale (right)
+</p>
+</div>
+<p>If a sample is approximately lognormal
+and you plot its CDF on a log-x scale, it will have the characteristic
+shape of a normal distribution. To test how well the sample fits a
+lognormal model, you can make a normal probability plot using the log of
+the values in the sample.</p>
+<p>As an example, let’s look at the
+distribution of adult weights, which is approximately
+lognormal.<a href="#fn2" class="footnote-ref" id="fnref2"><sup>2</sup></a></p>
+<p>The National Center for Chronic Disease
+Prevention and Health Promotion conducts an annual survey as part of the
+Behavioral Risk Factor Surveillance System
+(BRFSS).<a href="#fn3" class="footnote-ref" id="fnref3"><sup>3</sup></a></p>
+<p>In 2008, they interviewed 414,509 respondents
+and asked about their demographics, health, and health risks. Among the
+data they collected are the weights in kilograms of 398,484 respondents.</p>
+<p>The repository for this book contains
+<code>CDBRFS08.ASC.gz</code>, a
+fixed-width ASCII file that contains data from the BRFSS, and <code>brfss.py</code>, which reads the file and
+analyzes the data.</p>
+<div class="figure" style="text-align: center"><span id="fig:brfss-weight-normal"></span>
+<img src="images/21.png" alt="Normal probability plots for adult weight on a linear scale (left) and log scale (right)." width="90%" />
+<p class="caption">
+Figure 5.8: Normal probability plots for adult weight on a linear scale (left) and log scale (right).
+</p>
+</div>
+<p>Figure <a href="#brfss-weight">5.7</span></a> (left) shows the distribution of adult weights
+on a linear scale with a normal model. Figure <a href="#brfss-weight">5.7</a> (right) shows the same distribution on a log
+scale with a lognormal model. The lognormal model is a better fit, but
+this representation of the data does not make the difference
+particularly dramatic.</p>
+<p>Figure <a href="#brfss-weight-normal">5.8</a> shows normal probability plots for adult
+weights, <span class="math inline">\(w\)</span>, and for their logarithms, <span class="math inline">\(log_10{w}\)</span>. Now it is apparent that the
+data deviate substantially from the normal model. On the other hand, the
+lognormal model is a good match for the data.</p>
+</div>
+<div id="the-pareto-distribution" class="section level2">
+<h2><span class="header-section-number">5.5</span> The Pareto Distribution</h2>
+<p>The <strong>Pareto
+distribution</strong> is named after the economist Vilfredo Pareto, who
+used it to describe the distribution of wealth (see <a href="http://wikipedia.org/wiki/Pareto_distribution">http://wikipedia.org/wiki/Pareto_distribution</a>). Since then, it has been used to describe
+phenomena in the natural and social sciences including sizes of cities
+and towns, sand particles and meteorites, forest fires and earthquakes.</p>
+<p>The CDF of the Pareto distribution is:</p>
+<p><span class="math display">\[
+CDF(x) = 1 - \Bigg({x \over x_m}\Bigg)^{-\alpha}
+\]</span></p>
+<p>The parameters <span class="math inline">\(x_m\)</span> and <span class="math inline">\(\alpha\)</span> determine the location and shape of the
+distribution. <span class="math inline">\(x_m\)</span> is the minimum possible value.
+Figure <a href="#analytic-pareto-cdf">5.9</a> shows CDFs of Pareto distributions with <span class="math inline">\(x_m\)</span> = 0.5
+and different values of <span class="math inline">\(\alpha\)</span>.</p>
+<div class="figure" style="text-align: center"><span id="fig:analytic-pareto-cdf"></span>
+<img src="images/22.png" alt="CDFs of Pareto distributions with different parameters." width="90%" />
+<p class="caption">
+Figure 5.9: CDFs of Pareto distributions with different parameters.
+</p>
+</div>
+<p>There is a simple visual test that
+indicates whether an empirical distribution fits a Pareto distribution:
+on a log-log scale, the CCDF looks like a straight line. Let’s see why
+that works.</p>
+<p>If you plot the CCDF of a sample from a
+Pareto distribution on a linear scale, you expect to see a function
+like:</p>
+<p><span class="math display">\[
+y \approx \Bigg({x \over x_m} \Bigg)^{-\alpha}
+\]</span></p>
+<p>Taking the log of both sides yields:</p>
+<p><span class="math display">\[
+logy \approx -\alpha(logx - logx_m) 
+\]</span></p>
+<p>So if you plot <span class="math inline">\(logy\)</span> versus <span class="math inline">\(logx\)</span>, it should look like a straight line
+with slope <span class="math inline">\(-\alpha\)</span> and intercept <span class="math inline">\(\alpha logx_m\)</span>.</p>
+<p>As an example, let’s look at the sizes of
+cities and towns. The U.S. Census Bureau publishes the population of
+every incorporated city and town in the United States.</p>
+<div class="figure" style="text-align: center"><span id="fig:populations-pareto"></span>
+<img src="images/23.png" alt="CCDFs of city and town populations, on a log-log scale." width="90%" />
+<p class="caption">
+Figure 5.10: CCDFs of city and town populations, on a log-log scale.
+</p>
+</div>
+<p>I downloaded their data from
+<a href="http://www.census.gov/popest/data/cities/totals/2012/SUB-EST2012-3.html">http://www.census.gov/popest/data/cities/totals/2012/SUB-EST2012-3.html</a>; it is in the repository for this book in a
+file named <code>PEP_2012_PEPANNRES_with_ann.csv</code>. The repository also
+contains <code>populations.py</code>,
+which reads the file and plots the distribution of populations.</p>
+<p>Figure <a href="#populations-pareto">5.10</a> shows the CCDF of populations on a log-log
+scale. The largest 1% of cities and towns, below <span class="math inline">\(10^-2\)</span>,
+fall along a straight line. So we could conclude, as some researchers
+have, that the tail of this distribution fits a Pareto model.</p>
+<p>On the other hand, a lognormal
+distribution also models the data well. Figure <a href="#populations-normal">5.11</a> shows the CDF of populations and a lognormal
+model (left), and a normal probability plot (right). Both plots show
+good agreement between the data and the model.</p>
+<p>Neither model is perfect. The Pareto
+model only applies to the largest 1% of cities, but it is a better fit
+for that part of the distribution. The lognormal model is a better fit
+for the other 99%. Which model is appropriate depends on which part of
+the distribution is relevant.</p>
+<div class="figure" style="text-align: center"><span id="fig:populations-normal"></span>
+<img src="images/24.png" alt="CDF of city and town populations on a log-x scale (left), and normal probability plot of log-transformed populations (right)." width="90%" />
+<p class="caption">
+Figure 5.11: CDF of city and town populations on a log-x scale (left), and normal probability plot of log-transformed populations (right).
+</p>
+</div>
+</div>
+<div id="generating-random-numbers" class="section level2">
+<h2><span class="header-section-number">5.6</span> Generating Random Numbers</h2>
+<p>Analytic CDFs can be used to generate
+random numbers with a given distribution function, <span class="math inline">\(p = CDF(x)\)</span>. If there is an efficient way to
+compute the inverse CDF, we can generate random values with the
+appropriate distribution by choosing <span class="math inline">\(p\)</span> from a uniform distribution between 0
+and 1, then choosing $x = ICDF(p).</p>
+<p>For example, the CDF of the exponential
+distribution is</p>
+<p><span class="math display">\[
+p = 1 - e^{-\lambda x}
+\]</span></p>
+<p>Solving for <span class="math inline">\(x\)</span> yields:</p>
+<p><span class="math display">\[
+x = {-log(1-p) \over \lambda}
+\]</span></p>
+<p>So in Python we can write</p>
+<pre><code>def expovariate(lam):
+    p = random.random()
+    x = -math.log(1-p) / lam
+    return x</code></pre>
+<p><code>expovariate</code> takes <code>lam</code> and returns a random value
+chosen from the exponential distribution with parameter <code>lam</code>.</p>
+<p>Two notes about this implementation: I
+called the parameter <code>lam</code> because <code>lambda</code> is a Python keyword. Also,
+since log0 is undefined, we have to be a little careful. The
+implementation of <code>random.random</code> can return 0 but not
+1, so <span class="math inline">\(1 − p\)</span> can be 1 but not 0,
+so <code>log(1-p)</code> is always
+defined.</p>
+</div>
+<div id="why-model" class="section level2">
+<h2><span class="header-section-number">5.7</span> Why Model?</h2>
+<p>At the beginning of this chapter, I said
+that many real world phenomena can be modeled with analytic
+distributions. “So,” you might ask, “what?”</p>
+<p>Like all models, analytic distributions
+are abstractions, which means they leave out details that are considered
+irrelevant. For example, an observed distribution might have measurement
+errors or quirks that are specific to the sample; analytic models smooth
+out these idiosyncrasies.</p>
+<p>Analytic models are also a form of data
+compression. When a model fits a dataset well, a small set of parameters
+can summarize a large amount of data.</p>
+<p>It is sometimes surprising when data from
+a natural phenomenon fit an analytic distribution, but these
+observations can provide insight into physical systems. Sometimes we can
+explain why an observed distribution has a particular form. For example,
+Pareto distributions are often the result of generative processes with
+positive feedback (so-called preferential attachment processes: see
+<a href="http://wikipedia.org/wiki/Preferential_attachment">http://wikipedia.org/wiki/Preferential_attachment</a>).</p>
+<p>Also, analytic distributions lend
+themselves to mathematical analysis, as we will see in
+Chapter <a href="#analysis"><strong>??</strong></a>.</p>
+<p>But it is important to remember that all
+models are imperfect. Data from the real world never fit an analytic
+distribution perfectly. People sometimes talk as if data are generated
+by models; for example, they might say that the distribution of human
+heights is normal, or the distribution of income is lognormal. Taken
+literally, these claims cannot be true; there are always differences
+between the real world and mathematical models.</p>
+<p>Models are useful if they capture the
+relevant aspects of the real world and leave out unneeded details. But
+what is “relevant” or “unneeded” depends on what you are planning to use
+the model for.</p>
+</div>
+<div id="exercises-4" class="section level2">
+<h2><span class="header-section-number">5.8</span> Exercises</h2>
+<p>For the following exercises, you can start with <code>chap05ex.ipynb</code>. My solution is in <code>chap05soln.ipynb</code>.</p>
+<p><strong>Exercise 1</strong></p>
+<p>In the BRFSS (see
+Section <a href="#lognormal"><strong>??</strong></a>, the distribution of heights is roughly
+normal with parameters <span class="math inline">\(\mu\)</span> = 178 cm and <span class="math inline">\(\sigma\)</span> = 7.7 cm for men, and <span class="math inline">\(\mu\)</span> =
+163 cm and <span class="math inline">\(\sigma\)</span> = 7.3 cm for women.</p>
+<p>In order to join Blue Man Group, you
+have to be male between 5’10” and 6’1” (see<a href="http://bluemancasting.com">http://bluemancasting.com</a>). What percentage of the U.S. male population
+is in this range? Hint: use <code>scipy.stats.norm.cdf</code>.</p>
+<p><strong>Exercise 2</strong></p>
+<p>To get a feel for the
+Pareto distribution, let’s see how different the world would be if the
+distribution of human height were Pareto. With the parameters $x_m = 1 m and <span class="math inline">\(\alpha\)</span> = 1.7, we get a distribution
+with a reasonable minimum, 1 m, and median, 1.5 m.</p>
+<p>Plot this distribution. What is the mean
+human height in Pareto world? What fraction of the population is shorter
+than the mean? If there are 7 billion people in Pareto world, how many
+do we expect to be taller than 1 km? How tall do we expect the tallest
+person to be?</p>
+<p><strong>Exercise 3</strong></p>
+<p>The Weibull distribution is a
+generalization of the exponential distribution that comes up in failure
+analysis (see <a href="http://wikipedia.org/wiki/Weibull_distribution">http://wikipedia.org/wiki/Weibull_distribution</a>. Its CDF is</p>
+<p><span class="math display">\[
+CDF(x) = 1 - e^{({x \over \lambda})^k}
+\]</span></p>
+<p>Can you find a transformation that
+makes a Weibull distribution look like a straight line? What do the
+slope and intercept of the line indicate?</p>
+<p>Use <code>random.weibullvariate</code> to generate a
+sample from a Weibull distribution and use it to test your
+transformation.</p>
+<p><strong>Exercise 4</strong>  </p>
+<p>For small values of <span class="math inline">\(n\)</span>, we don’t expect an empirical
+distribution to fit an analytic distribution exactly. One way to
+evaluate the quality of fit is to generate a sample from an analytic
+distribution and see how well it matches the data.</p>
+<p>For example, in Section <a href="#exponential"><strong>??</strong></a> we plotted the distribution of time between
+births and saw that it is approximately exponential. But the
+distribution is based on only 44 data points. To see whether the data
+might have come from an exponential distribution, generate 44 values
+from an exponential distribution with the same mean as the data, about
+33 minutes between births.</p>
+<p>Plot the distribution of the random
+values and compare it to the actual distribution. You can use <code>random.expovariate</code> to generate the
+values.</p>
+<p><strong>Exercise 5</strong>  </p>
+<p>In the repository for this
+book, you’ll find a set of data files called <code>mystery0.dat</code>, <code>mystery1.dat</code>, and so on. Each
+contains a sequence of random numbers generated from an analytic
+distribution.</p>
+<p>You will also find <code>test_models.py</code>, a
+script that reads data from a file and plots the CDF under a variety of
+transforms. You can run it like this:</p>
+<pre><code>$ python test_models.py mystery0.dat</code></pre>
+<p>Based on these plots, you should be able
+to infer what kind of distribution generated each file. If you are
+stumped, you can look in <code>mystery.py</code>, which contains the code
+that generated the files.</p>
+<p><strong>Exercise 6</strong></p>
+<p>The distributions of wealth and income
+are sometimes modeled using lognormal and Pareto distributions. To see
+which is better, let’s look at some data.</p>
+<p>The Current Population Survey (CPS) is a
+joint effort of the Bureau of Labor Statistics and the Census Bureau to
+study income and related variables. Data collected in 2013 is available
+from <a href="http://www.census.gov/hhes/www/cpstables/032013/hhinc/toc.htm">http://www.census.gov/hhes/www/cpstables/032013/hhinc/toc.htm</a>. I downloaded <code>hinc06.xls</code>, which is an Excel
+spreadsheet with information about household income, and converted it to
+<code>hinc06.csv</code>, a CSV file you
+will find in the repository for this book. You will also find <code>hinc.py</code>, which reads this
+file.</p>
+<p>Extract the distribution of incomes from
+this dataset. Are any of the analytic distributions in this chapter a
+good model of the data? A solution to this exercise is in <code>hinc\_soln.py</code>.</p>
+</div>
+<div id="glossary-4" class="section level2">
+<h2><span class="header-section-number">5.9</span> Glossary</h2>
+<ul>
+<li><strong>empirical distribution</strong>: The
+distribution of values in a sample.</li>
+<li><strong>analytic distribution</strong>: A distribution
+whose CDF is an analytic function.</li>
+<li><strong>model</strong>: A useful simplification.
+Analytic distributions are often good models of more complex
+empirical distributions.</li>
+<li><strong>interarrival time</strong>: The elapsed time
+between two events.</li>
+<li><strong>complementary CDF</strong>: A function that
+maps from a value, <span class="math inline">\(x\)</span>, to the
+fraction of values that exceed <span class="math inline">\(x\)</span>, which is <span class="math inline">\(1 − CDF(x)\)</span>.</li>
+<li><strong>standard normal distribution</strong>: The
+normal distribution with mean 0 and standard deviation 1.</li>
+<li><strong>normal probability plot</strong>: A plot of
+the values in a sample versus random values from a standard normal
+distribution.</li>
+</ul>
+
+</div>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div class="footnotes">
+<hr />
+<ol start="1">
+<li id="fn1"><p>This example is based on information and data from Dunn, “A Simple
+Dataset for Demonstrating Common Distributions,” Journal of Statistics
+Education v.7, n.3 (1999).<a href="modeling.html#fnref1" class="footnote-back">↩</a></p></li>
+<li id="fn2"><p>I was tipped off to this possibility by a comment (without citation) at
+<a href="http://mathworld.wolfram.com/LogNormalDistribution.html">http://mathworld.wolfram.com/LogNormalDistribution.html</a>.
+Subsequently I found a paper that proposes the log transform and
+suggests a cause: Penman and Johnson, “The Changing Shape of the Body
+Mass Index Distribution Curve in the Population,” Preventing Chronic
+Disease, 2006 July; 3(3): A74. Online at <a href="http://www.ncbi.nlm.nih.gov/pmc/articles/PMC1636707">http://www.ncbi.nlm.nih.gov/pmc/articles/PMC1636707</a>.<a href="modeling.html#fnref2" class="footnote-back">↩</a></p></li>
+<li id="fn3"><p>Centers for Disease Control and Prevention (CDC). Behavioral Risk Factor
+Surveillance System Survey Data. Atlanta, Georgia: U.S. Department of
+Health and Human Services, Centers for Disease Control and
+Prevention, 2008.<a href="modeling.html#fnref3" class="footnote-back">↩</a></p></li>
+</ol>
+</div>
+            </section>
+
+          </div>
+        </div>
+      </div>
+<a href="cumulative.html" class="navigation navigation-prev navigation-unique" aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+
+    </div>
+  </div>
+<script src="libs/gitbook-2.6.7/js/app.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/lunr.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script>
+gitbook.require(["gitbook"], function(gitbook) {
+gitbook.start({
+"sharing": {
+"github": false,
+"facebook": true,
+"twitter": true,
+"google": false,
+"linkedin": false,
+"weibo": false,
+"instapaper": false,
+"vk": false,
+"all": ["facebook", "google", "twitter", "linkedin", "weibo", "instapaper"]
+},
+"fontsettings": {
+"theme": "white",
+"family": "sans",
+"size": 2
+},
+"edit": {
+"link": null,
+"text": null
+},
+"history": {
+"link": null,
+"text": null
+},
+"download": null,
+"toc": {
+"collapse": "subsection"
+}
+});
+});
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    var src = "true";
+    if (src === "" || src === "true") src = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML";
+    if (location.protocol !== "file:" && /^https?:/.test(src))
+      src = src.replace(/^https?:/, '');
+    script.src = src;
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+</body>
+
+</html>
