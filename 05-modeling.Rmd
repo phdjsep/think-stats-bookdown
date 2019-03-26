@@ -137,8 +137,8 @@ knitr::include_graphics("images/16.png")
 ```
 
 The normal distribution is characterized
-by two parameters: the mean, µ, and standard deviation σ. The normal
-distribution with µ=0 and σ=1 is called the **standard normal distribution**. Its CDF is
+by two parameters: the mean, $\mu$, and standard deviation $\sigma$. The normal
+distribution with $\mu$=0 and $\sigma$=1 is called the **standard normal distribution**. Its CDF is
 defined by an integral that does not have a closed form solution, but
 there are algorithms that evaluate it efficiently. One of them is
 provided by SciPy: `scipy.stats.norm` is an object that
@@ -639,4 +639,3 @@ good model of the data? A solution to this exercise is in `hinc\_soln.py`.
 -   **normal probability plot**: A plot of
     the values in a sample versus random values from a standard normal
     distribution. 
-    

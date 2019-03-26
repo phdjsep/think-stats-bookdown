@@ -1,0 +1,782 @@
+<!DOCTYPE html>
+<html >
+
+<head>
+
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title>Chapter 6 Probability Density Functions | Think Stats</title>
+  <meta name="description" content="Version 2.0.35">
+  <meta name="generator" content="bookdown  and GitBook 2.6.7">
+
+  <meta property="og:title" content="Chapter 6 Probability Density Functions | Think Stats" />
+  <meta property="og:type" content="book" />
+  
+  
+  <meta property="og:description" content="Version 2.0.35" />
+  
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="Chapter 6 Probability Density Functions | Think Stats" />
+  
+  <meta name="twitter:description" content="Version 2.0.35" />
+  
+
+<meta name="author" content="Allen B. Downey">
+
+
+<meta name="date" content="2019-03-26">
+
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black">
+  
+  
+<link rel="prev" href="modeling.html">
+
+<script src="libs/jquery-2.2.3/jquery.min.js"></script>
+<link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+
+
+
+
+
+
+
+
+
+
+</head>
+
+<body>
+
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i>Preface</a><ul>
+<li class="chapter" data-level="0.1" data-path="index.html"><a href="index.html#how-i-wrote-this-book"><i class="fa fa-check"></i><b>0.1</b> How I wrote this book</a></li>
+<li class="chapter" data-level="0.2" data-path="index.html"><a href="index.html#using-the-code"><i class="fa fa-check"></i><b>0.2</b> Using the code</a></li>
+<li class="chapter" data-level="0.3" data-path="index.html"><a href="index.html#contributor-list"><i class="fa fa-check"></i><b>0.3</b> Contributor List</a></li>
+</ul></li>
+<li class="chapter" data-level="1" data-path="exploratory.html"><a href="exploratory.html"><i class="fa fa-check"></i><b>1</b> Exploratory Data Analysis</a><ul>
+<li class="chapter" data-level="1.1" data-path="exploratory.html"><a href="exploratory.html#a-statistical-approach"><i class="fa fa-check"></i><b>1.1</b> A Statistical Approach</a></li>
+<li class="chapter" data-level="1.2" data-path="exploratory.html"><a href="exploratory.html#the-national-survey-of-family-growth"><i class="fa fa-check"></i><b>1.2</b> The National Survey of Family Growth</a></li>
+<li class="chapter" data-level="1.3" data-path="exploratory.html"><a href="exploratory.html#importing-the-data"><i class="fa fa-check"></i><b>1.3</b> Importing the Data</a></li>
+<li class="chapter" data-level="1.4" data-path="exploratory.html"><a href="exploratory.html#dataframes"><i class="fa fa-check"></i><b>1.4</b> DataFrames</a></li>
+<li class="chapter" data-level="1.5" data-path="exploratory.html"><a href="exploratory.html#variables"><i class="fa fa-check"></i><b>1.5</b> Variables</a></li>
+<li class="chapter" data-level="1.6" data-path="exploratory.html"><a href="exploratory.html#transformation"><i class="fa fa-check"></i><b>1.6</b> Transformation</a></li>
+<li class="chapter" data-level="1.7" data-path="exploratory.html"><a href="exploratory.html#validation"><i class="fa fa-check"></i><b>1.7</b> Validation</a></li>
+<li class="chapter" data-level="1.8" data-path="exploratory.html"><a href="exploratory.html#interpretation"><i class="fa fa-check"></i><b>1.8</b> Interpretation</a></li>
+<li class="chapter" data-level="1.9" data-path="exploratory.html"><a href="exploratory.html#exercises"><i class="fa fa-check"></i><b>1.9</b> Exercises</a></li>
+<li class="chapter" data-level="1.10" data-path="exploratory.html"><a href="exploratory.html#glossary"><i class="fa fa-check"></i><b>1.10</b> Glossary</a></li>
+</ul></li>
+<li class="chapter" data-level="2" data-path="distributions.html"><a href="distributions.html"><i class="fa fa-check"></i><b>2</b> Distributions</a><ul>
+<li class="chapter" data-level="2.1" data-path="distributions.html"><a href="distributions.html#histograms"><i class="fa fa-check"></i><b>2.1</b> Histograms</a></li>
+<li class="chapter" data-level="2.2" data-path="distributions.html"><a href="distributions.html#representing-histograms"><i class="fa fa-check"></i><b>2.2</b> Representing Histograms</a></li>
+<li class="chapter" data-level="2.3" data-path="distributions.html"><a href="distributions.html#plotting-histograms"><i class="fa fa-check"></i><b>2.3</b> Plotting Histograms</a></li>
+<li class="chapter" data-level="2.4" data-path="distributions.html"><a href="distributions.html#nsfg-variables"><i class="fa fa-check"></i><b>2.4</b> NSFG Variables</a></li>
+<li class="chapter" data-level="2.5" data-path="distributions.html"><a href="distributions.html#outliers"><i class="fa fa-check"></i><b>2.5</b> Outliers</a></li>
+<li class="chapter" data-level="2.6" data-path="distributions.html"><a href="distributions.html#first-babies"><i class="fa fa-check"></i><b>2.6</b> First Babies</a></li>
+<li class="chapter" data-level="2.7" data-path="distributions.html"><a href="distributions.html#summarizing-distributions"><i class="fa fa-check"></i><b>2.7</b> Summarizing Distributions</a></li>
+<li class="chapter" data-level="2.8" data-path="distributions.html"><a href="distributions.html#variance"><i class="fa fa-check"></i><b>2.8</b> Variance</a></li>
+<li class="chapter" data-level="2.9" data-path="distributions.html"><a href="distributions.html#effect-size"><i class="fa fa-check"></i><b>2.9</b> Effect Size</a></li>
+<li class="chapter" data-level="2.10" data-path="distributions.html"><a href="distributions.html#reporting-results"><i class="fa fa-check"></i><b>2.10</b> Reporting Results</a></li>
+<li class="chapter" data-level="2.11" data-path="distributions.html"><a href="distributions.html#exercises-1"><i class="fa fa-check"></i><b>2.11</b> Exercises</a></li>
+<li class="chapter" data-level="2.12" data-path="distributions.html"><a href="distributions.html#glossary-1"><i class="fa fa-check"></i><b>2.12</b> Glossary</a></li>
+</ul></li>
+<li class="chapter" data-level="3" data-path="probability.html"><a href="probability.html"><i class="fa fa-check"></i><b>3</b> Probability Mass Functions</a><ul>
+<li class="chapter" data-level="3.1" data-path="probability.html"><a href="probability.html#pmfs"><i class="fa fa-check"></i><b>3.1</b> PMFs</a></li>
+<li class="chapter" data-level="3.2" data-path="probability.html"><a href="probability.html#plotting-pmfs"><i class="fa fa-check"></i><b>3.2</b> Plotting PMFs</a></li>
+<li class="chapter" data-level="3.3" data-path="probability.html"><a href="probability.html#other-visualizations"><i class="fa fa-check"></i><b>3.3</b> Other Visualizations</a></li>
+<li class="chapter" data-level="3.4" data-path="probability.html"><a href="probability.html#the-class-size-paradox"><i class="fa fa-check"></i><b>3.4</b> The Class Size Paradox</a></li>
+<li class="chapter" data-level="3.5" data-path="probability.html"><a href="probability.html#dataframe-indexing"><i class="fa fa-check"></i><b>3.5</b> DataFrame Indexing</a></li>
+<li class="chapter" data-level="3.6" data-path="probability.html"><a href="probability.html#exercises-2"><i class="fa fa-check"></i><b>3.6</b> Exercises</a></li>
+<li class="chapter" data-level="3.7" data-path="probability.html"><a href="probability.html#glossary-2"><i class="fa fa-check"></i><b>3.7</b> Glossary</a></li>
+</ul></li>
+<li class="chapter" data-level="4" data-path="cumulative.html"><a href="cumulative.html"><i class="fa fa-check"></i><b>4</b> Cumulative Distribution Functions</a><ul>
+<li class="chapter" data-level="4.1" data-path="cumulative.html"><a href="cumulative.html#the-limits-of-pmfs"><i class="fa fa-check"></i><b>4.1</b> The Limits of PMFs</a></li>
+<li class="chapter" data-level="4.2" data-path="cumulative.html"><a href="cumulative.html#percentiles"><i class="fa fa-check"></i><b>4.2</b> Percentiles</a></li>
+<li class="chapter" data-level="4.3" data-path="cumulative.html"><a href="cumulative.html#cdfs"><i class="fa fa-check"></i><b>4.3</b> CDFs</a></li>
+<li class="chapter" data-level="4.4" data-path="cumulative.html"><a href="cumulative.html#representing-cdfs"><i class="fa fa-check"></i><b>4.4</b> Representing CDFs</a></li>
+<li class="chapter" data-level="4.5" data-path="cumulative.html"><a href="cumulative.html#comparing-cdfs"><i class="fa fa-check"></i><b>4.5</b> Comparing CDFs</a></li>
+<li class="chapter" data-level="4.6" data-path="cumulative.html"><a href="cumulative.html#percentile-based-statistics"><i class="fa fa-check"></i><b>4.6</b> Percentile-based Statistics</a></li>
+<li class="chapter" data-level="4.7" data-path="cumulative.html"><a href="cumulative.html#random-numbers"><i class="fa fa-check"></i><b>4.7</b> Random Numbers</a></li>
+<li class="chapter" data-level="4.8" data-path="cumulative.html"><a href="cumulative.html#comparing-percentile-ranks"><i class="fa fa-check"></i><b>4.8</b> Comparing Percentile Ranks</a></li>
+<li class="chapter" data-level="4.9" data-path="cumulative.html"><a href="cumulative.html#exercises-3"><i class="fa fa-check"></i><b>4.9</b> Exercises</a></li>
+<li class="chapter" data-level="4.10" data-path="cumulative.html"><a href="cumulative.html#glossary-3"><i class="fa fa-check"></i><b>4.10</b> Glossary</a></li>
+</ul></li>
+<li class="chapter" data-level="5" data-path="modeling.html"><a href="modeling.html"><i class="fa fa-check"></i><b>5</b> Modeling Distributions</a><ul>
+<li class="chapter" data-level="5.1" data-path="modeling.html"><a href="modeling.html#the-exponential-distribution"><i class="fa fa-check"></i><b>5.1</b> The Exponential Distribution</a></li>
+<li class="chapter" data-level="5.2" data-path="modeling.html"><a href="modeling.html#the-normal-distribution"><i class="fa fa-check"></i><b>5.2</b> The Normal Distribution</a></li>
+<li class="chapter" data-level="5.3" data-path="modeling.html"><a href="modeling.html#normal-probability-plot"><i class="fa fa-check"></i><b>5.3</b> Normal Probability Plot</a></li>
+<li class="chapter" data-level="5.4" data-path="modeling.html"><a href="modeling.html#the-lognormal-distribution"><i class="fa fa-check"></i><b>5.4</b> The Lognormal Distribution</a></li>
+<li class="chapter" data-level="5.5" data-path="modeling.html"><a href="modeling.html#the-pareto-distribution"><i class="fa fa-check"></i><b>5.5</b> The Pareto Distribution</a></li>
+<li class="chapter" data-level="5.6" data-path="modeling.html"><a href="modeling.html#generating-random-numbers"><i class="fa fa-check"></i><b>5.6</b> Generating Random Numbers</a></li>
+<li class="chapter" data-level="5.7" data-path="modeling.html"><a href="modeling.html#why-model"><i class="fa fa-check"></i><b>5.7</b> Why Model?</a></li>
+<li class="chapter" data-level="5.8" data-path="modeling.html"><a href="modeling.html#exercises-4"><i class="fa fa-check"></i><b>5.8</b> Exercises</a></li>
+<li class="chapter" data-level="5.9" data-path="modeling.html"><a href="modeling.html#glossary-4"><i class="fa fa-check"></i><b>5.9</b> Glossary</a></li>
+</ul></li>
+<li class="chapter" data-level="6" data-path="probability-density.html"><a href="probability-density.html"><i class="fa fa-check"></i><b>6</b> Probability Density Functions</a><ul>
+<li class="chapter" data-level="6.1" data-path="probability-density.html"><a href="probability-density.html#pdfs"><i class="fa fa-check"></i><b>6.1</b> PDFs</a></li>
+<li class="chapter" data-level="6.2" data-path="probability-density.html"><a href="probability-density.html#kernel-density-estimation"><i class="fa fa-check"></i><b>6.2</b> Kernel Density Estimation</a></li>
+<li class="chapter" data-level="6.3" data-path="probability-density.html"><a href="probability-density.html#the-distribution-framework"><i class="fa fa-check"></i><b>6.3</b> The Distribution Framework</a></li>
+<li class="chapter" data-level="6.4" data-path="probability-density.html"><a href="probability-density.html#hist-implementation"><i class="fa fa-check"></i><b>6.4</b> Hist Implementation</a></li>
+<li class="chapter" data-level="6.5" data-path="probability-density.html"><a href="probability-density.html#pmf-implementation"><i class="fa fa-check"></i><b>6.5</b> Pmf Implementation</a></li>
+<li class="chapter" data-level="6.6" data-path="probability-density.html"><a href="probability-density.html#cdf-implementation"><i class="fa fa-check"></i><b>6.6</b> Cdf Implementation</a></li>
+<li class="chapter" data-level="6.7" data-path="probability-density.html"><a href="probability-density.html#moments"><i class="fa fa-check"></i><b>6.7</b> Moments</a></li>
+<li class="chapter" data-level="6.8" data-path="probability-density.html"><a href="probability-density.html#skewness"><i class="fa fa-check"></i><b>6.8</b> Skewness</a></li>
+<li class="chapter" data-level="6.9" data-path="probability-density.html"><a href="probability-density.html#exercises-5"><i class="fa fa-check"></i><b>6.9</b> Exercises</a></li>
+<li class="chapter" data-level="6.10" data-path="probability-density.html"><a href="probability-density.html#glossary-5"><i class="fa fa-check"></i><b>6.10</b> Glossary</a></li>
+</ul></li>
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">Think Stats</a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="probability-density" class="section level1">
+<h1><span class="header-section-number">Chapter 6</span> Probability Density Functions</h1>
+<p>The code for this chapter is in <code>density.py</code>. For information about
+downloading and working with this code, see Section <a href="index.html#using-the-code">0.2</a>.</p>
+<div id="pdfs" class="section level2">
+<h2><span class="header-section-number">6.1</span> PDFs</h2>
+<p>The derivative of a CDF is called a <strong>probability density function</strong>, or PDF.
+For example, the PDF of an exponential distribution is</p>
+<p><span class="math display">\[
+PDF_{expo}(x) = \lambda e^{-\lambda x}
+\]</span></p>
+<p>The PDF of a normal distribution is</p>
+<p><span class="math display">\[
+PDF_{normal}(x) = {1 \over \sigma \sqrt {2 \pi}} \Bigg[-{1 \over 2} \Big({x - \mu \over \sigma} \Big)^2 \Bigg]
+\]</span></p>
+<p>Evaluating a PDF for a particular value
+of <span class="math inline">\(x\)</span> is usually not useful. The
+result is not a probability; it is a probability <em>density</em>.</p>
+<p>In physics, density is mass per unit of
+volume; in order to get a mass, you have to multiply by volume or, if
+the density is not constant, you have to integrate over volume.</p>
+<p>Similarly, <strong>probability density</strong> measures probability
+per unit of <span class="math inline">\(x\)</span>. In order to get a
+probability mass, you have to integrate over <span class="math inline">\(x\)</span>.</p>
+<p><code>thinkstats2</code> provides a class called
+Pdf that represents a probability density function. Every Pdf object
+provides the following methods:</p>
+<ul>
+<li><code>Density</code>, which takes a value,
+<code>x</code>, and returns the
+density of the distribution at <code>x</code>.</li>
+<li><code>Render</code>, which evaluates the
+density at a discrete set of values and returns a pair of sequences:
+the sorted values, <code>xs</code>,
+and their probability densities, <code>ds</code>.</li>
+<li><code>MakePmf</code>, which evaluates <code>Density</code> at a discrete set of
+values and returns a normalized Pmf that approximates the Pdf.</li>
+<li><code>GetLinspace</code>, which returns the
+default set of points used by <code>Render</code> and <code>MakePmf</code>.</li>
+</ul>
+<p>Pdf is an abstract parent class, which
+means you should not instantiate it; that is, you cannot create a Pdf
+object. Instead, you should define a child class that inherits from Pdf
+and provides definitions of <code>Density</code> and <code>GetLinspace</code>. Pdf provides <code>Render</code> and <code>MakePmf</code>.</p>
+<p>For example, <code>thinkstats2</code> provides a class named
+<code>NormalPdf</code> that evaluates the
+normal density function.</p>
+<pre><code>class NormalPdf(Pdf):
+
+    def __init__(self, mu=0, sigma=1, label=&#39;&#39;):
+        self.mu = mu
+        self.sigma = sigma
+        self.label = label
+
+    def Density(self, xs):
+        return scipy.stats.norm.pdf(xs, self.mu, self.sigma)
+
+    def GetLinspace(self):
+        low, high = self.mu-3*self.sigma, self.mu+3*self.sigma
+        return np.linspace(low, high, 101)</code></pre>
+<p>The NormalPdf object contains the
+parameters <code>mu</code> and <code>sigma</code>. <code>Density</code> uses <code>scipy.stats.norm</code>, which is an
+object that represents a normal distribution and provides <code>cdf</code> and <code>pdf</code>, among other methods (see
+Section <a href="modeling.html#the-normal-distribution">5.2</a>).</p>
+<p>The following example creates a NormalPdf
+with the mean and variance of adult female heights, in cm, from the
+BRFSS (see Section <a href="modeling.html#the-lognormal-distribution">5.4</a>). Then it computes the density of the
+distribution at a location one standard deviation from the mean.</p>
+<pre><code>&gt;&gt;&gt; mean, var = 163, 52.8
+&gt;&gt;&gt; std = math.sqrt(var)
+&gt;&gt;&gt; pdf = thinkstats2.NormalPdf(mean, std)
+&gt;&gt;&gt; pdf.Density(mean + std)
+0.0333001</code></pre>
+<p>The result is about 0.03, in units of
+probability mass per cm. Again, a probability density doesn’t mean much
+by itself. But if we plot the Pdf, we can see the shape of the
+distribution:</p>
+<pre><code>&gt;&gt;&gt; thinkplot.Pdf(pdf, label=&#39;normal&#39;)
+&gt;&gt;&gt; thinkplot.Show()</code></pre>
+<p><code>thinkplot</code>.Pdf plots the Pdf as a
+smooth function, as contrasted with <code>thinkplot.Pmf</code>, which renders a Pmf
+as a step function. Figure <a href="#pdf-example">6.1</a> shows the result, as well as a PDF estimated
+from a sample, which we’ll compute in the next section.</p>
+<p>You can use <code>MakePmf</code></span> to approximate the
+Pdf:</p>
+<pre><code>&gt;&gt;&gt; pmf = pdf.MakePmf()</code></pre>
+<p>By default, the resulting Pmf contains
+101 points equally spaced from <span class="math inline">\(\mu - 3 * \sigma\)</span> to <span class="math inline">\(\mu + 3 * \sigma\)</span>. Optionally, <code>MakePmf</code> and <code>Render</code> can take keyword arguments
+<code>low</code>, <code>high</code>, and <code>n</code>.</p>
+<div class="figure" style="text-align: center"><span id="fig:pdf-example"></span>
+<img src="images/25.png" alt="A normal PDF that models adult female height in the U.S., and the kernel density estimate of a sample with $n" width="90%" />
+<p class="caption">
+Figure 6.1: A normal PDF that models adult female height in the U.S., and the kernel density estimate of a sample with $n
+</p>
+</div>
+</div>
+<div id="kernel-density-estimation" class="section level2">
+<h2><span class="header-section-number">6.2</span> Kernel Density Estimation</h2>
+<p><strong>Kernel
+density estimation</strong> (KDE) is an algorithm that takes a sample and
+finds an appropriately smooth PDF that fits the data. You can read
+details at <a href="http://en.wikipedia.org/wiki/Kernel_density_estimation">http://en.wikipedia.org/wiki/Kernel_density_estimation</a></p>
+<p><code>scipy</code> provides an implementation of
+KDE and <code>thinkstats2</code> provides
+a class called <code>EstimatedPdf</code>
+that uses it:</p>
+<pre><code>class EstimatedPdf(Pdf):
+
+    def __init__(self, sample):
+        self.kde = scipy.stats.gaussian_kde(sample)
+
+    def Density(self, xs):
+        return self.kde.evaluate(xs)</code></pre>
+<p><code>__init__</code> takes a sample and computes a
+kernel density estimate. The result is a <code>gaussian_kde</code> object that
+provides an <code>evaluate</code>
+method.</p>
+<p><code>Density</code> takes a value or sequence,
+calls <code>gaussian_kde.evaluate</code>, and returns the resulting density. The
+word “Gaussian” appears in the name because it uses a filter based on a
+Gaussian distribution to smooth the KDE.</p>
+<p>Here’s an example that generates a sample
+from a normal distribution and then makes an EstimatedPdf to fit it:</p>
+<pre><code>&gt;&gt;&gt; sample = [random.gauss(mean, std) for i in range(500)]
+&gt;&gt;&gt; sample_pdf = thinkstats2.EstimatedPdf(sample)
+&gt;&gt;&gt; thinkplot.Pdf(sample_pdf, label=&#39;sample KDE&#39;)</code></pre>
+<p><code>sample</code> is a list of 500 random heights.
+<code>sample_pdf</code> is a Pdf object that contains the estimated KDE of the
+sample.</p>
+<p>Figure <a href="#pdf-example">6.1</a> shows the normal density function and a KDE
+based on a sample of 500 random heights. The estimate is a good match
+for the original distribution.</p>
+<p>Estimating a density function with KDE is
+useful for several purposes:</p>
+<ul>
+<li><em>Visualization:</em> During the
+exploration phase of a project, CDFs are usually the best
+visualization of a distribution. After you look at a CDF, you can
+decide whether an estimated PDF is an appropriate model of the
+distribution. If so, it can be a better choice for presenting the
+distribution to an audience that is unfamiliar with CDFs.</li>
+<li><em>Interpolation:</em> An estimated PDF is
+a way to get from a sample to a model of the population. If you have
+reason to believe that the population distribution is smooth, you
+can use KDE to interpolate the density for values that don’t appear
+in the sample.</li>
+<li><em>Simulation:</em> Simulations are often
+based on the distribution of a sample. If the sample size is small,
+it might be appropriate to smooth the sample distribution using KDE,
+which allows the simulation to explore more possible outcomes,
+rather than replicating the observed data.</li>
+</ul>
+</div>
+<div id="the-distribution-framework" class="section level2">
+<h2><span class="header-section-number">6.3</span> The Distribution Framework</h2>
+<div class="figure" style="text-align: center"><span id="fig:dist-framework"></span>
+<img src="images/26.png" alt="A framework that relates representations of distribution functions." width="90%" />
+<p class="caption">
+Figure 6.2: A framework that relates representations of distribution functions.
+</p>
+</div>
+<p>At this point we have seen PMFs, CDFs and
+PDFs; let’s take a minute to review. Figure <a href="#dist-framework">6.2</a> shows how these functions relate to each
+other.</p>
+<p>We started with PMFs, which represent the
+probabilities for a discrete set of values. To get from a PMF to a CDF,
+you add up the probability masses to get cumulative probabilities. To
+get from a CDF back to a PMF, you compute differences in cumulative
+probabilities. We’ll see the implementation of these operations in the
+next few sections.</p>
+<p>A PDF is the derivative of a continuous
+CDF; or, equivalently, a CDF is the integral of a PDF. Remember that a
+PDF maps from values to probability densities; to get a probability, you
+have to integrate.</p>
+<p>To get from a discrete to a continuous
+distribution, you can perform various kinds of smoothing. One form of
+smoothing is to assume that the data come from an analytic continuous
+distribution (like exponential or normal) and to estimate the parameters
+of that distribution. Another option is kernel density estimation.</p>
+<p>The opposite of smoothing is <strong>discretizing</strong>, or quantizing. If you
+evaluate a PDF at discrete points, you can generate a PMF that is an
+approximation of the PDF. You can get a better approximation using
+numerical integration.</p>
+<p>To distinguish between continuous and
+discrete CDFs, it might be better for a discrete CDF to be a “cumulative
+mass function,” but as far as I can tell no one uses that term.</p>
+</div>
+<div id="hist-implementation" class="section level2">
+<h2><span class="header-section-number">6.4</span> Hist Implementation</h2>
+<p>At this point you should know how to use
+the basic types provided by <code>thinkstats2</code>: Hist, Pmf, Cdf, and
+Pdf. The next few sections provide details about how they are
+implemented. This material might help you use these classes more
+effectively, but it is not strictly necessary.</p>
+<p>Hist and Pmf inherit from a parent class
+called <code>_DictWrapper</code>. The leading underscore indicates that this class
+is “internal;” that is, it should not be used by code in other modules.
+The name indicates what it is: a dictionary wrapper. Its primary
+attribute is <code>d</code>, the
+dictionary that maps from values to their frequencies.</p>
+<p>The values can be any hashable type. The
+frequencies should be integers, but can be any numeric type.</p>
+<p><code>_DictWrapper</code> contains methods
+appropriate for both Hist and Pmf, including <code>__init__</code>, <code>Values</code>, <code>Items</code> and <code>Render</code>. It also provides modifier
+methods <code>Set</code>, <code>Incr</code>, <code>Mult</code>, and <code>Remove</code>. These methods are all
+implemented with dictionary operations. For example:</p>
+<pre><code># class _DictWrapper
+
+    def Incr(self, x, term=1):
+        self.d[x] = self.d.get(x, 0) + term
+
+    def Mult(self, x, factor):
+        self.d[x] = self.d.get(x, 0) * factor
+
+    def Remove(self, x):
+        del self.d[x]</code></pre>
+<p>Hist also provides <code>Freq</code>, which looks up the frequency
+of a given value.</p>
+<p>Because Hist operators and methods are
+based on dictionaries, these methods are constant time operations; that
+is, their run time does not increase as the Hist gets bigger.</p>
+</div>
+<div id="pmf-implementation" class="section level2">
+<h2><span class="header-section-number">6.5</span> Pmf Implementation</h2>
+<p>Pmf and Hist are almost the same thing,
+except that a Pmf maps values to floating-point probabilities, rather
+than integer frequencies. If the sum of the probabilities is 1, the Pmf
+is normalized.</p>
+<p>Pmf provides <code>Normalize</code>, which computes the sum
+of the probabilities and divides through by a factor:</p>
+<pre><code># class Pmf
+
+    def Normalize(self, fraction=1.0):
+        total = self.Total()
+        if total == 0.0:
+            raise ValueError(&#39;Total probability is zero.&#39;)
+
+        factor = float(fraction) / total
+        for x in self.d:
+            self.d[x] *= factor
+
+        return total</code></pre>
+<p><code>fraction</code> determines the sum of the
+probabilities after normalizing; the default value is 1. If the total
+probability is 0, the Pmf cannot be normalized, so <code>Normalize</code> raises <code>ValueError</code>.</p>
+<p>Hist and Pmf have the same constructor.
+It can take as an argument a <code>dict</code>, Hist, Pmf or Cdf, a pandas
+Series, a list of (value, frequency) pairs, or a sequence of values.</p>
+<p>If you instantiate a Pmf, the result is
+normalized. If you instantiate a Hist, it is not. To construct an
+unnormalized Pmf, you can create an empty Pmf and modify it. The Pmf
+modifiers do not renormalize the Pmf.</p>
+</div>
+<div id="cdf-implementation" class="section level2">
+<h2><span class="header-section-number">6.6</span> Cdf Implementation</h2>
+<p>A CDF maps from values to cumulative
+probabilities, so I could have implemented Cdf as a <code>_DictWrapper</code>. But
+the values in a CDF are ordered and the values in a <code>_DictWrapper</code> are
+not. Also, it is often useful to compute the inverse CDF; that is, the
+map from cumulative probability to value. So the implementaion I chose
+is two sorted lists. That way I can use binary search to do a forward or
+inverse lookup in logarithmic time.</p>
+<p>The Cdf constructor can take as a
+parameter a sequence of values or a pandas Series, a dictionary that
+maps from values to probabilities, a sequence of (value, probability)
+pairs, a Hist, Pmf, or Cdf. Or if it is given two parameters, it treats
+them as a sorted sequence of values and the sequence of corresponding
+cumulative probabilities.</p>
+<p>Given a sequence, pandas Series, or
+dictionary, the constructor makes a Hist. Then it uses the Hist to
+initialize the attributes:</p>
+<pre><code>self.xs, freqs = zip(*sorted(dw.Items()))
+self.ps = np.cumsum(freqs, dtype=np.float)
+self.ps /= self.ps[-1]</code></pre>
+<p><code>xs</code> is the sorted list of values;
+<code>freqs</code> is the list of
+corresponding frequencies. <code>np.cumsum</code> computes the cumulative
+sum of the frequencies. Dividing through by the total frequency yields
+cumulative probabilities. For <code>n</code> values, the time to construct the
+Cdf is proportional to <span class="math inline">\(n log\)</span>n$.</p>
+<p>Here is the implementation of <code>Prob</code>, which takes a value and
+returns its cumulative probability:</p>
+<pre><code># class Cdf
+    def Prob(self, x):
+        if x &lt; self.xs[0]:
+            return 0.0
+        index = bisect.bisect(self.xs, x)
+        p = self.ps[index - 1]
+        return p</code></pre>
+<p>The <code>bisect</code> module provides an
+implementation of binary search. And here is the implementation of <code>Value</code>, which takes a cumulative
+probability and returns the corresponding value:</p>
+<pre><code># class Cdf
+    def Value(self, p):
+        if p &lt; 0 or p &gt; 1:
+            raise ValueError(&#39;p must be in range [0, 1]&#39;)
+
+        index = bisect.bisect_left(self.ps, p)
+        return self.xs[index]</code></pre>
+<p>Given a Cdf, we can compute the Pmf by
+computing differences between consecutive cumulative probabilities. If
+you call the Cdf constructor and pass a Pmf, it computes differences by
+calling <code>Cdf.Items</code>:</p>
+<pre><code># class Cdf
+    def Items(self):
+        a = self.ps
+        b = np.roll(a, 1)
+        b[0] = 0
+        return zip(self.xs, a-b)</code></pre>
+<p><code>np.roll</code> shifts the elements of
+<code>a</code> to the right, and “rolls”
+the last one back to the beginning. We replace the first element of
+<code>b</code> with 0 and then compute the
+difference <code>a-b</code>. The result is
+a NumPy array of probabilities.</p>
+<p>Cdf provides <code>Shift</code> and <code>Scale</code>, which modify the values in
+the Cdf, but the probabilities should be treated as immutable.</p>
+</div>
+<div id="moments" class="section level2">
+<h2><span class="header-section-number">6.7</span> Moments</h2>
+<p>Any time you take a sample and reduce it
+to a single number, that number is a statistic. The statistics we have
+seen so far include mean, variance, median, and interquartile
+range.</p>
+<p>A <strong>raw
+moment</strong> is a kind of statistic. If you have a sample of values,
+<span class="math inline">\(x_i\)</span>, the <span class="math inline">\(k\)</span>th raw moment is:</p>
+<p><span class="math display">\[
+m_k^{&#39;} = {1 \over n} \sum_i x_i^k
+\]</span></p>
+<p>Or if you prefer Python notation:</span></p>
+<pre><code>def RawMoment(xs, k):
+    return sum(x**k for x in xs) / len(xs)</code></pre>
+<p>When <span class="math inline">\(k\)</span>=1 the result is the sample mean,
+<span class="math inline">\(\bar x\)</span>. The other raw moments
+don’t mean much by themselves, but they are used in some
+computations.</p>
+<p>The <strong>central moments</strong> are more useful. The
+<span class="math inline">\(k\)</span>th central moment is:</p>
+<p><span class="math display">\[
+m_k = {1 \over n} \sum_i (x_i - \bar x)^k 
+\]</span></p>
+<p>Or in Python:</span></p>
+<pre><code>def CentralMoment(xs, k):
+    mean = RawMoment(xs, 1)
+    return sum((x - mean)**k for x in xs) / len(xs)</code></pre>
+<p>When <span class="math inline">\(k\)</span>=2 the result is the second central
+moment, which you might recognize as variance. The definition of
+variance gives a hint about why these statistics are called moments. If
+we attach a weight along a ruler at each location, <span class="math inline">\(x_i\)</span>, and then spin the ruler around the mean, the
+moment of inertia of the spinning weights is the variance of the values.
+If you are not familiar with moment of inertia, see <a href="http://en.wikipedia.org/wiki/Moment_of_inertia">http://en.wikipedia.org/wiki/Moment_of_inertia</a>.</p>
+<p>When you report moment-based statistics,
+it is important to think about the units. For example, if the values
+<span class="math inline">\(x_i\)</span> are in cm, the first raw moment is also in cm.
+But the second moment is in cm<sup>2</sup>,
+the third moment is in cm<sup>3</sup>,
+and so on.</p>
+<p>Because of these units, moments are hard
+to interpret by themselves. That’s why, for the second moment, it is
+common to report standard deviation, which is the square root of
+variance, so it is in the same units as <span class="math inline">\(x_i\)</span>.</p>
+</div>
+<div id="skewness" class="section level2">
+<h2><span class="header-section-number">6.8</span> Skewness</h2>
+<p><strong>Skewness</strong> is a property that describes
+the shape of a distribution. If the distribution is symmetric around its
+central tendency, it is unskewed. If the values extend farther to the
+right, it is “right skewed” and if the values extend left, it is “left
+skewed.”</p>
+<p>This use of “skewed” does not have the
+usual connotation of “biased.” Skewness only describes the shape of the
+distribution; it says nothing about whether the sampling process might
+have been biased.</p>
+<p>Several statistics are commonly used to
+quantify the skewness of a distribution. Given a sequence of values,
+<span class="math inline">\(x_i\)</span>, the <strong>sample
+skewness</strong>, <span class="math inline">\(g_1\)</span>,
+can be computed like this:</p>
+<pre><code>def StandardizedMoment(xs, k):
+    var = CentralMoment(xs, 2)
+    std = math.sqrt(var)
+    return CentralMoment(xs, k) / std**k
+
+def Skewness(xs):
+    return StandardizedMoment(xs, 3)</code></pre>
+<p><span class="math inline">\(g_1\)</span>
+is the third <strong>standardized moment</strong>,
+which means that it has been normalized so it has no units.</p>
+<p>Negative skewness indicates that a
+distribution skews left; positive skewness indicates that a distribution
+skews right. The magnitude of <span class="math inline">\(g_1\)</span>
+indicates the strength of the skewness, but by itself it is not easy to
+interpret.</p>
+<p>In practice, computing sample skewness is
+usually not a good idea. If there are any outliers, they have a
+disproportionate effect on <span class="math inline">\(g_1\)</span></p>
+<p>Another way to evaluate the asymmetry of
+a distribution is to look at the relationship between the mean and
+median. Extreme values have more effect on the mean than the median, so
+in a distribution that skews left, the mean is less than the median. In
+a distribution that skews right, the mean is greater.</p>
+<p><strong>Pearson’s
+median skewness coefficient</strong> is a measure of skewness based on the
+difference between the sample mean and median:</p>
+<p><span class="math display">\[
+g_p = {3 {(\bar x - m)} \over S}
+\]</span></p>
+<p>Where <span class="math inline">\(\bar x\)</span> is the sample mean, <span class="math inline">\(m\)</span> is the median, and <span class="math inline">\(S\)</span> is the standard deviation. Or in
+Python:</p>
+<pre><code>def Median(xs):
+    cdf = thinkstats2.Cdf(xs)
+    return cdf.Value(0.5)
+
+def PearsonMedianSkewness(xs):
+    median = Median(xs)
+    mean = RawMoment(xs, 1)
+    var = CentralMoment(xs, 2)
+    std = math.sqrt(var)
+    gp = 3 * (mean - median) / std
+    return gp</code></pre>
+<p>This statistic is <strong>robust</strong>, which means that it is less
+vulnerable to the effect of outliers.</p>
+<div class="figure" style="text-align: center"><span id="fig:density-totalwgt-kde"></span>
+<img src="images/27.png" alt="Estimated PDF of birthweight data from the NSFG." width="90%" />
+<p class="caption">
+Figure 6.3: Estimated PDF of birthweight data from the NSFG.
+</p>
+</div>
+<p>As an example, let’s look at the skewness
+of birth weights in the NSFG pregnancy data. Here’s the code to estimate
+and plot the PDF: </span><span id="hevea_default554"></span></p>
+<pre><code>    live, firsts, others = first.MakeFrames()
+    data = live.totalwgt_lb.dropna()
+    pdf = thinkstats2.EstimatedPdf(data)
+    thinkplot.Pdf(pdf, label=&#39;birth weight&#39;)</code></pre>
+<p>Figure <a href="#density-totalwgt-kde">6.3</a> shows the result. The left tail appears longer
+than the right, so we suspect the distribution is skewed left. The mean,
+7.27 lbs, is a bit less than the median, 7.38 lbs, so that is consistent
+with left skew. And both skewness coefficients are negative: sample
+skewness is -0.59; Pearson’s median skewness is -0.23.</p>
+<div class="figure" style="text-align: center"><span id="fig:density-wtkg2-kde"></span>
+<img src="images/28.png" alt="Estimated PDF of adult weight data from the BRFSS." width="90%" />
+<p class="caption">
+Figure 6.4: Estimated PDF of adult weight data from the BRFSS.
+</p>
+</div>
+<p>Now let’s compare this distribution to
+the distribution of adult weight in the BRFSS. Again, here’s the code:</p>
+<pre><code>    df = brfss.ReadBrfss(nrows=None)
+    data = df.wtkg2.dropna()
+    pdf = thinkstats2.EstimatedPdf(data)
+    thinkplot.Pdf(pdf, label=&#39;adult weight&#39;)</code></pre>
+<p>Figure <a href="#density-wtkg2-kde">6.4</a> shows the result. The distribution appears
+skewed to the right. Sure enough, the mean, 79.0, is bigger than the
+median, 77.3. The sample skewness is 1.1 and Pearson’s median skewness
+is 0.26.</p>
+<p>The sign of the skewness coefficient
+indicates whether the distribution skews left or right, but other than
+that, they are hard to interpret. Sample skewness is less robust; that
+is, it is more susceptible to outliers. As a result it is less reliable
+when applied to skewed distributions, exactly when it would be most
+relevant.</p>
+<p>Pearson’s median skewness is based on a
+computed mean and variance, so it is also susceptible to outliers, but
+since it does not depend on a third moment, it is somewhat more robust.</p>
+</div>
+<div id="exercises-5" class="section level2">
+<h2><span class="header-section-number">6.9</span> Exercises</h2>
+<p>A solution to this exercise is in <code>chap06soln.py</code>.</p>
+<p><strong>Exercise 1</strong></p>
+<p>The distribution of income is famously
+skewed to the right. In this exercise, we’ll measure how strong that
+skew is.</p>
+<p>The Current Population Survey (CPS) is a
+joint effort of the Bureau of Labor Statistics and the Census Bureau to
+study income and related variables. Data collected in 2013 is available
+from <a href="http://www.census.gov/hhes/www/cpstables/032013/hhinc/toc.htm">http://www.census.gov/hhes/www/cpstables/032013/hhinc/toc.htm</a>. I downloaded <code>hinc06.xls</code>, which is an Excel
+spreadsheet with information about household income, and converted it to
+<code>hinc06.csv</code>, a CSV file you
+will find in the repository for this book. You will also find <code>hinc2.py</code>, which reads this file and
+transforms the data.</p>
+<p>The dataset is in the form of a series
+of income ranges and the number of respondents who fell in each range.
+The lowest range includes respondents who reported annual household
+income “Under $5000.” The highest range includes respondents who made
+“$250,000 or more.”</p>
+<p>To estimate mean and other statistics
+from these data, we have to make some assumptions about the lower and
+upper bounds, and how the values are distributed in each range. <code>hinc2.py</code> provides <code>InterpolateSample</code>, which shows one
+way to model this data. It takes a DataFrame with a column, <code>income</code>, that contains the upper
+bound of each range, and <code>freq</code>, which contains the number of
+respondents in each frame.</p>
+<p>It also takes <code>log_upper</code>, which is an
+assumed upper bound on the highest range, expressed in <code>log10</code> dollars. The default value,
+<code>log_upper=6.0</code> represents the assumption that the largest income among
+the respondents is 10<sup>6</sup>, or one million dollars.</p>
+<p><code>InterpolateSample</code> generates a
+pseudo-sample; that is, a sample of household incomes that yields the
+same number of respondents in each range as the actual data. It assumes
+that incomes in each range are equally spaced on a log10 scale.</p>
+<p>Compute the median, mean, skewness and
+Pearson’s skewness of the resulting sample. What fraction of households
+reports a taxable income below the mean? How do the results depend on
+the assumed upper bound?</p>
+</div>
+<div id="glossary-5" class="section level2">
+<h2><span class="header-section-number">6.10</span> Glossary</h2>
+<ul>
+<li><strong>Probability density function (PDF)</strong>:
+The derivative of a continuous CDF, a function that maps a value to
+its probability density.</li>
+<li><strong>Probability density</strong>: A quantity that
+can be integrated over a range of values to yield a probability. If
+the values are in units of cm, for example, probability density is
+in units of probability per cm.</li>
+<li><strong>Kernel density estimation (KDE)</strong>: An
+algorithm that estimates a PDF based on a sample.</li>
+<li><strong>discretize</strong>: To approximate a
+continuous function or distribution with a discrete function. The
+opposite of smoothing.</li>
+<li><strong>raw moment</strong>: A statistic based on the
+sum of data raised to a power.</li>
+<li><strong>central moment</strong>: A statistic based on
+deviation from the mean, raised to a power.</li>
+<li><strong>standardized moment</strong>: A ratio of
+moments that has no units.</li>
+<li><strong>skewness</strong>: A measure of how asymmetric
+a distribution is.</li>
+<li><strong>sample skewness</strong>: A moment-based
+statistic intended to quantify the skewness of a distribution.</li>
+<li><strong>Pearson’s median skewness
+coefficient</strong>: A statistic intended to quantify the skewness of a
+distribution based on the median, mean, and standard deviation.</li>
+<li><strong>robust</strong>: A statistic is robust if it
+is relatively immune to the effect of outliers.</li>
+</ul>
+
+</div>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+            </section>
+
+          </div>
+        </div>
+      </div>
+<a href="modeling.html" class="navigation navigation-prev navigation-unique" aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+
+    </div>
+  </div>
+<script src="libs/gitbook-2.6.7/js/app.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/lunr.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script>
+gitbook.require(["gitbook"], function(gitbook) {
+gitbook.start({
+"sharing": {
+"github": false,
+"facebook": true,
+"twitter": true,
+"google": false,
+"linkedin": false,
+"weibo": false,
+"instapaper": false,
+"vk": false,
+"all": ["facebook", "google", "twitter", "linkedin", "weibo", "instapaper"]
+},
+"fontsettings": {
+"theme": "white",
+"family": "sans",
+"size": 2
+},
+"edit": {
+"link": null,
+"text": null
+},
+"history": {
+"link": null,
+"text": null
+},
+"download": null,
+"toc": {
+"collapse": "subsection"
+}
+});
+});
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    var src = "true";
+    if (src === "" || src === "true") src = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML";
+    if (location.protocol !== "file:" && /^https?:/.test(src))
+      src = src.replace(/^https?:/, '');
+    script.src = src;
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+</body>
+
+</html>
