@@ -1,0 +1,704 @@
+<!DOCTYPE html>
+<html >
+
+<head>
+
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title>Chapter 7 Relationships between variables | Think Stats</title>
+  <meta name="description" content="Version 2.0.35">
+  <meta name="generator" content="bookdown  and GitBook 2.6.7">
+
+  <meta property="og:title" content="Chapter 7 Relationships between variables | Think Stats" />
+  <meta property="og:type" content="book" />
+  
+  
+  <meta property="og:description" content="Version 2.0.35" />
+  
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="Chapter 7 Relationships between variables | Think Stats" />
+  
+  <meta name="twitter:description" content="Version 2.0.35" />
+  
+
+<meta name="author" content="Allen B. Downey">
+
+
+<meta name="date" content="2019-03-28">
+
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black">
+  
+  
+<link rel="prev" href="probability-density.html">
+
+<script src="libs/jquery-2.2.3/jquery.min.js"></script>
+<link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+
+
+
+
+
+
+
+
+
+
+</head>
+
+<body>
+
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i>Preface</a><ul>
+<li class="chapter" data-level="0.1" data-path="index.html"><a href="index.html#how-i-wrote-this-book"><i class="fa fa-check"></i><b>0.1</b> How I wrote this book</a></li>
+<li class="chapter" data-level="0.2" data-path="index.html"><a href="index.html#using-the-code"><i class="fa fa-check"></i><b>0.2</b> Using the code</a></li>
+<li class="chapter" data-level="0.3" data-path="index.html"><a href="index.html#contributor-list"><i class="fa fa-check"></i><b>0.3</b> Contributor List</a></li>
+</ul></li>
+<li class="chapter" data-level="1" data-path="exploratory.html"><a href="exploratory.html"><i class="fa fa-check"></i><b>1</b> Exploratory Data Analysis</a><ul>
+<li class="chapter" data-level="1.1" data-path="exploratory.html"><a href="exploratory.html#a-statistical-approach"><i class="fa fa-check"></i><b>1.1</b> A Statistical Approach</a></li>
+<li class="chapter" data-level="1.2" data-path="exploratory.html"><a href="exploratory.html#the-national-survey-of-family-growth"><i class="fa fa-check"></i><b>1.2</b> The National Survey of Family Growth</a></li>
+<li class="chapter" data-level="1.3" data-path="exploratory.html"><a href="exploratory.html#importing-the-data"><i class="fa fa-check"></i><b>1.3</b> Importing the Data</a></li>
+<li class="chapter" data-level="1.4" data-path="exploratory.html"><a href="exploratory.html#dataframes"><i class="fa fa-check"></i><b>1.4</b> DataFrames</a></li>
+<li class="chapter" data-level="1.5" data-path="exploratory.html"><a href="exploratory.html#variables"><i class="fa fa-check"></i><b>1.5</b> Variables</a></li>
+<li class="chapter" data-level="1.6" data-path="exploratory.html"><a href="exploratory.html#transformation"><i class="fa fa-check"></i><b>1.6</b> Transformation</a></li>
+<li class="chapter" data-level="1.7" data-path="exploratory.html"><a href="exploratory.html#validation"><i class="fa fa-check"></i><b>1.7</b> Validation</a></li>
+<li class="chapter" data-level="1.8" data-path="exploratory.html"><a href="exploratory.html#interpretation"><i class="fa fa-check"></i><b>1.8</b> Interpretation</a></li>
+<li class="chapter" data-level="1.9" data-path="exploratory.html"><a href="exploratory.html#exercises"><i class="fa fa-check"></i><b>1.9</b> Exercises</a></li>
+<li class="chapter" data-level="1.10" data-path="exploratory.html"><a href="exploratory.html#glossary"><i class="fa fa-check"></i><b>1.10</b> Glossary</a></li>
+</ul></li>
+<li class="chapter" data-level="2" data-path="distributions.html"><a href="distributions.html"><i class="fa fa-check"></i><b>2</b> Distributions</a><ul>
+<li class="chapter" data-level="2.1" data-path="distributions.html"><a href="distributions.html#histograms"><i class="fa fa-check"></i><b>2.1</b> Histograms</a></li>
+<li class="chapter" data-level="2.2" data-path="distributions.html"><a href="distributions.html#representing-histograms"><i class="fa fa-check"></i><b>2.2</b> Representing Histograms</a></li>
+<li class="chapter" data-level="2.3" data-path="distributions.html"><a href="distributions.html#plotting-histograms"><i class="fa fa-check"></i><b>2.3</b> Plotting Histograms</a></li>
+<li class="chapter" data-level="2.4" data-path="distributions.html"><a href="distributions.html#nsfg-variables"><i class="fa fa-check"></i><b>2.4</b> NSFG Variables</a></li>
+<li class="chapter" data-level="2.5" data-path="distributions.html"><a href="distributions.html#outliers"><i class="fa fa-check"></i><b>2.5</b> Outliers</a></li>
+<li class="chapter" data-level="2.6" data-path="distributions.html"><a href="distributions.html#first-babies"><i class="fa fa-check"></i><b>2.6</b> First Babies</a></li>
+<li class="chapter" data-level="2.7" data-path="distributions.html"><a href="distributions.html#summarizing-distributions"><i class="fa fa-check"></i><b>2.7</b> Summarizing Distributions</a></li>
+<li class="chapter" data-level="2.8" data-path="distributions.html"><a href="distributions.html#variance"><i class="fa fa-check"></i><b>2.8</b> Variance</a></li>
+<li class="chapter" data-level="2.9" data-path="distributions.html"><a href="distributions.html#effect-size"><i class="fa fa-check"></i><b>2.9</b> Effect Size</a></li>
+<li class="chapter" data-level="2.10" data-path="distributions.html"><a href="distributions.html#reporting-results"><i class="fa fa-check"></i><b>2.10</b> Reporting Results</a></li>
+<li class="chapter" data-level="2.11" data-path="distributions.html"><a href="distributions.html#exercises-1"><i class="fa fa-check"></i><b>2.11</b> Exercises</a></li>
+<li class="chapter" data-level="2.12" data-path="distributions.html"><a href="distributions.html#glossary-1"><i class="fa fa-check"></i><b>2.12</b> Glossary</a></li>
+</ul></li>
+<li class="chapter" data-level="3" data-path="probability.html"><a href="probability.html"><i class="fa fa-check"></i><b>3</b> Probability Mass Functions</a><ul>
+<li class="chapter" data-level="3.1" data-path="probability.html"><a href="probability.html#pmfs"><i class="fa fa-check"></i><b>3.1</b> PMFs</a></li>
+<li class="chapter" data-level="3.2" data-path="probability.html"><a href="probability.html#plotting-pmfs"><i class="fa fa-check"></i><b>3.2</b> Plotting PMFs</a></li>
+<li class="chapter" data-level="3.3" data-path="probability.html"><a href="probability.html#other-visualizations"><i class="fa fa-check"></i><b>3.3</b> Other Visualizations</a></li>
+<li class="chapter" data-level="3.4" data-path="probability.html"><a href="probability.html#the-class-size-paradox"><i class="fa fa-check"></i><b>3.4</b> The Class Size Paradox</a></li>
+<li class="chapter" data-level="3.5" data-path="probability.html"><a href="probability.html#dataframe-indexing"><i class="fa fa-check"></i><b>3.5</b> DataFrame Indexing</a></li>
+<li class="chapter" data-level="3.6" data-path="probability.html"><a href="probability.html#exercises-2"><i class="fa fa-check"></i><b>3.6</b> Exercises</a></li>
+<li class="chapter" data-level="3.7" data-path="probability.html"><a href="probability.html#glossary-2"><i class="fa fa-check"></i><b>3.7</b> Glossary</a></li>
+</ul></li>
+<li class="chapter" data-level="4" data-path="cumulative.html"><a href="cumulative.html"><i class="fa fa-check"></i><b>4</b> Cumulative Distribution Functions</a><ul>
+<li class="chapter" data-level="4.1" data-path="cumulative.html"><a href="cumulative.html#the-limits-of-pmfs"><i class="fa fa-check"></i><b>4.1</b> The Limits of PMFs</a></li>
+<li class="chapter" data-level="4.2" data-path="cumulative.html"><a href="cumulative.html#percentiles"><i class="fa fa-check"></i><b>4.2</b> Percentiles</a></li>
+<li class="chapter" data-level="4.3" data-path="cumulative.html"><a href="cumulative.html#cdfs"><i class="fa fa-check"></i><b>4.3</b> CDFs</a></li>
+<li class="chapter" data-level="4.4" data-path="cumulative.html"><a href="cumulative.html#representing-cdfs"><i class="fa fa-check"></i><b>4.4</b> Representing CDFs</a></li>
+<li class="chapter" data-level="4.5" data-path="cumulative.html"><a href="cumulative.html#comparing-cdfs"><i class="fa fa-check"></i><b>4.5</b> Comparing CDFs</a></li>
+<li class="chapter" data-level="4.6" data-path="cumulative.html"><a href="cumulative.html#percentile-based-statistics"><i class="fa fa-check"></i><b>4.6</b> Percentile-based Statistics</a></li>
+<li class="chapter" data-level="4.7" data-path="cumulative.html"><a href="cumulative.html#random-numbers"><i class="fa fa-check"></i><b>4.7</b> Random Numbers</a></li>
+<li class="chapter" data-level="4.8" data-path="cumulative.html"><a href="cumulative.html#comparing-percentile-ranks"><i class="fa fa-check"></i><b>4.8</b> Comparing Percentile Ranks</a></li>
+<li class="chapter" data-level="4.9" data-path="cumulative.html"><a href="cumulative.html#exercises-3"><i class="fa fa-check"></i><b>4.9</b> Exercises</a></li>
+<li class="chapter" data-level="4.10" data-path="cumulative.html"><a href="cumulative.html#glossary-3"><i class="fa fa-check"></i><b>4.10</b> Glossary</a></li>
+</ul></li>
+<li class="chapter" data-level="5" data-path="modeling.html"><a href="modeling.html"><i class="fa fa-check"></i><b>5</b> Modeling Distributions</a><ul>
+<li class="chapter" data-level="5.1" data-path="modeling.html"><a href="modeling.html#the-exponential-distribution"><i class="fa fa-check"></i><b>5.1</b> The Exponential Distribution</a></li>
+<li class="chapter" data-level="5.2" data-path="modeling.html"><a href="modeling.html#the-normal-distribution"><i class="fa fa-check"></i><b>5.2</b> The Normal Distribution</a></li>
+<li class="chapter" data-level="5.3" data-path="modeling.html"><a href="modeling.html#normal-probability-plot"><i class="fa fa-check"></i><b>5.3</b> Normal Probability Plot</a></li>
+<li class="chapter" data-level="5.4" data-path="modeling.html"><a href="modeling.html#the-lognormal-distribution"><i class="fa fa-check"></i><b>5.4</b> The Lognormal Distribution</a></li>
+<li class="chapter" data-level="5.5" data-path="modeling.html"><a href="modeling.html#the-pareto-distribution"><i class="fa fa-check"></i><b>5.5</b> The Pareto Distribution</a></li>
+<li class="chapter" data-level="5.6" data-path="modeling.html"><a href="modeling.html#generating-random-numbers"><i class="fa fa-check"></i><b>5.6</b> Generating Random Numbers</a></li>
+<li class="chapter" data-level="5.7" data-path="modeling.html"><a href="modeling.html#why-model"><i class="fa fa-check"></i><b>5.7</b> Why Model?</a></li>
+<li class="chapter" data-level="5.8" data-path="modeling.html"><a href="modeling.html#exercises-4"><i class="fa fa-check"></i><b>5.8</b> Exercises</a></li>
+<li class="chapter" data-level="5.9" data-path="modeling.html"><a href="modeling.html#glossary-4"><i class="fa fa-check"></i><b>5.9</b> Glossary</a></li>
+</ul></li>
+<li class="chapter" data-level="6" data-path="probability-density.html"><a href="probability-density.html"><i class="fa fa-check"></i><b>6</b> Probability Density Functions</a><ul>
+<li class="chapter" data-level="6.1" data-path="probability-density.html"><a href="probability-density.html#pdfs"><i class="fa fa-check"></i><b>6.1</b> PDFs</a></li>
+<li class="chapter" data-level="6.2" data-path="probability-density.html"><a href="probability-density.html#kernel-density-estimation"><i class="fa fa-check"></i><b>6.2</b> Kernel Density Estimation</a></li>
+<li class="chapter" data-level="6.3" data-path="probability-density.html"><a href="probability-density.html#the-distribution-framework"><i class="fa fa-check"></i><b>6.3</b> The Distribution Framework</a></li>
+<li class="chapter" data-level="6.4" data-path="probability-density.html"><a href="probability-density.html#hist-implementation"><i class="fa fa-check"></i><b>6.4</b> Hist Implementation</a></li>
+<li class="chapter" data-level="6.5" data-path="probability-density.html"><a href="probability-density.html#pmf-implementation"><i class="fa fa-check"></i><b>6.5</b> Pmf Implementation</a></li>
+<li class="chapter" data-level="6.6" data-path="probability-density.html"><a href="probability-density.html#cdf-implementation"><i class="fa fa-check"></i><b>6.6</b> Cdf Implementation</a></li>
+<li class="chapter" data-level="6.7" data-path="probability-density.html"><a href="probability-density.html#moments"><i class="fa fa-check"></i><b>6.7</b> Moments</a></li>
+<li class="chapter" data-level="6.8" data-path="probability-density.html"><a href="probability-density.html#skewness"><i class="fa fa-check"></i><b>6.8</b> Skewness</a></li>
+<li class="chapter" data-level="6.9" data-path="probability-density.html"><a href="probability-density.html#exercises-5"><i class="fa fa-check"></i><b>6.9</b> Exercises</a></li>
+<li class="chapter" data-level="6.10" data-path="probability-density.html"><a href="probability-density.html#glossary-5"><i class="fa fa-check"></i><b>6.10</b> Glossary</a></li>
+</ul></li>
+<li class="chapter" data-level="7" data-path="variable-relationships.html"><a href="variable-relationships.html"><i class="fa fa-check"></i><b>7</b> Relationships between variables</a><ul>
+<li class="chapter" data-level="7.1" data-path="variable-relationships.html"><a href="variable-relationships.html#scatter-plots"><i class="fa fa-check"></i><b>7.1</b> Scatter plots</a></li>
+<li class="chapter" data-level="7.2" data-path="variable-relationships.html"><a href="variable-relationships.html#characterizing-relationships"><i class="fa fa-check"></i><b>7.2</b> Characterizing relationships</a></li>
+<li class="chapter" data-level="7.3" data-path="variable-relationships.html"><a href="variable-relationships.html#correlation"><i class="fa fa-check"></i><b>7.3</b> Correlation</a></li>
+<li class="chapter" data-level="7.4" data-path="variable-relationships.html"><a href="variable-relationships.html#covariance"><i class="fa fa-check"></i><b>7.4</b> Covariance</a></li>
+<li class="chapter" data-level="7.5" data-path="variable-relationships.html"><a href="variable-relationships.html#pearsons-correlation"><i class="fa fa-check"></i><b>7.5</b> Pearson’s correlation</a></li>
+<li class="chapter" data-level="7.6" data-path="variable-relationships.html"><a href="variable-relationships.html#nonlinear-relationships"><i class="fa fa-check"></i><b>7.6</b> Nonlinear relationships</a></li>
+<li class="chapter" data-level="7.7" data-path="variable-relationships.html"><a href="variable-relationships.html#spearmans-rank-correlation"><i class="fa fa-check"></i><b>7.7</b> Spearman’s rank correlation</a></li>
+<li class="chapter" data-level="7.8" data-path="variable-relationships.html"><a href="variable-relationships.html#correlation-and-causation"><i class="fa fa-check"></i><b>7.8</b> Correlation and causation</a></li>
+<li class="chapter" data-level="7.9" data-path="variable-relationships.html"><a href="variable-relationships.html#exercises-6"><i class="fa fa-check"></i><b>7.9</b> Exercises</a></li>
+<li class="chapter" data-level="7.10" data-path="variable-relationships.html"><a href="variable-relationships.html#glossary-6"><i class="fa fa-check"></i><b>7.10</b> Glossary</a></li>
+</ul></li>
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">Think Stats</a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="variable-relationships" class="section level1">
+<h1><span class="header-section-number">Chapter 7</span> Relationships between variables</h1>
+<p>So far we have only looked at one
+variable at a time. In this chapter we look at relationships between
+variables. Two variables are related if knowing one gives you
+information about the other. For example, height and weight are related;
+people who are taller tend to be heavier. Of course, it is not a perfect
+relationship: there are short heavy people and tall light ones. But if
+you are trying to guess someone’s weight, you will be more accurate if
+you know their height than if you don’t.</p>
+<p>The code for this chapter is in <code>scatter.py</code>. For information about
+downloading and working with this code, see Section <a href="index.html#using-the-code">0.2</a>.</p>
+<div id="scatter-plots" class="section level2">
+<h2><span class="header-section-number">7.1</span> Scatter plots</h2>
+<p>The simplest way to check for a
+relationship between two variables is a <strong>scatter plot</strong>, but making a good scatter
+plot is not always easy. As an example, I’ll plot weight versus height
+for the respondents in the BRFSS (see Section <a href="thinkstats2006.html#lognormal">5.4</a>.</p>
+<p>Here’s the code that reads the data file
+and extracts height and weight:</p>
+<pre><code>    df = brfss.ReadBrfss(nrows=None)
+    sample = thinkstats2.SampleRows(df, 5000)
+    heights, weights = sample.htm3, sample.wtkg2</code></pre>
+<p><code>SampleRows</code> chooses a random subset
+of the data:</p>
+<pre><code>def SampleRows(df, nrows, replace=False):
+    indices = np.random.choice(df.index, nrows, replace=replace)
+    sample = df.loc[indices]
+    return sample</code></pre>
+<p><code>df</code> is the DataFrame, <code>nrows</code> is the number of rows to
+choose, and <code>replace</code> is a
+boolean indicating whether sampling should be done with replacement; in
+other words, whether the same row could be chosen more than once.</p>
+<p><code>thinkplot</code> provides <code>Scatter</code>, which makes scatter plots:</p>
+<pre><code>    thinkplot.Scatter(heights, weights)
+    thinkplot.Show(xlabel=&#39;Height (cm)&#39;,
+                   ylabel=&#39;Weight (kg)&#39;,
+                   axis=[140, 210, 20, 200])</code></pre>
+<p>The result, in Figure <a href="#scatter1">7.1</a> (left), shows the shape of the relationship.
+As we expected, taller people tend to be heavier.</p>
+<div class="figure" style="text-align: center"><span id="fig:scatter1"></span>
+<img src="images/29.png" alt="Scatter plots of weight versus height for the respondents in the BRFSS, unjittered (left), jittered (right)." width="90%" />
+<p class="caption">
+Figure 7.1: Scatter plots of weight versus height for the respondents in the BRFSS, unjittered (left), jittered (right).
+</p>
+</div>
+<p>But this is not the best representation
+of the data, because the data are packed into columns. The problem is
+that the heights are rounded to the nearest inch, converted to
+centimeters, and then rounded again. Some information is lost in
+translation.</p>
+<p>We can’t get that information back, but
+we can minimize the effect on the scatter plot by <strong>jittering</strong> the data, which means adding
+random noise to reverse the effect of rounding off. Since these
+measurements were rounded to the nearest inch, they might be off by up
+to 0.5 inches or 1.3 cm. Similarly, the weights might be off by 0.5 kg.</p>
+<pre><code>    heights = thinkstats2.Jitter(heights, 1.3)
+    weights = thinkstats2.Jitter(weights, 0.5)</code></pre>
+<p>Here’s the implementation of <code>Jitter</code>:</p>
+<pre><code>def Jitter(values, jitter=0.5):
+    n = len(values)
+    return np.random.uniform(-jitter, +jitter, n) + values</code></pre>
+<p>The values can be any sequence; the
+result is a NumPy array.</p>
+<p>Figure <a href="#scatter1">7.1</a> (right) shows the result. Jittering reduces
+the visual effect of rounding and makes the shape of the relationship
+clearer. But in general you should only jitter data for purposes of
+visualization and avoid using jittered data for analysis.</p>
+<p>Even with jittering, this is not the best
+way to represent the data. There are many overlapping points, which
+hides data in the dense parts of the figure and gives disproportionate
+emphasis to outliers. This effect is called <strong>saturation</strong>.</p>
+<div class="figure" style="text-align: center"><span id="fig:scatter2"></span>
+<img src="images/30.png" alt="Scatter plot with jittering and transparency (left), hexbin plot (right)." width="90%" />
+<p class="caption">
+Figure 7.2: Scatter plot with jittering and transparency (left), hexbin plot (right).
+</p>
+</div>
+<p>We can solve this problem with the <code>alpha</code> parameter, which makes the
+points partly transparent:</p>
+<pre><code>    thinkplot.Scatter(heights, weights, alpha=0.2)</code></pre>
+<p>Figure <a href="#scatter2">7.2</a> (left) shows the result. Overlapping data
+points look darker, so darkness is proportional to density. In this
+version of the plot we can see two details that were not apparent
+before: vertical clusters at several heights and a horizontal line near
+90 kg or 200 pounds. Since this data is based on self-reports in pounds,
+the most likely explanation is that some respondents reported rounded
+values.</p>
+<p>Using transparency works well for
+moderate-sized datasets, but this figure only shows the first 5000
+records in the BRFSS, out of a total of 414,509.</p>
+<p>To handle larger datasets, another option
+is a hexbin plot, which divides the graph into hexagonal bins and colors
+each bin according to how many data points fall in it. <code>thinkplot</code> provides <code>HexBin</code>:</p>
+<pre><code>    thinkplot.HexBin(heights, weights)</code></pre>
+<p>Figure <a href="#scatter2">7.2</a> (right) shows the result. An advantage of a
+hexbin is that it shows the shape of the relationship well, and it is
+efficient for large datasets, both in time and in the size of the file
+it generates. A drawback is that it makes the outliers invisible.</p>
+<p>The point of this example is that it is
+not easy to make a scatter plot that shows relationships clearly without
+introducing misleading artifacts.</p>
+</div>
+<div id="characterizing-relationships" class="section level2">
+<h2><span class="header-section-number">7.2</span> Characterizing relationships</h2>
+<p>Scatter plots provide a general
+impression of the relationship between variables, but there are other
+visualizations that provide more insight into the nature of the
+relationship. One option is to bin one variable and plot percentiles of
+the other.</p>
+<p>NumPy and pandas provide functions for
+binning data:</p>
+<pre><code>    df = df.dropna(subset=[&#39;htm3&#39;, &#39;wtkg2&#39;])
+    bins = np.arange(135, 210, 5)
+    indices = np.digitize(df.htm3, bins)
+    groups = df.groupby(indices)</code></pre>
+<p><code>dropna</code> drops rows with <code>nan</code> in any of the listed columns.
+<code>arange</code> makes a NumPy array of
+bins from 135 to, but not including, 210, in increments of 5.</p>
+<p><code>digitize</code> computes the index of the
+bin that contains each value in <code>df.htm3</code>. The result is a NumPy
+array of integer indices. Values that fall below the lowest bin are
+mapped to index 0. Values above the highest bin are mapped to <code>len(bins)</code>.</p>
+<div class="figure" style="text-align: center"><span id="fig:scatter3"></span>
+<img src="images/31.png" alt="Percentiles of weight for a range of height bins." width="90%" />
+<p class="caption">
+Figure 7.3: Percentiles of weight for a range of height bins.
+</p>
+</div>
+<p><code>groupby</code> is a DataFrame method that
+returns a GroupBy object; used in a <code>for</code> loop, <code>groups</code> iterates the names of the
+groups and the DataFrames that represent them. So, for example, we can
+print the number of rows in each group like this:</p>
+<pre><code>for i, group in groups:
+    print(i, len(group))</code></pre>
+<p>Now for each group we can compute the
+mean height and the CDF of weight:</p>
+<pre><code>    heights = [group.htm3.mean() for i, group in groups]
+    cdfs = [thinkstats2.Cdf(group.wtkg2) for i, group in groups]</code></pre>
+<p>Finally, we can plot percentiles of
+weight versus height:</p>
+<pre><code>    for percent in [75, 50, 25]:
+        weights = [cdf.Percentile(percent) for cdf in cdfs]
+        label = &#39;%dth&#39; % percent
+        thinkplot.Plot(heights, weights, label=label)</code></pre>
+<p>Figure <a href="#scatter3">7.3</a> shows the result. Between 140 and 200 cm the
+relationship between these variables is roughly linear. This range
+includes more than 99% of the data, so we don’t have to worry too much
+about the extremes.</p>
+</div>
+<div id="correlation" class="section level2">
+<h2><span class="header-section-number">7.3</span> Correlation</h2>
+<p>A <strong>correlation</strong> is a statistic intended to
+quantify the strength of the relationship between two variables.</p>
+<p>A challenge in measuring correlation is
+that the variables we want to compare are often not expressed in the
+same units. And even if they are in the same units, they come from
+different distributions.</p>
+<p>There are two common solutions to these
+problems:</p>
+<ol style="list-style-type: decimal">
+<li>Transform each value to a <strong>standard scores</strong>, which is the number
+of standard deviations from the mean. This transform leads to the
+“Pearson product-moment correlation coefficient.”</li>
+<li>Transform each value to its <strong>rank</strong>, which is its index in the
+sorted list of values. This transform leads to the “Spearman rank
+correlation coefficient.”</li>
+</ol>
+<p>If <span class="math inline">\(X\)</span> is a series of <span class="math inline">\(n\)</span> values, $x_i, we can convert to standard scores by
+subtracting the mean and dividing by the standard deviation: <span class="math inline">\(z_i = (x_i − \mu) / \sigma\)</span>.</p>
+<p>The numerator is a deviation: the
+distance from the mean. Dividing by <span class="math inline">\(\sigma\)</span> <strong>standardizes</strong> the deviation, so the
+values of <span class="math inline">\(Z\)</span> are dimensionless (no
+units) and their distribution has mean 0 and variance 1.</p>
+<p>If <span class="math inline">\(X\)</span> is normally distributed, so is <span class="math inline">\(Z\)</span>. But if <span class="math inline">\(X\)</span> is skewed or has outliers, so does
+<span class="math inline">\(Z\)</span>; in those cases, it is more
+robust to use percentile ranks. If we compute a new variable, <span class="math inline">\(R\)</span>, so that $r_i is the rank of $x_i,
+the distribution of <span class="math inline">\(R\)</span> is uniform from 1 to <span class="math inline">\(n\)</span>, regardless of the distribution of
+<span class="math inline">\(X\)</span>.</p>
+</div>
+<div id="covariance" class="section level2">
+<h2><span class="header-section-number">7.4</span> Covariance</h2>
+<p><strong>Covariance</strong> is a measure of the tendency
+of two variables to vary together. If we have two series, <span class="math inline">\(X\)</span> and <span class="math inline">\(Y\)</span>, their deviations from the mean are</p>
+<p><span class="math display">\[
+dx_i = x_i - \bar x
+\]</span></p>
+<p><span class="math display">\[
+dy_i = y_i - \bar y
+\]</span></p>
+<p>where <span class="math inline">\(\bar x\)</span> is the sample mean of <span class="math inline">\(X\)</span> and <span class="math inline">\(\bar y\)</span> is the sample mean of <span class="math inline">\(Y\)</span>. If <span class="math inline">\(X\)</span> and <span class="math inline">\(Y\)</span> vary together, their deviations tend to have the same sign.</p>
+<p>If we multiply them together, the product
+is positive when the deviations have the same sign and negative when
+they have the opposite sign. So adding up the products gives a measure
+of the tendency to vary together.</p>
+<p>Covariance is the mean of these products:</p>
+<p><span class="math display">\[
+Cov(X,Y) = {1 \over n} \sum dx_i dy_i
+\]</span></p>
+<p>where <span class="math inline">\(n\)</span> is the length of the two series (they have to be the same length).</p>
+<p>If you have studied linear algebra, you
+might recognize that <code>Cov</code> is
+the dot product of the deviations, divided by their length. So the
+covariance is maximized if the two vectors are identical, 0 if they are
+orthogonal, and negative if they point in opposite directions. <code>thinkstats2</code> uses <code>np.dot</code> to implement <code>Cov</code> efficiently:</p>
+<pre><code>def Cov(xs, ys, meanx=None, meany=None):
+    xs = np.asarray(xs)
+    ys = np.asarray(ys)
+
+    if meanx is None:
+        meanx = np.mean(xs)
+    if meany is None:
+        meany = np.mean(ys)
+
+    cov = np.dot(xs-meanx, ys-meany) / len(xs)
+    return cov</code></pre>
+<p>By default <code>Cov</code> computes deviations from the
+sample means, or you can provide known means. If <code>xs</code> and <code>ys</code> are Python sequences, <code>np.asarray</code> converts them to NumPy
+arrays. If they are already NumPy arrays, <code>np.asarray</code> does nothing.</p>
+<p>This implementation of covariance is
+meant to be simple for purposes of explanation. NumPy and pandas also
+provide implementations of covariance, but both of them apply a
+correction for small sample sizes that we have not covered yet, and
+<code>np.cov</code> returns a covariance
+matrix, which is more than we need for now.</p>
+</div>
+<div id="pearsons-correlation" class="section level2">
+<h2><span class="header-section-number">7.5</span> Pearson’s correlation</h2>
+<p>Covariance is useful in some
+computations, but it is seldom reported as a summary statistic because
+it is hard to interpret. Among other problems, its units are the product
+of the units of <span class="math inline">\(X\)</span> and <span class="math inline">\(Y\)</span>. For example, the covariance of
+weight and height in the BRFSS dataset is 113 kilogram-centimeters,
+whatever that means.</p>
+<p>One solution to this problem is to divide
+the deviations by the standard deviation, which yields standard scores,
+and compute the product of standard scores:</p>
+<p><span class="math display">\[
+p_i = {(x_i - \bar x) \over S_X}{(y_i - \bar y) \over S_Y}
+\]</span></p>
+<p>Where <span class="math inline">\(S_X\)</span> and <span class="math inline">\(S_Y\)</span> are the standard deviations of <span class="math inline">\(X\)</span> and <span class="math inline">\(Y\)</span>. The mean of these products is</p>
+<p><span class="math display">\[
+\varrho = {1 \over n} \sum p_i
+\]</span></p>
+<p>Or we can rewrite ρ by factoring out
+<span class="math inline">\(S_X\)</span> and <span class="math inline">\(S_Y\)</span>:</p>
+<p><span class="math display">\[
+\varrho = {Cov(X,Y) \over S_X S_Y}
+\]</span></p>
+<p>This value is called <strong>Pearson’s correlation</strong> after Karl
+Pearson, an influential early statistician. It is easy to compute and
+easy to interpret. Because standard scores are dimensionless, so is <span class="math inline">\(\varrho\)</span>.</p>
+<p>Here is the implementation in <code>thinkstats2</code>:</p>
+<pre><code>def Corr(xs, ys):
+    xs = np.asarray(xs)
+    ys = np.asarray(ys)
+
+    meanx, varx = MeanVar(xs)
+    meany, vary = MeanVar(ys)
+
+    corr = Cov(xs, ys, meanx, meany) / math.sqrt(varx * vary)
+    return corr</code></pre>
+<p><code>MeanVar</code> computes mean and variance
+slightly more efficiently than separate calls to <code>np.mean</code> and <code>np.var</code>.</p>
+<p>Pearson’s correlation is always between
+-1 and +1 (including both). If <span class="math inline">\(\varrho\)</span> is positive, we say that the
+correlation is positive, which means that when one variable is high, the
+other tends to be high. If <span class="math inline">\(\varrho\)</span> is negative, the correlation is negative,
+so when one variable is high, the other is low.</span></p>
+<p>The magnitude of <span class="math inline">\(\varrho\)</span> indicates the strength
+of the correlation. If <span class="math inline">\(\varrho\)</span> is 1 or -1, the variables are perfectly
+correlated, which means that if you know one, you can make a perfect
+prediction about the other.</p>
+<p>Most correlation in the real world is not
+perfect, but it is still useful. The correlation of height and weight is
+0.51, which is a strong correlation compared to similar human-related
+variables.</p>
+</div>
+<div id="nonlinear-relationships" class="section level2">
+<h2><span class="header-section-number">7.6</span> Nonlinear relationships</h2>
+<p>If Pearson’s correlation is near 0, it is
+tempting to conclude that there is no relationship between the
+variables, but that conclusion is not valid. Pearson’s correlation only
+measures <em>linear</em> relationships. If there’s a nonlinear relationship, <span class="math inline">\(\varrho\)</span>
+understates its strength.</p>
+<div class="figure" style="text-align: center"><span id="fig:corr-examples"></span>
+<img src="images/32.png" alt="Examples of datasets with a range of correlations." width="90%" />
+<p class="caption">
+Figure 7.4: Examples of datasets with a range of correlations.
+</p>
+</div>
+<p>Figure <a href="#corr-examples">7.4</a> is from <a href="http://wikipedia.org/wiki/Correlation_and_dependence">http://wikipedia.org/wiki/Correlation_and_dependence</a>. It shows scatter plots and correlation
+coefficients for several carefully constructed datasets.</p>
+<p>The top row shows linear relationships
+with a range of correlations; you can use this row to get a sense of
+what different values of ρ look like. The second row shows perfect
+correlations with a range of slopes, which demonstrates that correlation
+is unrelated to slope (we’ll talk about estimating slope soon). The
+third row shows variables that are clearly related, but because the
+relationship is nonlinear, the correlation coefficient is 0.</p>
+<p>The moral of this story is that you
+should always look at a scatter plot of your data before blindly
+computing a correlation coefficient.</p>
+</div>
+<div id="spearmans-rank-correlation" class="section level2">
+<h2><span class="header-section-number">7.7</span> Spearman’s rank correlation</h2>
+<p>Pearson’s correlation works well if the
+relationship between variables is linear and if the variables are
+roughly normal. But it is not robust in the presence of outliers.</p>
+<p>Spearman’s rank correlation is an alternative
+that mitigates the effect of outliers and skewed distributions. To
+compute Spearman’s correlation, we have to compute the <strong>rank</strong> of each value, which is its index
+in the sorted sample. For example, in the sample <code>[1, 2, 5, 7]</code> the rank of the
+value 5 is 3, because it appears third in the sorted list. Then we
+compute Pearson’s correlation for the ranks.</p>
+<p><code>thinkstats2</code> provides a function
+that computes Spearman’s rank correlation:</p>
+<pre><code>def SpearmanCorr(xs, ys):
+    xranks = pandas.Series(xs).rank()
+    yranks = pandas.Series(ys).rank()
+    return Corr(xranks, yranks)</code></pre>
+<p>I convert the arguments to pandas Series
+objects so I can use <code>rank</code>,
+which computes the rank for each value and returns a Series. Then I use
+<code>Corr</code> to compute the
+correlation of the ranks.</p>
+<p>I could also use <code>Series.corr</code> directly and specify
+Spearman’s method:</p>
+<pre><code>def SpearmanCorr(xs, ys):
+    xs = pandas.Series(xs)
+    ys = pandas.Series(ys)
+    return xs.corr(ys, method=&#39;spearman&#39;)</code></pre>
+<p>The Spearman rank correlation for the
+BRFSS data is 0.54, a little higher than the Pearson correlation, 0.51.
+There are several possible reasons for the difference, including:</p>
+<ul>
+<li>If the relationship is nonlinear,
+Pearson’s correlation tends to underestimate the strength of the
+relationship, and</li>
+<li>Pearson’s correlation can be affected
+(in either direction) if one of the distributions is skewed or
+contains outliers. Spearman’s rank correlation is more robust.</li>
+</ul>
+<p>In the BRFSS example, we know that the
+distribution of weights is roughly lognormal; under a log transform it
+approximates a normal distribution, so it has no skew. So another way to
+eliminate the effect of skewness is to compute Pearson’s correlation
+with log-weight and height:</p>
+<pre><code>    thinkstats2.Corr(df.htm3, np.log(df.wtkg2)))</code></pre>
+<p>The result is 0.53, close to the rank
+correlation, 0.54. So that suggests that skewness in the distribution of
+weight explains most of the difference between Pearson’s and Spearman’s
+correlation.</p>
+</div>
+<div id="correlation-and-causation" class="section level2">
+<h2><span class="header-section-number">7.8</span> Correlation and causation</h2>
+<p>If variables A and B are correlated,
+there are three possible explanations: A causes B, or B causes A, or
+some other set of factors causes both A and B. These explanations are
+called “causal relationships”.</p>
+<p>Correlation alone does not distinguish
+between these explanations, so it does not tell you which ones are true.
+This rule is often summarized with the phrase “Correlation does not
+imply causation,” which is so pithy it has its own Wikipedia page:
+<a href="http://wikipedia.org/wiki/Correlation_does_not_imply_causation">http://wikipedia.org/wiki/Correlation_does_not_imply_causation</a>.</p>
+<p>So what can you do to provide evidence of
+causation?</p>
+<ol style="list-style-type: decimal">
+<li>Use time. If A comes before B, then A
+can cause B but not the other way around (at least according to our
+common understanding of causation). The order of events can help us
+infer the direction of causation, but it does not preclude the
+possibility that something else causes both A and B.</li>
+<li><p>Use randomness. If you divide a large
+sample into two groups at random and compute the means of almost any
+variable, you expect the difference to be small. If the groups are
+nearly identical in all variables but one, you can eliminate
+spurious relationships.</p>
+<p>This works even if you don’t know
+what the relevant variables are, but it works even better if you do,
+because you can check that the groups are identical.</p></li>
+</ol>
+<p>These ideas are the motivation for the
+<strong>randomized controlled trial</strong>, in
+which subjects are assigned randomly to two (or more) groups: a <strong>treatment group</strong> that receives some kind
+of intervention, like a new medicine, and a <strong>control group</strong> that receives no
+intervention, or another treatment whose effects are known.</p>
+<p>A randomized controlled trial is the most
+reliable way to demonstrate a causal relationship, and the foundation of
+science-based medicine (see <a href="http://wikipedia.org/wiki/Randomized_controlled_trial">http://wikipedia.org/wiki/Randomized_controlled_trial</a>.</p>
+<p>Unfortunately, controlled trials are only
+possible in the laboratory sciences, medicine, and a few other
+disciplines. In the social sciences, controlled experiments are rare,
+usually because they are impossible or unethical.</p>
+<p>An alternative is to look for a <strong>natural experiment</strong>, where different
+“treatments” are applied to groups that are otherwise similar. One
+danger of natural experiments is that the groups might differ in ways
+that are not apparent. You can read more about this topic at
+<a href="http://wikipedia.org/wiki/Natural_experiment">http://wikipedia.org/wiki/Natural_experiment</a>.</p>
+<p>In some cases it is possible to infer
+causal relationships using <strong>regression
+analysis</strong>, which is the topic of Chapter 11 ().</p>
+</div>
+<div id="exercises-6" class="section level2">
+<h2><span class="header-section-number">7.9</span> Exercises</h2>
+<p>A solution to this exercise is in
+<code>chap07soln.py</code>.</p>
+<p><strong>Exercise 1</strong>
+Using data from the NSFG,
+make a scatter plot of birth weight versus mother’s age. Plot
+percentiles of birth weight versus mother’s age. Compute Pearson’s and
+Spearman’s correlations. How would you characterize the relationship
+between these variables?</p>
+</div>
+<div id="glossary-6" class="section level2">
+<h2><span class="header-section-number">7.10</span> Glossary</h2>
+<ul>
+<li><strong>scatter plot</strong>: A visualization of the
+relationship between two variables, showing one point for each row
+of data.</li>
+<li><strong>jitter</strong>: Random noise added to data
+for purposes of visualization.</li>
+<li><strong>saturation</strong>: Loss of information when
+multiple points are plotted on top of each other.</li>
+<li><strong>correlation</strong>: A statistic that
+measures the strength of the relationship between two variables.</li>
+<li><strong>standardize</strong>: To transform a set of
+values so that their mean is 0 and their variance is 1.</li>
+<li><strong>standard score</strong>: A value that has been
+standardized so that it is expressed in standard deviations from the
+mean.</li>
+<li><strong>covariance</strong>: A measure of the tendency
+of two variables to vary together.</li>
+<li><strong>rank</strong>: The index where an element
+appears in a sorted list.</li>
+<li><strong>randomized controlled trial</strong>: An
+experimental design in which subjects are divided into groups at
+random, and different groups are given different treatments.</li>
+<li><strong>treatment group</strong>: A group in a
+controlled trial that receives some kind of intervention.</li>
+<li><strong>control group</strong>: A group in a
+controlled trial that receives no treatment, or a treatment whose
+effect is known.</li>
+<li><strong>natural experiment</strong>: An experimental
+design that takes advantage of a natural division of subjects into
+groups in ways that are at least approximately random.</li>
+</ul>
+
+</div>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+            </section>
+
+          </div>
+        </div>
+      </div>
+<a href="probability-density.html" class="navigation navigation-prev navigation-unique" aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+
+    </div>
+  </div>
+<script src="libs/gitbook-2.6.7/js/app.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/lunr.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script>
+gitbook.require(["gitbook"], function(gitbook) {
+gitbook.start({
+"sharing": {
+"github": false,
+"facebook": true,
+"twitter": true,
+"google": false,
+"linkedin": false,
+"weibo": false,
+"instapaper": false,
+"vk": false,
+"all": ["facebook", "google", "twitter", "linkedin", "weibo", "instapaper"]
+},
+"fontsettings": {
+"theme": "white",
+"family": "sans",
+"size": 2
+},
+"edit": {
+"link": null,
+"text": null
+},
+"history": {
+"link": null,
+"text": null
+},
+"download": null,
+"toc": {
+"collapse": "subsection"
+}
+});
+});
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    var src = "true";
+    if (src === "" || src === "true") src = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML";
+    if (location.protocol !== "file:" && /^https?:/.test(src))
+      src = src.replace(/^https?:/, '');
+    script.src = src;
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+</body>
+
+</html>
